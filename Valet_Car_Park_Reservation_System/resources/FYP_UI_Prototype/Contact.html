@@ -1,49 +1,26 @@
 <!doctype html>
 <html lang="en">
   <style>
-    div.bar{
-      margin-bottom: 10px;
-      float: right;
-    }
-
-    .slide{
-      background-color: #555;
-    }
-
-    .center {
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      width: 100%;
-    }
 
 
-    div.card {
-      border: 1px solid red;
-      width: 15rem;
-      max-height: 100rem;
-      margin: 0 auto;
-      float: none;
-      margin-bottom: 10px;
+    .socialMedia{
+        margin-top: 45px;
+        padding: 50px 60px;
+
     }
-    div.card div.card-body {
-      height: 5rem;
-    }
-    div.carousel-inner div.calousel-caption{
+    .form-container{
+      padding:50px 60px;
+      margin-top:6vh;
       color: black;
-    right: 58%;
-    text-align: center;
-    max-width: 500px;
-    left: auto;
-    top: auto;
+      border-right: 1px solid black;
+
+
     }
-    div.card{
-      text-align: center;
-    }
-    div.row{
-      background-color:rgb(55, 55, 56);
-      padding-top: 10px;
-      padding-right: 10px;
+    .background-img{
+      background:url(img/) no-repeat;
+      width:100%;
+      height:100vh;
+      background-color:rgb(234, 227, 227);
     }
     #myBtn {
       display: none;
@@ -60,15 +37,16 @@
       padding: 15px;
       border-radius: 50px;
     }
+
     #myBtn:hover {
       background-color: #555;
     }
     .logo-center{
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      margin-top: 10px;
-    }
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 10px;
+      }
     </style>
   <head>
     <!-- Required meta tags -->
@@ -144,7 +122,50 @@
       </nav>
 
 
-<div><h1>Booking</h1></div>
+      <div class="container-fluid background-img">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-1"></div>
+                    <div class="col-md-5">
+                        <form class="form-container">
+                        <h1 style="text-align: center;">Contact Us</h1>
+                        <hr>
+                        <div class="form-group">
+                            <label for="exampleInputName">Your Name</label>
+                            <input type="Name" class="form-control" id="exampleInputName" placeholder="Your Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPhone">Phone</label>
+                            <input type="Phone" class="form-control" id="exampleInputPhone" placeholder="Phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail">Email</label>
+                            <input type="Email" class="form-control" id="exampleInputEmail" placeholder="Email">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEnquiry">Enquiry</label>
+                            <input type="Enquiry" class="form-control" id="exampleInputEnquiry" placeholder="Enquiry">
+                        </div>
+                        <botton type="submit" class="btn btn-primary btn-block">Submit</botton>
+                        </form>
+                    </div>
+                    <div class="col-md-5" >
+                        <div class="socialMedia">
+                            <h1>Let's get in touch</h1>
+                            <hr><br>
+                            <div>
+                                <a href=""><h5><i class="fa fa-facebook mr-3"></i>Facebook: valet</h5></a><br>
+                                <a href=""><h5><i class="fa fa-google mr-3"></i>Gmail: valetinfo@gmail.com</h5></a><br>
+                                <a href=""><h5><i class="fa fa-youtube mr-3"></i>Youtube: valet</h5></a><br>
+                                <a href=""><h5><i class="fa fa-whatsapp mr-3"></i>WhatsApp: + 010 812 3975</h5></a><br>
+                              </div>
+                        </div>
+                        
+                    </div>
+                <div class="col-md-1"></div>
+            </div>
+        </div>
+      </div>
 
 
 
