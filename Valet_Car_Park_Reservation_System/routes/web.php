@@ -14,13 +14,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// ADMIN_ROUTE
+
+Route::prefix('admin')->group(function(){
+
+    Route::get('/home');
+    
+});
+
+// CLIENT_ROUTE
+
+Route::get('/', function () {
+    return view('welcome');
+});
 
 Route::get('/testing', function () {
     return view('prototype.testing');
