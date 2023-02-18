@@ -13,7 +13,8 @@ class Car extends Model
 
         'car_plate',
         'client_id',
-        'phone_number'
+        'phone_number',
+        'reserve_id'
 
     ];
     

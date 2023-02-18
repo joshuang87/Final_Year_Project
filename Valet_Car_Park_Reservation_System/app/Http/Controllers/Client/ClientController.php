@@ -60,7 +60,8 @@ class ClientController extends Controller
 
             'car_plate' => $data['car_plate'],
             'phone_number' => $data['phone_number'],
-            'client_id' => $currentClientId
+            'client_id' => $currentClientId,
+            'reserve_id' => $currentClientReserveId
 
         ]);
         // store reserve data to reserves database
@@ -75,4 +76,10 @@ class ClientController extends Controller
 
         return redirect(route('test.inforGetting'));
     }
+
+    public function update()
+    {
+
+    }
+
 }

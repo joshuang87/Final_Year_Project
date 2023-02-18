@@ -22,6 +22,11 @@ class ClientRepository implements ClientRepositoryInterface
     {
         return Client::where('client_id',$id)->first();
     }
+
+    public function updateClientData(array $data, $id)
+    {
+        return Client::where('client_id',$id)->update($data);
+    }
 }
 
 ?>

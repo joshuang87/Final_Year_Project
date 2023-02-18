@@ -11,7 +11,7 @@ interface ClientRepositoryInterface
 
     public function findClient($id);
 
-    // public function updateClientData($data,$id);
+    public function updateClientData(array $data,$id);
 
     // public function destroyClient($id);
 
