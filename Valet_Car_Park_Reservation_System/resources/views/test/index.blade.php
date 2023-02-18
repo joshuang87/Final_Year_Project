@@ -11,5 +11,8 @@
     <button>
         <a href="{{route('test.inforGetting')}}">Reserve</a>
     </button>
+    <button>
+        <a href="{{route('test.showAll')}}">All Client Data</a>
+    </button>
 </body>
 </html>

@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('clients', function (Blueprint $table) {
             $table->id('client_id');
             $table->string('phone_number');
-            $table->string('car_plate');
-            $table->string('reserve_id')->default(substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 10)); // generate a uniqid code with alphabet and integer like : jho2b31h
+            $table->string('car_plate')->unique();
+            $table->string('reserve_id')->default(substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 10))->unique(); // generate a uniqid code with alphabet and integer like : jho2b31h
             $table->timestamps();
         });
     }

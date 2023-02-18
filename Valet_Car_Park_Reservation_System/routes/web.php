@@ -40,5 +40,6 @@ Route::prefix('test')->group(function(){
     Route::get('/home',[ClientController::class,'index'])->name('test.home');
     Route::get('/home/inforGetting',[ClientController::class,'create'])->name('test.inforGetting');
     Route::post('/inforUpload',[ClientController::class,'store'])->name('test.inforUpload');
+    Route::get('/home/allClient',[ClientController::class,'showAll'])->name('test.showAll');
 
 });

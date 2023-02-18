@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('reserves', function (Blueprint $table) {
             $table->string('reserve_id')->primary();
-            // $table->unsignedInteger('client_id');
-            // $table->foreign('client_id')->references('client_id')->on('clients')->onDelete('cascade');
             $table->string('phone_number');
-            // $table->foreign('car_plate')->references('car_plate')->on('cars')->onDelete('cascade');
             $table->timestamps();
+            $table->string('car_plate');
+            $table->foreign('car_plate')->references('car_plate')->on('cars')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('client_id')->constrained('clients','client_id')->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 
