@@ -18,14 +18,19 @@ class ClientRepository implements ClientRepositoryInterface
         return Client::create($data);
     }
 
-    public function findClient($id)
+    public function findClient($client_id)
     {
-        return Client::where('client_id',$id)->first();
+        return Client::where('client_id',$client_id)->first();
     }
 
-    public function updateClientData(array $data, $id)
+    public function updateClientData(array $data,$client_id)
     {
-        return Client::where('client_id',$id)->update($data);
+        return Client::where('client_id',$client_id)->update($data);
+    }
+
+    public function destroyClient($client_id)
+    {
+        return Client::where('client_id',$client_id)->delete();
     }
 }
 

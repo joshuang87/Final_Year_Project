@@ -21,6 +21,14 @@
             <td>{{ $client->car_plate}}</td>
             <td>{{ $client->phone_number}}</td>
             <td>{{ $client->reserve_id}}</td>
+            <td>
+                <form action="{{route('test.deleteClientData',$client->client_id)}}" method="POST">
+                    <a href="{{route('test.editClientInfor',$client->client_id)}}" class="btn btn-outline-warning" style="--bs-btn-padding-x: 1.34rem;">Edit</a>&nbsp;
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" onClick="return confirm('Are you sure to delete?')" class="btn btn-outline-danger">Delete</button>
+                </form>
+            </td>
         @endforeach
     </table><br>
     <button>

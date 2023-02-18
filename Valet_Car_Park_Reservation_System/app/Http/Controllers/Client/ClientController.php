@@ -77,9 +77,41 @@ class ClientController extends Controller
         return redirect(route('test.inforGetting'));
     }
 
-    public function update()
+    public function edit(int $client_id)
     {
+        return view('test.editClientInfor',[
 
+            'client' => $this->client->findClient($client_id)
+
+        ]);
+    }
+
+    public function update(Request $request,int $client_id)
+    {
+        $currentClientCarPlate = Client::where('client_id',$client_id)->first()['car_plate'];
+        $clientReserveId = Client::where('client_id',$client_id)->first()['reserve_id'];
+        $data = $request->validate([
+
+            'car_plate' => 'required|string|max:255',
+            'phone_number' => 'required|string|max:255'
+
+        ]);
+        // update client data
+        $this->client->updateClientData($data,$client_id);
+
+        $this->car->updateCartData($data,$currentClientCarPlate);
+
+        $this->reserve->updateReserveData($data,$clientReserveId);
+
+
+        return redirect(route('test.showAll'));
+    }
+
+    public function destroy($client_id)
+    {
+        $this->client->destroyClient($client_id);
+
+        return redirect(route('test.showAll'));
     }
 
 }

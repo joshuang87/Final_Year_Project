@@ -12,6 +12,11 @@ class ReserveRepository implements ReserveRepositoryInterface
     {
         return Reserve::create($data);
     }
+
+    public function updateReserveData(array $data,$reserve_id)
+    {
+        return Reserve::where('reserve_id',$reserve_id)->update($data);
+    }
 }
 
 ?>

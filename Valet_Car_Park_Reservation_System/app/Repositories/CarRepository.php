@@ -13,9 +13,14 @@ class CarRepository implements CarRepositoryInterface
         return Car::all();
     }
 
-    public function storeCarData($data)
+    public function storeCarData(array $data)
     {
         return Car::create($data);
+    }
+
+    public function updateCartData(array $data,$car_plate)
+    {
+        return Car::where('car_plate',$car_plate)->update($data);
     }
 }
 

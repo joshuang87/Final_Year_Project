@@ -41,5 +41,8 @@ Route::prefix('test')->group(function(){
     Route::get('/home/inforGetting',[ClientController::class,'create'])->name('test.inforGetting');
     Route::post('/inforUpload',[ClientController::class,'store'])->name('test.inforUpload');
     Route::get('/home/allClient',[ClientController::class,'showAll'])->name('test.showAll');
+    Route::get('/home/allClient/client{client_id}',[ClientController::class,'edit'])->name('test.editClientInfor');
+    Route::patch('/home/allClient/client{client_id}/update',[ClientController::class,'update'])->name('test.updateClientInfor');
+    Route::delete('/home/allClient/client{client_id}/delete',[ClientController::class,'destroy'])->name('test.deleteClientData');
 
 });

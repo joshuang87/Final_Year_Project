@@ -9,11 +9,11 @@ interface ClientRepositoryInterface
 
     public function storeClientInfor(array $data);
 
-    public function findClient($id);
+    public function findClient($client_id);
 
-    public function updateClientData(array $data,$id);
+    public function updateClientData(array $data,$client_id);
 
-    // public function destroyClient($id);
+    public function destroyClient($client_id);
 
 }
 

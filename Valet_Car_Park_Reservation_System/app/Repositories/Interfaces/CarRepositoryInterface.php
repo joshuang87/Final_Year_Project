@@ -11,7 +11,7 @@ interface CarRepositoryInterface
 
     // public function findCar($id);
 
-    // public function updateCartData($data,$id);
+    public function updateCartData(array $data,$car_plate);
 
     // public function destroyCar($id);
 

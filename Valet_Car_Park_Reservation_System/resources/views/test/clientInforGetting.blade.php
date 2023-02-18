@@ -23,6 +23,11 @@
                 Back
             </a>
         </button>
+        <button>
+            <a href="{{route('test.showAll')}}">
+                All Client Data
+            </a>
+        </button>
     </form>
 </body>
 </html>
