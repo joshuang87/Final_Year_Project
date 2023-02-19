@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\ClientRepositories;
 
+use App\Repositories\Interfaces\ClientInterfaces\ReserveRepositoryInterface;
 use App\Models\Reserve;
-use App\Repositories\Interfaces\ReserveRepositoryInterface;
 
 class ReserveRepository implements ReserveRepositoryInterface
 {

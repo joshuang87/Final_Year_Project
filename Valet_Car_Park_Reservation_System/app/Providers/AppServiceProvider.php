@@ -2,12 +2,16 @@
 
 namespace App\Providers;
 
-use App\Repositories\CarRepository;
-use App\Repositories\ClientRepository;
-use App\Repositories\Interfaces\CarRepositoryInterface;
-use App\Repositories\Interfaces\ClientRepositoryInterface;
-use App\Repositories\Interfaces\ReserveRepositoryInterface;
-use App\Repositories\ReserveRepository;
+use App\Repositories\AdminRepositories\ParkingLotRepository;
+use App\Repositories\AdminRepositories\ParkingSpaceRepository;
+use App\Repositories\ClientRepositories\CarRepository;
+use App\Repositories\ClientRepositories\ClientRepository;
+use App\Repositories\ClientRepositories\ReserveRepository;
+use App\Repositories\Interfaces\AdminInterfaces\ParkingLotRepositoryInterface;
+use App\Repositories\Interfaces\AdminInterfaces\ParkingSpaceRepositoryInterface;
+use App\Repositories\Interfaces\ClientInterfaces\CarRepositoryInterface;
+use App\Repositories\Interfaces\ClientInterfaces\ClientRepositoryInterface;
+use App\Repositories\Interfaces\ClientInterfaces\ReserveRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -17,9 +21,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        // Client
         $this->app->bind(ClientRepositoryInterface::class,ClientRepository::class);
         $this->app->bind(CarRepositoryInterface::class,CarRepository::class);
         $this->app->bind(ReserveRepositoryInterface::class,ReserveRepository::class);
+
+        // Admin
+        $this->app->bind(ParkingLotRepositoryInterface::class,ParkingLotRepository::class);
+        $this->app->bind(ParkingSpaceRepositoryInterface::class,ParkingSpaceRepository::class);
     }
 
     /**

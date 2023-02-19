@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Models\Client;
-use App\Repositories\Interfaces\CarRepositoryInterface;
-use App\Repositories\Interfaces\ClientRepositoryInterface;
-use App\Repositories\Interfaces\ReserveRepositoryInterface;
+use App\Repositories\Interfaces\ClientInterfaces\CarRepositoryInterface;
+use App\Repositories\Interfaces\ClientInterfaces\ClientRepositoryInterface;
+use App\Repositories\Interfaces\ClientInterfaces\ReserveRepositoryInterface;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -96,13 +96,12 @@ class ClientController extends Controller
             'phone_number' => 'required|string|max:255'
 
         ]);
-        // update client data
+        // update client data to clients table
         $this->client->updateClientData($data,$client_id);
 
         $this->car->updateCartData($data,$currentClientCarPlate);
 
         $this->reserve->updateReserveData($data,$clientReserveId);
-
 
         return redirect(route('test.showAll'));
     }

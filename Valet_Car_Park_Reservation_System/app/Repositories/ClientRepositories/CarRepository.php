@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\ClientRepositories;
 
+use App\Repositories\Interfaces\ClientInterfaces\CarRepositoryInterface;
 use App\Models\Car;
-use App\Repositories\Interfaces\CarRepositoryInterface;
 
 class CarRepository implements CarRepositoryInterface
 {

@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cars', function (Blueprint $table) {
-            $table->string('car_plate')->primary();
+        Schema::create('clients', function (Blueprint $table) {
+            $table->string('client_id')->primary();
             $table->string('phone_number');
+            $table->string('car_plate')->unique();
+            $table->string('reserve_id')->default(substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 10))->unique(); // generate a uniqid code with alphabet and integer like : jho2b31h
             $table->timestamps();
-            $table->foreignId('client_id')->constrained('clients','client_id')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->string('reserve_id');
-            $table->foreign('reserve_id')->references('reserve_id')->on('clients')->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cars');
+        Schema::dropIfExists('clients');
     }
 };

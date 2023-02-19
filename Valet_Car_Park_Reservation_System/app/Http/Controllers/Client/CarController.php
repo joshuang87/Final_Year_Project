@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Repositories\Interfaces\CarRepositoryInterface;
+use App\Repositories\Interfaces\ClientInterfaces\CarRepositoryInterface;
 
 class CarController extends Controller
 {

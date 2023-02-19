@@ -14,5 +14,8 @@
     <button>
         <a href="{{route('test.showAll')}}">All Client Data</a>
     </button>
+    <button>
+        <a href="{{route('test.adminHome')}}">Admin Home</a>
+    </button>
 </body>
 </html>

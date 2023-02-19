@@ -11,7 +11,6 @@ class Client extends Model
 
     protected $fillable = [
 
-        'client_id',
         'phone_number',
         'car_plate'
         
@@ -20,6 +19,16 @@ class Client extends Model
     public function cars()
     {
         return $this->hasMany(Car::class);
+    }
+
+    public function parkingSpaces()
+    {
+        return $this->hasMany(ParkingSpace::class);
+    }
+
+    public function reserves()
+    {
+        return $this->hasMany(Reserve::class);
     }
 
 }

@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\ParkingLotController;
+use App\Http\Controllers\Admin\ParkingSpaceController;
 use App\Http\Controllers\Client\ClientController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -36,7 +39,7 @@ Route::get('/', function () {
 // TESTING_ROUTE
 
 Route::prefix('test')->group(function(){
-
+    // mix route client and admin
     Route::get('/home',[ClientController::class,'index'])->name('test.home');
     Route::get('/home/inforGetting',[ClientController::class,'create'])->name('test.inforGetting');
     Route::post('/inforUpload',[ClientController::class,'store'])->name('test.inforUpload');
@@ -45,4 +48,11 @@ Route::prefix('test')->group(function(){
     Route::patch('/home/allClient/client{client_id}/update',[ClientController::class,'update'])->name('test.updateClientInfor');
     Route::delete('/home/allClient/client{client_id}/delete',[ClientController::class,'destroy'])->name('test.deleteClientData');
 
+    // admin
+    Route::get('/admin/home',[AdminController::class,'index'])->name('test.adminHome');
+    Route::get('/admin/home/addParkingLot',[ParkingLotController::class,'create'])->name('test.adminAddParkingLot');
+    Route::post('/admin/home/addParkingLot/add',[ParkingLotController::class,'store'])->name('test.adminStoreParkingLot');
+    Route::get('/admin/home/addParkingSpace',[ParkingSpaceController::class,'create'])->name('test.adminAddParkingSpace');
+    Route::post('/admin/home/addParkingSpace/add',[ParkingSpaceController::class,'store'])->name('test.adminStoreParkingSpace');
+    
 });

@@ -17,7 +17,8 @@ return new class extends Migration
             $table->timestamps();
             $table->string('car_plate');
             $table->foreign('car_plate')->references('car_plate')->on('cars')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreignId('client_id')->constrained('clients','client_id')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->string('Client_id');
+            $table->foreign('client_id')->references('client_id')->on('clients')->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 
