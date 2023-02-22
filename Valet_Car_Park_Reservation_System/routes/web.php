@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Client\ClientController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +33,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/testing', function () {
-    return view('prototype.testing');
+// TESTING_ROUTE
+
+Route::prefix('test')->group(function(){
+
+    Route::get('/home',[ClientController::class,'index'])->name('test.home');
+    Route::get('/home/inforGetting',[ClientController::class,'create'])->name('test.inforGetting');
+    Route::post('/inforUpload',[ClientController::class,'store'])->name('test.inforUpload');
+
 });
