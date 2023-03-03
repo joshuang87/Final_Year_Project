@@ -7,6 +7,8 @@ interface ParkingSpaceRepositoryInterface
 
     public function storeParkingSpaceData($data);
 
+    public function allParkingSpaceData();
+
 }
 
 ?>

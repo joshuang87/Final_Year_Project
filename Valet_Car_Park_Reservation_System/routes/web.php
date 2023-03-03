@@ -47,6 +47,7 @@ Route::prefix('test')->group(function(){
     Route::get('/home/allClient/client{client_id}',[ClientController::class,'edit'])->name('test.editClientInfor');
     Route::patch('/home/allClient/client{client_id}/update',[ClientController::class,'update'])->name('test.updateClientInfor');
     Route::delete('/home/allClient/client{client_id}/delete',[ClientController::class,'destroy'])->name('test.deleteClientData');
+    Route::get('/home/inforGetting/getParkingSpace',[]);
 
     // admin
     Route::get('/admin/home',[AdminController::class,'index'])->name('test.adminHome');
@@ -54,5 +55,6 @@ Route::prefix('test')->group(function(){
     Route::post('/admin/home/addParkingLot/add',[ParkingLotController::class,'store'])->name('test.adminStoreParkingLot');
     Route::get('/admin/home/addParkingSpace',[ParkingSpaceController::class,'create'])->name('test.adminAddParkingSpace');
     Route::post('/admin/home/addParkingSpace/add',[ParkingSpaceController::class,'store'])->name('test.adminStoreParkingSpace');
+    Route::get('/admin/home/allParkingData',[ParkingSpaceController::class,'show'])->name('test.adminAllParkingData');
     
 });

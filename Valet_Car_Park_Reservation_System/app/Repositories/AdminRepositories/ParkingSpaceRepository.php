@@ -12,6 +12,11 @@ class ParkingSpaceRepository implements ParkingSpaceRepositoryInterface
     {
         return ParkingSpace::create($data);
     }
+
+    public function allParkingSpaceData()
+    {
+        return ParkingSpace::all();
+    }
 }
 
 ?>

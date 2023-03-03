@@ -5,14 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    @vite(['resources\css\app.css'])
 </head>
 <body>
+
     <h1>Admin Home</h1>
     <button>
         <a href="{{route('test.adminAddParkingLot')}}">Add Parking Lot</a>
     </button>
     <button>
         <a href="{{route('test.adminAddParkingSpace')}}">Add Parking Space</a>
+    </button>
+    <button>
+        <a href="{{route('test.adminAllParkingData')}}">All Parking Data</a>
     </button>
     <?php
     use Carbon\Carbon;

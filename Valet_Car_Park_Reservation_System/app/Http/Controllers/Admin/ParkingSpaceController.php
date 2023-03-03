@@ -35,4 +35,11 @@ class ParkingSpaceController extends Controller
 
         return redirect(route('test.adminHome'));
     }
+
+    public function show()
+    {
+        return view('test.adminAllParkingData',[
+            'parkingSpaces' => $this->parkingSpace->allParkingSpaceData()
+        ]);
+    }
 }
