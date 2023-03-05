@@ -4,6 +4,8 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ParkingLotController;
 use App\Http\Controllers\Admin\ParkingSpaceController;
 use App\Http\Controllers\Client\ClientController;
+use App\Http\Controllers\Client\ParkingLotController as ClientParkingLotController;
+use App\Http\Controllers\Client\ParkingSpaceController as ClientParkingSpaceController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -47,7 +49,7 @@ Route::prefix('test')->group(function(){
     Route::get('/home/allClient/client{client_id}',[ClientController::class,'edit'])->name('test.editClientInfor');
     Route::patch('/home/allClient/client{client_id}/update',[ClientController::class,'update'])->name('test.updateClientInfor');
     Route::delete('/home/allClient/client{client_id}/delete',[ClientController::class,'destroy'])->name('test.deleteClientData');
-    Route::get('/home/inforGetting/getParkingSpace',[]);
+    Route::get('/home/inforGetting/getParkingSpace',[ClientParkingLotController::class,'showAvailable'])->name('test.showAvailableParkingLot');
 
     // admin
     Route::get('/admin/home',[AdminController::class,'index'])->name('test.adminHome');

@@ -77,7 +77,7 @@ class ClientController extends Controller
         return redirect(route('test.inforGetting'));
     }
 
-    public function edit(int $client_id)
+    public function edit(string $client_id)
     {
         return view('test.editClientInfor',[
 

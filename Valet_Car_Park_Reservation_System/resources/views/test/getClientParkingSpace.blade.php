@@ -10,11 +10,20 @@
     <h1>Client Choice Parking Space</h1>
     <form action="">
         <select name="parking_lot_id" id="parking_lot_id">
-            @foreach ( as )
-            <option value=""></option>    
+            @foreach ( $parkingLots as $parkingLot )
+            <option value="{{$parkingLot->parking_lot_id}}">{{$parkingLot->parking_lot_id}}</option>    
             @endforeach
-        </select>
+        </select><br>
+        
         <button>Confirm</button>
     </form>
+    <?php
+
+        foreach ($parkingLots as $parkingLot) {
+            echo $parkingLot->parking_lot_id; // Output the client's name
+            echo $parkingLot->parking_space_id;
+        }
+
+    ?>
 </body>
 </html>
