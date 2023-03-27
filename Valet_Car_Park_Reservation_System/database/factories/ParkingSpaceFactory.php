@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,7 @@ class ParkingSpaceFactory extends Factory
     public function definition(): array
     {
         return [
-            'parking_space_id' => fake()->numerify('ABC##'),
+            'parking_space_id' => Str::uuid()->toString(),
             'open_time' => null,
             'close_time' => null,
             'parking_lot_id' => fake()->numerify('G#'),

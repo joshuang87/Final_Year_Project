@@ -7,7 +7,7 @@ interface ClientRepositoryInterface
 
     public function allClientInfor();
 
-    public function storeClientInfor(array $data);
+    public function storeClientInfor($data);
 
     public function findClient($client_id);
 

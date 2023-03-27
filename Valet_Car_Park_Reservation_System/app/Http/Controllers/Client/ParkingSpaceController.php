@@ -21,4 +21,11 @@ class ParkingSpaceController extends Controller
             'parkingSpaces' => $this->parkingSpace->allParkingSpaceData()
         ]);
     }
+
+    public function fetch(){
+        
+        $all = $this->parkingSpace->allParkingSpaceData();
+
+        return $all;
+    }
 }

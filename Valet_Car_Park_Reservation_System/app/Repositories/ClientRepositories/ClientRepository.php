@@ -2,8 +2,9 @@
 
 namespace App\Repositories\ClientRepositories;
 
-use App\Repositories\Interfaces\ClientInterfaces\ClientRepositoryInterface;
 use App\Models\Client;
+use Illuminate\Support\Str;
+use App\Repositories\Interfaces\ClientInterfaces\ClientRepositoryInterface;
 
 class ClientRepository implements ClientRepositoryInterface
 {
@@ -13,8 +14,15 @@ class ClientRepository implements ClientRepositoryInterface
         return Client::all();
     }
     
-    public function storeClientInfor(array $data)
+    public function storeClientInfor($data)
     {
+        $data = [
+            'client_id' => Str::uuid()->toString(),
+            'car_plate' => $data['car_plate'],
+            'phone_number' => $data['phone_number'],
+            'reserve_id' => Str::uuid()->toString()
+        ];
+        
         return Client::create($data);
     }
 

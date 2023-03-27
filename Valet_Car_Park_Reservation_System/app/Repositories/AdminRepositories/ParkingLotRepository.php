@@ -11,10 +11,18 @@ class ParkingLotRepository implements ParkingLotRepositoryInterface
 
     public function allParkingLotId()
     {
-        $all = DB::table('parking_lots')->leftjoin('parking_spaces','parking_spaces.parking_lot_id','=','parking_lots.parking_lot_id')
-                                        ->get();
+        // $all = DB::table('parking_lots')->leftjoin('parking_spaces','parking_lots.parking_lot_id','=','parking_spaces.parking_lot_id')
+        //                                 ->select()
+        //                                 ->get();
+
+        $all = parkingLot::all();
         
         return $all;
+    }
+
+    public function showAvailableParkingLot()
+    {
+
     }
 
     public function storeParkingLotData($data)

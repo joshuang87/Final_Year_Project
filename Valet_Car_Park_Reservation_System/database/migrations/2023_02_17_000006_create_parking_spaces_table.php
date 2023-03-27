@@ -22,6 +22,7 @@ return new class extends Migration
             $table->foreign('car_plate')->references('car_plate')->on('cars')->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('client_id')->nullable()->default(null);
             $table->foreign('client_id')->references('client_id')->on('clients')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->boolean('status')->default(true);
         });
     }
 

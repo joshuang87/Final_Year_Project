@@ -25,6 +25,7 @@
             <td>{{ $parkingSpace->close_time }}</td>
             <td>{{ $parkingSpace->car_plate }}</td>
             <td>{{ $parkingSpace->client_id }}</td>
+            <td>{{ $parkingSpace->status}}</td>
         @endforeach
     </table><br>
     <button>

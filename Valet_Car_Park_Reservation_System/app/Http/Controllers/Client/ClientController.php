@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\Http\Controllers\Controller;
 use App\Models\Client;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\ParkingLot;
+use App\Models\ParkingSpace;
 use App\Repositories\Interfaces\ClientInterfaces\CarRepositoryInterface;
 use App\Repositories\Interfaces\ClientInterfaces\ClientRepositoryInterface;
 use App\Repositories\Interfaces\ClientInterfaces\ReserveRepositoryInterface;
-use Illuminate\Http\Request;
+use DateTime;
 
 class ClientController extends Controller
 {
@@ -50,7 +55,7 @@ class ClientController extends Controller
             'phone_number' => 'required|string|max:255'
 
         ]);
-        // store client data to clients database
+        // pass client segment data
         $this->client->storeClientInfor($data);
         // get current client id who is making reserve
         $currentClientId = Client::where('car_plate',$data['car_plate'])->first()['client_id'];
@@ -74,7 +79,7 @@ class ClientController extends Controller
 
         ]);
 
-        return redirect(route('test.inforGetting'));
+        return redirect(route('test.showAvailableParkingLot',$currentClientId));
     }
 
     public function edit(string $client_id)
@@ -113,4 +118,34 @@ class ClientController extends Controller
         return redirect(route('test.showAll'));
     }
 
+    public function getParkLID($parkingLotId)
+    {
+
+        $parkingSpaces = ParkingSpace::where('parking_lot_id',$parkingLotId)->get();
+
+        return view('test.getClientParkingSpace')->with('parkingSpaces',$parkingSpaces);
+
+        // return dd($parkingSpaces);
+    }
+
+    public function getParkSID($parkingLotId,$parkingSpaceId)
+    {
+
+        $parkingSpace = ParkingSpace::where('parking_space_id',$parkingSpaceId)->get();
+
+        return view('test.getClientTime')->with('parkingSpace',$parkingSpace);
+    }
+
+    public function storeAllData(Request $request,$parkingLotId,$parkingSpaceId)
+    {
+        $data = $request->validate([
+
+            'open_time' => 'required|string|max:255',
+            'close_time' => 'required|string|max:255'
+
+        ]);
+
+        ParkingSpace::where('parking_space_id',$parkingSpaceId)->update($data);
+        
+    }
 }

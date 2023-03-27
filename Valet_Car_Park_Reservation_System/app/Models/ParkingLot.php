@@ -13,7 +13,8 @@ class ParkingLot extends Model
 
         'parking_lot_id',
         'open_time',
-        'close_time'
+        'close_time',
+        'status'
         
     ];
 
