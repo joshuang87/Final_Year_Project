@@ -16,7 +16,12 @@ import { createApp } from 'vue';
 const app = createApp({});
 
 import ExampleComponent from './components/ExampleComponent.vue';
+import TestAdminHome from './components/TestAdminHome.vue';
+import Testing from './components/Testing.vue';
+
 app.component('example-component', ExampleComponent);
+app.component('test-admin-home', TestAdminHome);
+app.component('testing', Testing);
 
 /**
  * The following block of code may be used to automatically register your
@@ -37,3 +42,9 @@ app.component('example-component', ExampleComponent);
  */
 
 app.mount('#app');
+
+const router = new VueRouter({
+    routes:[
+        {path:'test/home/inforGetting/parkL=:parking_lot_id/getParkS',name:'test.getParkingLotID',component: Testing}
+    ]
+})

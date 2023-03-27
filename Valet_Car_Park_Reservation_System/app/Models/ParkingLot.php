@@ -11,10 +11,22 @@ class ParkingLot extends Model
 
     protected $fillable = [
 
-        'parking_space_id',
+        'parking_lot_id',
         'open_time',
-        'close_time'
+        'close_time',
+        'status'
         
     ];
+
+    // protected $casts = [
+
+    //     'open_time' => 'h:i:s A',
+    //     'close_time' => 'h:i:s A'
+    // ];
+
+    public function parkingSpaces()
+    {
+        return $this->hasMany(ParkingSpace::class);
+    }
 
 }
