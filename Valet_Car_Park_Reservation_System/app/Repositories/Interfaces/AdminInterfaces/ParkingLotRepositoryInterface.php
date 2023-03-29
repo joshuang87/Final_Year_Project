@@ -4,13 +4,13 @@ namespace App\Repositories\Interfaces\AdminInterfaces;
 
 interface ParkingLotRepositoryInterface
 {
+    public function showAllParkingLot();
 
-    public function allParkingLotId();
+    public function storeParkingLot($data);
 
-    public function showAvailableParkingLot();
+    public function updateParkingLotInformation($data,$parkingLotId);
 
-    public function storeParkingLotData($data);
-
+    public function deleteParkingLot($parkingLotId);
 }
 
 ?>

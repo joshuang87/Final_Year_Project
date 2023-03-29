@@ -18,7 +18,7 @@ class ParkingLotController extends Controller
 
     public function show()
     {
-        
+        return view('test.adminAllParkingLot')->with('parkingLots',$this->parkingLot->showAllParkingLot());
     }
 
     public function create()
@@ -32,8 +32,15 @@ class ParkingLotController extends Controller
             'parking_lot_id' => 'required|string|max:255'
         ]);
 
-        $this->parkingLot->storeParkingLotData($data);
+        $this->parkingLot->storeParkingLot($data);
 
         return redirect(route('test.adminHome'));
+    }
+
+    public function destroy($parkingLotId)
+    {
+        $this->parkingLot->deleteParkingLot($parkingLotId);
+
+        return redirect(route('test.adminAllParkingData'));
     }
 }

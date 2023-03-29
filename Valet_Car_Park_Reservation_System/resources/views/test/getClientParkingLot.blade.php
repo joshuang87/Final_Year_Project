@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Get Parking Lot</title>
-    @routes
+    @routes()
 </head>
 <body>
     <h1>Client Choice Parking Lot</h1>
@@ -31,9 +31,7 @@
         for (var i = 0; i < links.length; i++) {
             var parkingLotId = links[i].innerText
             links[i].href = route('test.getParkingLotID',[clientId,parkingLotId])
-            console.log(links[i]);
         }
     }
 
-    console.log(route().current());
 </script>

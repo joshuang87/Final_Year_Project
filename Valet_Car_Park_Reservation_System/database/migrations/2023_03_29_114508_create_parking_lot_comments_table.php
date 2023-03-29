@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('parking_lots', function (Blueprint $table) {
-            $table->string('parking_lot_id')->primary();
-            $table->time('open_time')->default('08:00:00');
-            $table->time('close_time')->default('23:30:00');
+        Schema::create('parking_lot_comments', function (Blueprint $table) {
+            $table->id();
             $table->timestamps();
-            $table->boolean('status')->default(true);
         });
     }
 
@@ -25,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('parking_lots');
+        Schema::dropIfExists('parking_lot_comments');
     }
 };

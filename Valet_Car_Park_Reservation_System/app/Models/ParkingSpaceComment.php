@@ -5,18 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ParkingLot extends Model
+class ParkingSpaceComment extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-
-        'parking_lot_id',
-        'open_time',
-        'close_time',
-        'status',
-        'comment'
-        
+        'comment_id',
+        'content',
+        'parking_Space_id'
     ];
 
     public function parkingSpaces()

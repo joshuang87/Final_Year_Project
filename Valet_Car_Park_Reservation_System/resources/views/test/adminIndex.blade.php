@@ -17,7 +17,7 @@
         <a href="{{route('test.adminAddParkingSpace')}}">Add Parking Space</a>
     </button>
     <button>
-        <a href="{{route('test.adminAllParkingData')}}">All Parking Data</a>
+        <a href="{{route('test.adminAllParkingLot')}}">All Parking Lot</a>
     </button>
     <?php
     use Carbon\Carbon;

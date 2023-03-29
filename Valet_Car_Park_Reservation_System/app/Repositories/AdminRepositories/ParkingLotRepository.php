@@ -9,25 +9,26 @@ use App\Repositories\Interfaces\AdminInterfaces\ParkingLotRepositoryInterface;
 class ParkingLotRepository implements ParkingLotRepositoryInterface
 {
 
-    public function allParkingLotId()
+    public function showAllParkingLot()
     {
-        // $all = DB::table('parking_lots')->leftjoin('parking_spaces','parking_lots.parking_lot_id','=','parking_spaces.parking_lot_id')
-        //                                 ->select()
-        //                                 ->get();
+        $allParkingLot = ParkingLot::all();
 
-        $all = parkingLot::all();
-        
-        return $all;
+        return $allParkingLot;
     }
 
-    public function showAvailableParkingLot()
-    {
-
-    }
-
-    public function storeParkingLotData($data)
+    public function storeParkingLot($data)
     {
         return ParkingLot::create($data);
+    }
+
+    public function updateParkingLotInformation($data,$parkingLotId)
+    {
+        return ParkingLot::where('parking_lot_id',$parkingLotId)->update($data);
+    }
+
+    public function deleteParkingLot($parkingLotId)
+    {
+        return ParkingLot::where('parking_lot_id',$parkingLotId)->delete();
     }
 }
 

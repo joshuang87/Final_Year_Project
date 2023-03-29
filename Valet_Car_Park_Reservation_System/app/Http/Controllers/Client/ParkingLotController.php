@@ -21,13 +21,13 @@ class ParkingLotController extends Controller
     
     public function showAvailable()
     {
-        $allParkingLotId = $this->parkingLot->allParkingLotId();
+        $allParkingLotId = $this->parkingLot->showAllParkingLot();
 
         return view('test.getClientParkingLot')->with('parkingLots',$allParkingLotId);
     }
 
     public function fetch(){
-        $all = $this->parkingLot->allParkingLotId();
+        $all = $this->parkingLot->showAllParkingLot();
 
         return $all;
     }
