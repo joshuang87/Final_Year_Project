@@ -5,13 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    @routes()
 </head>
 <body>
     <h1>Client Choice Time</h1>
 
-    <form action="{{route('test.storeAllData',[$parkingSpace[0]['parking_lot_id'],$parkingSpace[0]['parking_space_id']])}}" method="POST" enctype="multipart/form-data">
-        @csrf
-        @method("PATCH")
+    <form id="updateForm" method="POST" enctype="multipart/form-data">
+    @csrf
+    @method("PATCH")
         <label for="parking_lot_id">Current Parking Lot Code :</label>  
         <input type="text" name="parking_lot_id" id="parking_lot_id" value="{{$parkingSpace[0]['parking_lot_id']}}" disabled><br><br>
 
@@ -28,3 +29,26 @@
     </form>
 </body>
 </html>
+
+<script>
+    function getCurrentClientId(){
+        var url = window.location.href.toString()
+        var arrUrl = url.split("=")
+        var currentClientId = arrUrl[1].split("/")
+        
+
+        return currentClientId[0]
+    }
+
+    window.onload = function(){
+        const clientId = getCurrentClientId()
+        const parkingLotId = document.getElementById("parking_lot_id").value
+        const parkingSpaceId = document.getElementById("parking_space_id").value
+
+        var form = document.getElementById("updateForm")
+
+        form.action = route('test.storeAllData',[clientId,parkingLotId,parkingSpaceId])
+
+        console.log(route().params);
+    }
+</script>

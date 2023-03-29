@@ -50,9 +50,9 @@ Route::prefix('test')->group(function(){
     Route::patch('/home/allClient/client{client_id}/update',[ClientController::class,'update'])->name('test.updateClientInfor');
     Route::delete('/home/allClient/client{client_id}/delete',[ClientController::class,'destroy'])->name('test.deleteClientData');
     Route::get('/home/inforGetting/nowClient={client_id}/getParkingLot',[ClientParkingLotController::class,'showAvailable'])->name('test.showAvailableParkingLot');
-    Route::get('/home/inforGetting/parkL={parking_lot_id}/getParkS',[ClientController::class,'getParkLID'])->name('test.getParkingLotID');
-    Route::get('/home/inforGetting/parkL={parking_lot_id}/getParkS={parking_space_id}/getTime',[ClientController::class,'getParkSID'])->name('test.getParkingSpaceID');
-    Route::patch('/home/inforGetting/parkL={parking_lot_id}/getParkS={parking_space_id}/getTime/reserve',[ClientController::class,'storeAllData'])->name('test.storeAllData');
+    Route::get('/home/inforGetting/nowClient={client_id}/parkL={parking_lot_id}/getParkS',[ClientController::class,'getParkLID'])->name('test.getParkingLotID');
+    Route::get('/home/inforGetting/nowClient={client_id}/parkL={parking_lot_id}/getParkS={parking_space_id}/getTime',[ClientController::class,'getParkSID'])->name('test.getParkingSpaceID');
+    Route::patch('/home/inforGetting/nowClient={client_id}/parkL={parking_lot_id}/getParkS={parking_space_id}/getTime/reserve',[ClientController::class,'storeAllData'])->name('test.storeAllData');
 
     // admin
     Route::get('/admin/home',[AdminController::class,'index'])->name('test.adminHome');

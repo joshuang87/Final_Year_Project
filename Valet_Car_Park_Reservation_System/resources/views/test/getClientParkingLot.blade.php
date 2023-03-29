@@ -5,11 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Get Parking Lot</title>
+    @routes
 </head>
 <body>
     <h1>Client Choice Parking Lot</h1>
     @foreach ( $parkingLots as $parkingLot )
-    <a id="parkingLot" href="{{route('test.getParkingLotID',$parkingLot->parking_lot_id)}}">{{$parkingLot->parking_lot_id}}</a><br>    
+    <a id="parkingLot">{{$parkingLot->parking_lot_id}}</a><br>    
     @endforeach
 </body>
 </html>
@@ -24,10 +25,15 @@
         return currentClientId[0]
     }
 
-    const clientId = getCurrentClientId()
-    
+    window.onload = function(){
+        var links = document.getElementsByTagName("a")
+        const clientId = getCurrentClientId()
+        for (var i = 0; i < links.length; i++) {
+            var parkingLotId = links[i].innerText
+            links[i].href = route('test.getParkingLotID',[clientId,parkingLotId])
+            console.log(links[i]);
+        }
+    }
 
-    var parkingLotLink = "{{route('test.getParkingLotID',$parkingLot->parking_lot_id)}}"
-    console.log(parkingLotLink);
-    
+    console.log(route().current());
 </script>
