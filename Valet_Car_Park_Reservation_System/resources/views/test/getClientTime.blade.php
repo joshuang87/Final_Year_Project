@@ -5,12 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <!-- JQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     @routes()
 </head>
 <body>
     <h1>Client Choice Time</h1>
 
-    <form id="updateForm" method="POST" enctype="multipart/form-data">
+    <form id="updateForm" enctype="multipart/form-data">
     @csrf
     @method("PATCH")
         <label for="parking_lot_id">Current Parking Lot Code :</label>  
@@ -34,21 +36,19 @@
     function getCurrentClientId(){
         var url = window.location.href.toString()
         var arrUrl = url.split("=")
-        var currentClientId = arrUrl[1].split("/")
-        
+        var currentClientId = arrUrl[1].split("/")[0]
 
-        return currentClientId[0]
+        return currentClientId
     }
 
-    window.onload = function(){
+    $(function(){
         const clientId = getCurrentClientId()
-        const parkingLotId = document.getElementById("parking_lot_id").value
-        const parkingSpaceId = document.getElementById("parking_space_id").value
+        const parkingLotId = $("#parking_lot_id").val()
+        const parkingSpaceId = $("#parking_space_id").val()
 
-        var form = document.getElementById("updateForm")
-
-        form.action = route('test.storeAllData',[clientId,parkingLotId,parkingSpaceId])
-
-        console.log(route().params);
-    }
+        $("#updateForm").attr({
+            method: "POST",
+            action: route('test.storeAllData',[clientId,parkingLotId,parkingSpaceId])
+        })
+    })
 </script>

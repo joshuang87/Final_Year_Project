@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Parking Lot</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    @routes()
 </head>
 <body>
     <h1>All Parking Lot</h1>
@@ -19,15 +21,15 @@
         </tr>
         @foreach ($parkingLots as $parkingLot)
         <tr>
-            <td>{{ $parkingLot->parking_lot_id }}</td>
+            <td class="parking_lot_id">{{ $parkingLot->parking_lot_id }}</td>
             <td>{{ $parkingLot->open_time }}</td>
             <td>{{ $parkingLot->close_time }}</td>
             <td class="status">{{ $parkingLot->status }}</td>
             <td>{{ $parkingLot->comment }}</td>
             <td>
-                <a href="">Details</a>
-                <a href="">Edit</a>   
-                <a href="">Delete</a>    
+                <a class="details" href="">Details</a>
+                <a class="edit" href="">Edit</a>   
+                <a class="delete" href="{{route('test.adminDeleteParkingLot',$parkingLot->parking_lot_id)}}">Delete</a>    
             </td>
         @endforeach
     </table><br>
@@ -41,16 +43,27 @@
 </html>
 
 <script>
-    window.onload = function(){
-        var statusArr = document.getElementsByClassName("status")
+    $(function(){
+        var statusArr = $(".status")
         for(i = 0; i < statusArr.length; i++){
             var status = statusArr[i].innerText
             if(status == 1){
-                document.getElementsByClassName("status")[i].innerText= "Open"
+                $(".status")[i].innerText= "Open"
             }
             else{
-                document.getElementsByClassName("status")[i].innerText = "Closed"
+                $(".status")[i].innerText = "Closed"
             }
         }
-    }
+    })
+
+    // $(function(){
+    //     var parkingLotArr = $(".parking_lot_id")
+    //     for(i = 0; i < parkingLotArr.length; i++){
+    //         var parkingLotId = parkingLotArr[i].innerText
+    //         $(".delete").attr({
+    //             method: "POST",
+    //             href: route('test.adminDeleteParkingLot',[parkingLotId])
+    //         })
+    //     }
+    // })
 </script>

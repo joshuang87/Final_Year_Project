@@ -41,6 +41,6 @@ class ParkingLotController extends Controller
     {
         $this->parkingLot->deleteParkingLot($parkingLotId);
 
-        return redirect(route('test.adminAllParkingData'));
+        return redirect(route('test.adminAllParkingLot'));
     }
 }
