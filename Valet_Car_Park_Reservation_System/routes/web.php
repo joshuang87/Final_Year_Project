@@ -61,7 +61,10 @@ Route::prefix('test')->group(function(){
     Route::get('/admin/home/addParkingSpace',[ParkingSpaceController::class,'create'])->name('test.adminAddParkingSpace');
     Route::post('/admin/home/addParkingSpace/add',[ParkingSpaceController::class,'store'])->name('test.adminStoreParkingSpace');
     Route::get('/admin/home/allParkingLot',[ParkingLotController::class,'show'])->name('test.adminAllParkingLot');
-    Route::get('/admin/home/allParkingLot/delete={parking_lot_id}',[ParkingLotController::class,'destroy'])->name('test.adminDeleteParkingLot');
+    Route::delete('/admin/home/allParkingLot/delete={parking_lot_id}',[ParkingLotController::class,'destroy'])->name('test.adminDeleteParkingLot');
+    Route::get('/admin/home/allParkingLot/editParkingLot={parking_lot_id}',[ParkingLotController::class,'edit'])->name('test.adminEditParkingLot');
+    Route::patch('/admin/home/allParkingLot/editParkingLot={parking_lot_id}/update',[ParkingLotController::class,'update'])->name('test.adminUpdateParkingLot');
+    Route::get('/admin/home/allParkingLot/detail={parking_lot_id}',[ParkingLotController::class,'detail'])->name('test.adminParkingLotDetail');
 
     Route::get('/fetch/parkL',[ClientParkingLotController::class,'fetch']);
     Route::get('/fetch/parkS',[ClientParkingSpaceController::class,'fetch']);

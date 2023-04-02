@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\ParkingLot;
 use App\Repositories\Interfaces\AdminInterfaces\ParkingLotRepositoryInterface;
 
 class ParkingLotController extends Controller
@@ -18,12 +19,17 @@ class ParkingLotController extends Controller
 
     public function show()
     {
-        return view('test.adminAllParkingLot')->with('parkingLots',$this->parkingLot->showAllParkingLot());
+        return view('test.adminAllParkingLot')->with('parkingLots',$this->parkingLot->showParkingLot());
     }
 
     public function create()
     {
         return view('test.adminAddParkingLot');
+    }
+
+    public function edit($parkingLotId)
+    {
+        return view('test.adminParkingLotEdit')->with('parkingLot',$this->parkingLot->showParkingLot($parkingLotId));
     }
 
     public function store(Request $request)
@@ -42,5 +48,40 @@ class ParkingLotController extends Controller
         $this->parkingLot->deleteParkingLot($parkingLotId);
 
         return redirect(route('test.adminAllParkingLot'));
+    }
+
+    public function update(Request $request,$parkingLotId)
+    {
+        $oldData = ParkingLot::where('parking_lot_id',$parkingLotId)->first();
+
+        if($request->comment === null)
+        {
+            $errors = "NOT COMMENT";
+            return $errors;
+        }
+        elseif($request->has('comment') && $oldData->parking_lot_id == $request->parking_lot_id && $oldData->status == $request->status && $oldData->open_time == $request->open_time && $oldData->close_time == $request->close_time)
+        {
+            dd("UNNECESSARY COMMENT");
+        }
+        else
+        {
+            $data = $request->validate([
+                'comment' => 'required|string',
+                'parking_lot_id' => 'required|string',
+                'status' => 'required',
+                'open_time' => 'required',
+                'close_time' => 'required'
+    
+            ]);
+
+            $this->parkingLot->updateParkingLotInformation($data,$parkingLotId);
+        }   
+            
+        return redirect(route('test.adminAllParkingLot'));
+    }
+
+    public function detail($parkingLotId)
+    {
+        return view('test.adminParkingLotDetail')->with('parkingLot',$this->parkingLot->showParkingLot($parkingLotId));
     }
 }

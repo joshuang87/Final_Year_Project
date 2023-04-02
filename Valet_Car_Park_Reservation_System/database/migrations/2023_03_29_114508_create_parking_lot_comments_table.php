@@ -12,8 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('parking_lot_comments', function (Blueprint $table) {
-            $table->id();
+            $table->id('comment_id');
+            $table->longText("content");
             $table->timestamps();
+            $table->string('parking_lot_id');
+            $table->foreign('parking_lot_id')->references('parking_lot_id')->on('parking_lots')->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 

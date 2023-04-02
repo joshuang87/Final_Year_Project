@@ -25,10 +25,10 @@
             <td>{{ $parkingLot->open_time }}</td>
             <td>{{ $parkingLot->close_time }}</td>
             <td class="status">{{ $parkingLot->status }}</td>
-            <td>{{ $parkingLot->comment }}</td>
+            <td>{{ $parkingLot->content }}</td>
             <td>
-                <a class="details" href="">Details</a>
-                <a class="edit" href="">Edit</a>   
+                <a class="details" href="{{route('test.adminParkingLotDetail',$parkingLot->parking_lot_id)}}">Details</a>
+                <a class="edit" href="{{route('test.adminEditParkingLot',$parkingLot->parking_lot_id)}}">Edit</a>   
                 <a class="delete" href="{{route('test.adminDeleteParkingLot',$parkingLot->parking_lot_id)}}">Delete</a>    
             </td>
         @endforeach
