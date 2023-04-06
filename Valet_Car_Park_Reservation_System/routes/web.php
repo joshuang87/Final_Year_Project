@@ -68,5 +68,10 @@ Route::prefix('test')->group(function(){
 
     Route::get('/fetch/parkL',[ClientParkingLotController::class,'fetch']);
     Route::get('/fetch/parkS',[ClientParkingSpaceController::class,'fetch']);
+
+    // Vue Test
+    Route::get('/vue',function(){
+        return view('vueTest.home');
+    });
     
 });

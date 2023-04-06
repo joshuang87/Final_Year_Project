@@ -31,6 +31,7 @@
                 <a class="edit" href="{{route('test.adminEditParkingLot',$parkingLot->parking_lot_id)}}">Edit</a>   
                 <a class="delete" href="{{route('test.adminDeleteParkingLot',$parkingLot->parking_lot_id)}}">Delete</a>    
             </td>
+        </tr>
         @endforeach
     </table><br>
     <button>
