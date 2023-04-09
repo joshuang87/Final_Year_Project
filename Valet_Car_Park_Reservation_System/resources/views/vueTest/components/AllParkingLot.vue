@@ -43,15 +43,14 @@ import axios from 'axios';
             // const res = await axios.get('/test/fetch/parkL')
 
             // const parkingLotDataList = res.data
-            console.log(res);
+            // console.log(res);
 
             // return parkingLotDataList
-            // return res
+            return res
         }
         catch(err) {
             console.log(err);
         }
-        
     }
 
     export default {
