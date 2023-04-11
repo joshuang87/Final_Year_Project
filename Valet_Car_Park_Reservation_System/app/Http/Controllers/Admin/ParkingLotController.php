@@ -19,7 +19,7 @@ class ParkingLotController extends Controller
 
     public function show()
     {
-        return view('test.adminAllParkingLot')->with('parkingLots',$this->parkingLot->showParkingLot());
+        return view('test.adminAllParkingLot')->with('parkingLots',$this->parkingLot->showParkingLots());
     }
 
     public function create()
@@ -29,7 +29,7 @@ class ParkingLotController extends Controller
 
     public function edit($parkingLotId)
     {
-        return view('test.adminParkingLotEdit')->with('parkingLot',$this->parkingLot->showParkingLot($parkingLotId));
+        return view('test.adminParkingLotEdit')->with('parkingLot',$this->parkingLot->showParkingLots($parkingLotId));
     }
 
     public function store(Request $request)
@@ -82,6 +82,6 @@ class ParkingLotController extends Controller
 
     public function detail($parkingLotId)
     {
-        return view('test.adminParkingLotDetail')->with('parkingLot',$this->parkingLot->showParkingLot($parkingLotId));
+        return view('test.adminParkingLotDetail')->with('parkingLot',$this->parkingLot->showParkingLots($parkingLotId));
     }
 }

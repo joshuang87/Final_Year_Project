@@ -1,5 +1,7 @@
 <template>
-    <h1>All Parking Lot</h1>
+    <div>
+        <h1>Parking Lot data</h1>
+    </div>
     <table border="1">
         <tr>
             <th>Parking Lot ID</th>
@@ -17,7 +19,7 @@
             <td class="status">{{parkingLot.status}}</td>
             <td>{{parkingLot.content}}</td>
             <td>
-                <a class="details" href="">Details</a>
+                <RouterLink :to="'parkingLots/'+parkingLot.parking_lot_id+'/details'">Details</RouterLink>
                 <a class="edit" href="">Edit</a>   
                 <a class="delete" href="">Delete</a>    
             </td>
@@ -36,7 +38,7 @@ import axios from 'axios';
 
     const getAllParkingLot = async()=>{
         try {
-            const response = await axios.get('/test/fetch/parkL')
+            const response = await axios.get('/api/allParkingLotsData')
             const data = response.data
 
             return data

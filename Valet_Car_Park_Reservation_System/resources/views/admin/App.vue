@@ -8,9 +8,13 @@
         <h1>Admin Dashboard</h1>
     </div>
     <div>
-        <!-- <router-link> tag is <a> tag -->
-        <router-link to="/">Back To Home</router-link>
-        <router-link to="/allParkingLot">All Parking Lot</router-link>
+        <!-- <RouterLink> tag is <a> tag -->
+        <RouterLink to="/">Back To Home</RouterLink>
+        <RouterLink to="/parkingLots">Parking Lots</RouterLink>
+        <RouterLink to="/parkingSpaces">Parking Spaces</RouterLink>
+        <RouterLink to="/customers">Customers</RouterLink>
+        <RouterLink to="/users">Users</RouterLink>
+        <RouterLink to="/Users">Users</RouterLink>
     </div>
 
     <RouterView v-slot="{ Component }">
@@ -28,7 +32,6 @@
             </KeepAlive>
         </template>
     </RouterView>
-
 </template>
 
 <style scoped>

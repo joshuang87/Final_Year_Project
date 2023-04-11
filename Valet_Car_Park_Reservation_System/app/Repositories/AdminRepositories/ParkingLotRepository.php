@@ -11,7 +11,7 @@ use App\Repositories\Interfaces\AdminInterfaces\ParkingLotRepositoryInterface;
 class ParkingLotRepository implements ParkingLotRepositoryInterface
 {
 
-    public function showParkingLot($parkingLotId = null)
+    public function showParkingLots($parkingLotId = null)
     {
         if($parkingLotId) // For Specific Parking Lot
         {
@@ -48,7 +48,6 @@ class ParkingLotRepository implements ParkingLotRepositoryInterface
                                 ->get();
 
             return $parkingLotData;
-            // dd($parkingLotData);
         }
     }
 

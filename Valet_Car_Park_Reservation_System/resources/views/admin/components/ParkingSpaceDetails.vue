@@ -1,5 +1,5 @@
 <template>
     <div>
-        <h1>About Page</h1>
+        <h1>Parking Space Details</h1>
     </div>
 </template>

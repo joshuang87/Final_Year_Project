@@ -20,7 +20,7 @@ class ParkingSpaceController extends Controller
     public function create()
     {
         return view('test.adminAddParkingSpace',[
-            'parkingLots' => $this->parkingLot->showParkingLot()
+            'parkingLots' => $this->parkingLot->showParkingLots()
         ]);
     }
 
@@ -39,7 +39,7 @@ class ParkingSpaceController extends Controller
     public function show()
     {
         return view('test.adminAllParkingData',[
-            'parkingSpaces' => $this->parkingLot->showParkingLot()
+            'parkingSpaces' => $this->parkingLot->showParkingLots()
         ]);
     }
 }
