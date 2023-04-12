@@ -1,9 +1,9 @@
 // Import Vue Router
-import { createRouter,createWebHashHistory,createWebHistory } from 'vue-router'
+import { createRouter,createWebHistory } from 'vue-router'
 
 // Define A Router Object
 const router = createRouter({
-    history: createWebHashHistory(),
+    history: createWebHistory('/admin/home'),
     routes: [
         {
             path: '/',
@@ -13,14 +13,12 @@ const router = createRouter({
         {
             path: '/parkingLots',
             name: 'parkingLots',
-            component: ()=> import('../views/admin/components/ParkingLots.vue'),
-            children: [
-                {
-                    path: '/details',
-                    name: 'parkingLotDetails',
-                    component: ()=> import('../views/admin/components/ParkingLotDetails.vue')
-                }
-            ]
+            component: ()=> import('../views/admin/components/ParkingLots.vue')
+        },
+        {
+            path: '/parkingLot/:parkingLotId/details',
+            name: 'parkingLotDetails',
+            component: ()=> import('../views/admin/components/ParkingLotDetails.vue')
         },
         {
             path: '/parkingSpaces',

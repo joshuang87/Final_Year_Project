@@ -19,7 +19,7 @@
             <td class="status">{{parkingLot.status}}</td>
             <td>{{parkingLot.content}}</td>
             <td>
-                <RouterLink :to="'parkingLots/'+parkingLot.parking_lot_id+'/details'">Details</RouterLink>
+                <RouterLink :to="`/parkingLot/${parkingLot.parking_lot_id}/details`">Details</RouterLink>
                 <a class="edit" href="">Edit</a>   
                 <a class="delete" href="">Delete</a>    
             </td>

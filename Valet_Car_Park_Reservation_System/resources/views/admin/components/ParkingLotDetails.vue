@@ -26,3 +26,20 @@
         
     </h4>
 </template>
+
+<script>
+
+    const getParkingLotDetails = async()=>{
+        try {
+            const response = await axios.get('/api/'+parkingLotId+'/details')
+            const dataList = response.data
+        }
+        catch(error) {
+            console.log(error);
+        }
+    }
+
+    export default {
+
+    }
+</script>
