@@ -16,7 +16,7 @@ const router = createRouter({
             component: ()=> import('../views/admin/components/ParkingLots.vue'),
             children: [
                 {
-                    path: '/:parkingLotId/details',
+                    path: '/details',
                     name: 'parkingLotDetails',
                     component: ()=> import('../views/admin/components/ParkingLotDetails.vue')
                 }

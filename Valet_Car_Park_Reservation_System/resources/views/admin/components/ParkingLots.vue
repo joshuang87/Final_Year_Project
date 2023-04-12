@@ -38,7 +38,7 @@ import axios from 'axios';
 
     const getAllParkingLot = async()=>{
         try {
-            const response = await axios.get('/api/allParkingLotsData')
+            const response = await axios.get('/api/parkingLot/allData')
             const data = response.data
 
             return data
@@ -49,6 +49,7 @@ import axios from 'axios';
     }
 
     export default {
+        name: 'parkingLots',
         async setup() {
             const parkingLotDataList = await getAllParkingLot()
 
@@ -56,37 +57,26 @@ import axios from 'axios';
                 parkingLotDataList
             }
         },
-        mounted() {
+        // data() {
+        //     const route = useRoute()
+        //     const router = useRouter()
 
-            // async function(){
-            //     await axios.get('/test/fetch/parkL').then((response)=>{
-            //     this.parkingLotDataList = response.data
-            // }).catch((error)=>{
-            //     console.log(error);
-            // })
-            // }
-            // axios.get('/test/fetch/parkL').then((response)=>{
-            //     this.parkingLotDataList = response.data
-            // }).catch((error)=>{
-            //     console.log(error);
-            // })
+        //     return {
+        //         route,
+        //         router
+        //     }
+        // },
+        mounted() {
             console.log('Mounted');
-            
         },
         beforeCreate() {
             console.log('Before Create');
         },
         created() {
-            // axios.get('/test/fetch/parkL').then((response)=>{
-            //     this.parkingLotDataList = response.data
-            //     console.log(this.parkingLotDataList);
-            // }).catch((error)=>{
-            //     console.log(error);
-            // })
             console.log('Created');
         },
         beforeMount() {
-            console.log('Defore Mount');
+            console.log('Before Mount');
         },
         beforeUnmount() {
             console.log('Before Unmount');

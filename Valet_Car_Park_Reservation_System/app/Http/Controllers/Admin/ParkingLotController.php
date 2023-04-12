@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\ParkingLot;
 use App\Repositories\Interfaces\AdminInterfaces\ParkingLotRepositoryInterface;
 
 class ParkingLotController extends Controller
@@ -34,11 +33,7 @@ class ParkingLotController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'parking_lot_id' => 'required|string|max:255'
-        ]);
-
-        $this->parkingLot->storeParkingLot($data);
+        $this->parkingLot->storeParkingLot($request);
 
         return redirect(route('test.adminHome'));
     }
@@ -52,30 +47,7 @@ class ParkingLotController extends Controller
 
     public function update(Request $request,$parkingLotId)
     {
-        $oldData = ParkingLot::where('parking_lot_id',$parkingLotId)->first();
-
-        if($request->comment === null)
-        {
-            $errors = "NOT COMMENT";
-            return $errors;
-        }
-        elseif($request->has('comment') && $oldData->parking_lot_id == $request->parking_lot_id && $oldData->status == $request->status && $oldData->open_time == $request->open_time && $oldData->close_time == $request->close_time)
-        {
-            dd("UNNECESSARY COMMENT");
-        }
-        else
-        {
-            $data = $request->validate([
-                'comment' => 'required|string',
-                'parking_lot_id' => 'required|string',
-                'status' => 'required',
-                'open_time' => 'required',
-                'close_time' => 'required'
-    
-            ]);
-
-            $this->parkingLot->updateParkingLotInformation($data,$parkingLotId);
-        }   
+        $this->parkingLot->updateParkingLotInformation($request,$parkingLotId);
             
         return redirect(route('test.adminAllParkingLot'));
     }

@@ -4,7 +4,9 @@ namespace App\Repositories\Interfaces\AdminInterfaces;
 
 interface ParkingLotRepositoryInterface
 {
-    public function showParkingLots($parkingLotId = null);
+    public function showParkingLots();
+
+    public function showParkingLotDetails($parkingLotId);
 
     public function storeParkingLot($data);
 
