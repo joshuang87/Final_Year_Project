@@ -19,7 +19,7 @@
 
     <RouterView v-slot="{ Component }">
         <template v-if="Component">
-            <KeepAlive>
+            <KeepAlive exclude="parkingLotDetails,parkingLotEdit">
                 <Suspense>
                 <!-- 主要内容 -->
                 <component :is="Component"></component>

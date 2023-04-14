@@ -28,7 +28,7 @@ class ParkingLotController extends Controller
 
     public function edit($parkingLotId)
     {
-        return view('test.adminParkingLotEdit')->with('parkingLot',$this->parkingLot->showParkingLots($parkingLotId));
+        return view('test.adminParkingLotEdit')->with('parkingLot',$this->parkingLot->showParkingLotDetails($parkingLotId));
     }
 
     public function store(Request $request)

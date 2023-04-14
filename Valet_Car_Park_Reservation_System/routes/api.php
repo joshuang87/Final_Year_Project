@@ -23,6 +23,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('parkingLot')->group(function(){
     Route::get('/allData',[ParkingLotRepository::class,'showParkingLots'])->name('api.showParkingLots');
     Route::get('/{parkingLotId}/details',[ParkingLotRepository::class,'showParkingLotDetails'])->name('api.showParkingLotDetails');
+    Route::delete('/{parkingLotId}/delete',[ParkingLotRepository::class,'deleteParkingLot'])->name('api.deleteParkingLot');
+    Route::patch('/{parkingLotId}/update',[ParkingLotRepository::class,'updateParkingLotInformation'])->name('api.updateParkingLotInformation');
 });
 
 Route::prefix('parkingSpace')->group(function(){
