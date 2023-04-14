@@ -1,16 +1,16 @@
 <template>
     <h1>Parking Lot Data Edit</h1>
 
-    
+
         <label for="parking_lot_id">Parking Lot ID : </label>
         <input type="text" name="parking_lot_id" id="parking_lot_id" v-model="dataForm.parking_lot_id">{{ dataForm.parking_lot_id }}
         <br>
         <label for="status">Status : </label>
         <select name="status" id="status" v-model="dataForm.status">
-            <option id="option1" value="1" v-if="dataForm.status == 1" selected>Open</option>
-            <option id="option1" value="0" v-else selected>Closed</option>
-            <option id="option2" value="0"  v-if="dataForm.status == 1">Closed</option>
-            <option id="option2" value="1" v-else>Open</option>
+            <option id="option1" value= 1 v-if="dataForm.status == 1" selected>Open</option>
+            <option id="option1" value= 0 v-else selected>Closed</option>
+            <option id="option2" value= 0 v-if="dataForm.status == 1">Closed</option>
+            <option id="option2" value= 1 v-else>Open</option>
         </select>
         <br>
         <label for="comment">Comment : </label>
@@ -24,7 +24,7 @@
         <br>
         <button @click="updateData(dataForm.parking_lot_id)">Update</button>
         {{ dataForm }}
-    
+
 </template>
 
 <script>
@@ -85,9 +85,15 @@
                     close_time: this.dataForm.close_time,
                     content: this.dataForm.content
                 }
-                console.log(data);
+                // console.log(data);
                 try {
-                    await axios.patch('/api/parkingLot/'+parkingLotId+'/update')
+                    await axios.post('/api/parkingLot/'+parkingLotId+'/update',{
+                        data: data,
+                        _method: 'patch'
+                    })
+                    .then((response)=>{
+                        console.log(response);
+                    })
                 }
                 catch(error) {
                     console.log(error);

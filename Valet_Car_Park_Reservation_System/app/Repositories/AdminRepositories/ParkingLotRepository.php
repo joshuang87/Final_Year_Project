@@ -3,6 +3,7 @@
 namespace App\Repositories\AdminRepositories;
 
 use App\Models\ParkingLot;
+use Illuminate\Http\Request;
 use App\Models\ParkingLotComment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Query\JoinClause;
@@ -58,7 +59,7 @@ class ParkingLotRepository implements ParkingLotRepositoryInterface
         return ParkingLot::create($data);
     }
 
-    public function updateParkingLotInformation($data,$parkingLotId)
+    public function updateParkingLotInformation(Request $data,$parkingLotId)
     {
         $oldData = ParkingLot::where('parking_lot_id',$parkingLotId)->first();
 

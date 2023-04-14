@@ -20,7 +20,7 @@
         </div>
     @endif
 
-    <form action="{{route('test.adminUpdateParkingLot',$parkingLot[0][0]->parking_lot_id)}}" method="POST">
+    <form action="{{route('api.updateParkingLotInformation',$parkingLot[0][0]->parking_lot_id)}}" method="POST">
         @csrf
         @method("PATCH")
         <label for="parking_lot_id">Parking Lot ID : </label>
