@@ -1,9 +1,13 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Client\ReserveController;
 use App\Repositories\AdminRepositories\ParkingLotRepository;
 use App\Repositories\AdminRepositories\ParkingSpaceRepository;
+use App\Repositories\AdminRepositories\ParkingLotCommentRepository;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,4 +34,32 @@ Route::prefix('parkingLot')->group(function(){
 Route::prefix('parkingSpace')->group(function(){
     Route::get('/allData',[ParkingSpaceRepository::class,'showParkingSpaces'])->name('api.showParkingSpaces');
     Route::get('/{parkingSpaceId}/details',[ParkingLotRepository::class,'showParkingSpaceDetails'])->name('api.showParkingSpaceDetails');
+});
+
+Route::prefix('comments')->group(function(){
+    Route::get('/allComments',[ParkingLotCommentRepository::class,'showAllComments'])->name('api.showAllComments');
+});
+
+Route::prefix('reserve')->group(function(){
+    Route::post('/payment',[ReserveController::class,'payment'])->name('api.makePayment');
+    Route::get('/payment/success',[ReserveController::class,'success'])->name('api.paymentSuccess');
+});
+
+Route::get('userData',function(){
+    dd(User::all());    
+});
+
+Route::post('checkLogin',function(Request $request){
+    
+    $data = $request->validate([
+        'name' => ['required'],
+        'password' => ['required']
+    ]);
+
+    if(Auth::attempt($data)) {
+        return 'SUCCESS';
+    }
+    else {
+        return 'ERROR';
+    }
 });

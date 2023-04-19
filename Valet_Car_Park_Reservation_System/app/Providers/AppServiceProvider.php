@@ -28,6 +28,8 @@ class AppServiceProvider extends ServiceProvider
 
         // Admin
         $this->app->bind(ParkingLotRepositoryInterface::class,ParkingLotRepository::class);
+        $this->app->bind(ParkingLotCommentRepositoryInterface::class,ParkingLotCommentRepository::class);
+        
         $this->app->bind(ParkingSpaceRepositoryInterface::class,ParkingSpaceRepository::class);
     }
 

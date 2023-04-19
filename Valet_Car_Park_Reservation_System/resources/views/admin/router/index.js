@@ -8,22 +8,37 @@ const router = createRouter({
         {
             path: '/',
             name: 'adminHome',
-            component: ()=> import('../views/admin/components/Home.vue')
+            redirect: '/dashboard'
+        },
+        {
+            path: '/:pathMatch(.*)*',
+            name: 'pageNotFound',
+            component: ()=> import('../pages/404.vue')
+        },
+        {
+            path: '/login',
+            name: 'Login',
+            component: ()=> import('../pages/Login.vue')
+        },
+        {
+            path: '/dashboard',
+            name: 'adminDashboard',
+            component: ()=> import('../pages/Home.vue')
         },
         {
             path: '/parkingLots',
             name: 'parkingLots',
-            component: ()=> import('../views/admin/components/ParkingLots.vue')
+            component: ()=> import('../pages/ParkingLots.vue')
         },
         {
             path: '/parkingLot/:parkingLotId/details',
             name: 'parkingLotDetails',
-            component: ()=> import('../views/admin/components/ParkingLotDetails.vue')
+            component: ()=> import('../pages/ParkingLotDetails.vue')
         },
         {
             path: '/parkingLot/:parkingLotId/edit',
             name: 'parkingLotEdit',
-            component: ()=> import('../views/admin/components/ParkingLotEdit.vue')
+            component: ()=> import('../pages/ParkingLotEdit.vue')
         },
         {
             path: '/parkingLot/:parkingLotId/delete',
@@ -32,22 +47,22 @@ const router = createRouter({
         {
             path: '/parkingSpaces',
             name: 'parkingSpaces',
-            component: ()=> import('../views/admin/components/ParkingSpaces.vue'),
+            component: ()=> import('../pages/ParkingSpaces.vue'),
         },
         {
             path: '/parkingSpace/:parkingSpaceId/details',
             name: 'parkingSpaceDetails',
-            component: ()=> import('../views/admin/components/ParkingSpaceDetails.vue')
+            component: ()=> import('../pages/ParkingSpaceDetails.vue')
         },
         {
             path: '/users',
             name: 'users',
-            component: ()=> import('../views/admin/components/Users.vue')
+            component: ()=> import('../pages/Users.vue')
         },
         {
             path: '/customers',
             name: 'customers',
-            component: ()=> import('../views/admin/components/Customers.vue')
+            component: ()=> import('../pages/Customers.vue')
         },
     ]
 })

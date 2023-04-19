@@ -59,7 +59,7 @@ class ParkingLotRepository implements ParkingLotRepositoryInterface
         return ParkingLot::create($data);
     }
 
-    public function updateParkingLotInformation(Request $data,$parkingLotId)
+    public function updateParkingLotInformation($parkingLotId,Request $data)
     {
         $oldData = ParkingLot::where('parking_lot_id',$parkingLotId)->first();
 

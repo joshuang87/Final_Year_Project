@@ -1,9 +1,9 @@
 <template>
     <h1>Parking Lot Data Edit</h1>
 
-
+    <form @submit.prevent="updateData" novalidate>
         <label for="parking_lot_id">Parking Lot ID : </label>
-        <input type="text" name="parking_lot_id" id="parking_lot_id" v-model="dataForm.parking_lot_id">{{ dataForm.parking_lot_id }}
+        <input type="text" name="parking_lot_id" id="parking_lot_id" v-model="dataForm.parking_lot_id">
         <br>
         <label for="status">Status : </label>
         <select name="status" id="status" v-model="dataForm.status">
@@ -14,7 +14,7 @@
         </select>
         <br>
         <label for="comment">Comment : </label>
-        <textarea name="comment" id="comment" cols="30" rows="10" placeholder="Make Some Comment Before Update The ." v-model="dataForm.content"></textarea>
+        <textarea name="comment" id="comment" cols="30" rows="10" placeholder="Make Some Comment Before Update The ." v-model="dataForm.comment"></textarea>
         <br>
         <label for="open_time">Open Time : </label>
         <input type="time" name="open_time" id="open_time" step="1" v-model="dataForm.open_time">
@@ -22,14 +22,13 @@
         <label for="close_time">Close Time : </label>
         <input type="time" name="close_time" id="close-time" step="1" v-model="dataForm.close_time">
         <br>
-        <button @click="updateData(dataForm.parking_lot_id)">Update</button>
-        {{ dataForm }}
-
+        <button type="submit">Update</button>
+    </form>
 </template>
 
 <script>
-    import { useRoute } from 'vue-router'
-    import { ref,reactive } from 'vue'
+    import { useRoute,useRouter } from 'vue-router'
+    import { ref } from 'vue'
     import axios from 'axios'
 
     const getSpecificParkingLotData = async(parkingLotId)=>{
@@ -50,6 +49,7 @@
         async setup() {
 
             const route = useRoute()
+            const router = useRouter()
             const parkingLotId = route.params.parkingLotId
 
             const specificParkingLotData = await getSpecificParkingLotData(parkingLotId)
@@ -59,53 +59,32 @@
                 status: specificParkingLotData.status,
                 open_time: specificParkingLotData.open_time,
                 close_time: specificParkingLotData.close_time,
-                content: ''
+                comment: ''
             })
-
-            // dataForm.value = specificParkingLotData
-            // console.log(dataForm.value);
-            // console.log(dataForm);
-            console.log(dataForm.value);
-
-            // const showData = ()=>{
-            //     console.log(dataForm.value);
-            // }
 
             return {
                 dataForm,
-                // showData
+                router
             }
         },
+        beforeRouteEnter(to,from,next) {
+            console.log(to,from)
+            next()
+        },
         methods: {
-            async updateData(parkingLotId){
-                const data = {
-                    parking_lot_id: this.dataForm.parking_lot_id,
-                    status:  this.dataForm.status,
-                    open_time: this.dataForm.open_time,
-                    close_time: this.dataForm.close_time,
-                    content: this.dataForm.content
-                }
-                // console.log(data);
+            async updateData(){
                 try {
-                    await axios.post('/api/parkingLot/'+parkingLotId+'/update',{
-                        data: data,
-                        _method: 'patch'
-                    })
+                    await axios.patch(`/api/parkingLot/${this.dataForm.parking_lot_id}/update`,this.dataForm)
                     .then((response)=>{
-                        console.log(response);
+                        console.log(response.data);
+                        
+                        this.router.push('/parkingLots')
                     })
                 }
                 catch(error) {
                     console.log(error);
                 }
-            },
-            // showData(id){
-            //     console.log(id);
-            // }
-        },
-        mounted() {
-            // this.updateData()
-            // this.showData()
+            }
         }
     }
 </script>

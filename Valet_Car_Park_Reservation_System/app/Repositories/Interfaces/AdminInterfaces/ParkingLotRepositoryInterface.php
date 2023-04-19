@@ -12,7 +12,7 @@ interface ParkingLotRepositoryInterface
 
     public function storeParkingLot($data);
 
-    public function updateParkingLotInformation(Request $request,$parkingLotId);
+    public function updateParkingLotInformation($parkingLotId,Request $request);
 
     public function deleteParkingLot($parkingLotId);
 }
