@@ -60,6 +60,6 @@ Route::post('checkLogin',function(Request $request){
         return 'SUCCESS';
     }
     else {
-        return 'ERROR';
+        return response('Username or password incorrect',401);
     }
 });
