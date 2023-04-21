@@ -18,9 +18,13 @@
     },
     "dependencies": {
         "@element-plus/icons-vue": "^2.1.0",
+        "@vueuse/integrations": "^10.0.2",
         "animate.css": "^4.1.1",
         "element-plus": "^2.3.3",
+        "nprogress": "^0.2.0",
+        "universal-cookie": "^4.0.4",
         "vue-axios": "^3.5.2",
-        "vue-router": "^4.1.6"
+        "vue-router": "^4.1.6",
+        "vuex": "^4.0.2"
     }
 }

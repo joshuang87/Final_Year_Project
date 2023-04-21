@@ -2,11 +2,11 @@
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Client\ReserveController;
 use App\Repositories\AdminRepositories\ParkingLotRepository;
 use App\Repositories\AdminRepositories\ParkingSpaceRepository;
+use App\Repositories\AdminRepositories\AuthenticationRepository;
 use App\Repositories\AdminRepositories\ParkingLotCommentRepository;
 
 /*
@@ -49,17 +49,6 @@ Route::get('userData',function(){
     dd(User::all());    
 });
 
-Route::post('checkLogin',function(Request $request){
-    
-    $data = $request->validate([
-        'name' => ['required'],
-        'password' => ['required']
-    ]);
-
-    if(Auth::attempt($data)) {
-        return 'SUCCESS';
-    }
-    else {
-        return response('Username or password incorrect',401);
-    }
-});
+Route::post('checkUser',[AuthenticationRepository::class,'checkUser'])->name('api.checkUser');
+Route::get('getInfo',[AuthenticationRepository::class,'getInfo'])->middleware('auth:sanctum')->name('api.getInfo');
+Route::post('logout',[AuthenticationRepository::class,'logout'])->middleware('auth:sanctum')->name('api.logout');

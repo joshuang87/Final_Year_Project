@@ -5,12 +5,14 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
+import path from 'path'
+
 export default defineConfig({
     plugins: [
         laravel({
             input: [
                 'resources/sass/app.scss',
-                'resources/js/app.js',
+                'resources/views/admin/main.js',
             ],
             refresh: true,
         }),
@@ -32,6 +34,7 @@ export default defineConfig({
     resolve: {
         alias: {
             vue: 'vue/dist/vue.esm-bundler.js',
+            '$': path.resolve(__dirname,'resources/views/admin')
         },
     },
 });

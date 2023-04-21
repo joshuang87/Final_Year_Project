@@ -13,17 +13,32 @@ const router = createRouter({
         {
             path: '/:pathMatch(.*)*',
             name: 'pageNotFound',
-            component: ()=> import('../pages/404.vue')
+            component: ()=> import('../pages/404.vue'),
+            meta: {
+                title: '404 Page Not Found'
+            }
         },
         {
             path: '/login',
             name: 'Login',
-            component: ()=> import('../pages/Login.vue')
+            component: ()=> import('../pages/Login.vue'),
+            meta: {
+                title: 'Login'
+            }
         },
         {
             path: '/dashboard',
-            name: 'adminDashboard',
-            component: ()=> import('../pages/Home.vue')
+            name: 'dashboard',
+            component: ()=> import('$/layouts/Admin.vue'),
+            // Child Route
+            children: [{
+                path: '/dashboard',
+                component: ()=> import('../pages/Index.vue'),
+                meta: {
+                    title: 'Dashboard'
+                }
+            }]
+            
         },
         {
             path: '/parkingLots',
