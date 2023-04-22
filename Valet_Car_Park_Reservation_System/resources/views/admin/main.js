@@ -3,12 +3,17 @@ import { createApp } from 'vue';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-import 'element-plus/dist/index.css'
 import store from '$/store'
 import AdminRouter from '$/router'
 import AdminApp from '$/App.vue'
 import '$/permission'
+// CSS Import
+import 'element-plus/theme-chalk/index.css'
+import 'element-plus/dist/index.css'
 import 'nprogress/nprogress.css'
+import 'animate.css'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap/dist/js/bootstrap.min.js'
 
 const adminApp = createApp(AdminApp);
 

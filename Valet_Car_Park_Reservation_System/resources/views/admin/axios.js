@@ -1,6 +1,7 @@
 import axios from "axios"
 import { getToken } from "$/modules/auth"
 import { notification } from "$/modules/util"
+import store from './store'
 
 const service =  axios.create()
 
@@ -25,6 +26,12 @@ service.interceptors.response.use(function (response) {
     return response.data
   },
   function (error) {
+
+    const message = error.response.data
+
+    // if(message == '') {
+
+    // }
     // Display Error Notification
     notification('Error',error.response.data,'error')
 

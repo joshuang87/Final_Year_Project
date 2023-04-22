@@ -34,6 +34,7 @@ class AppServiceProvider extends ServiceProvider
         
         $this->app->bind(ParkingSpaceRepositoryInterface::class,ParkingSpaceRepository::class);
         $this->app->bind(AuthenticationRepositoryInterface::class,AuthenticationRepository::class);
+        $this->app->bind(ReservationRepositoryInterface::class,ReservationRepository::class);
     }
 
     /**

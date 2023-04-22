@@ -8,6 +8,7 @@ use App\Repositories\AdminRepositories\ParkingLotRepository;
 use App\Repositories\AdminRepositories\ParkingSpaceRepository;
 use App\Repositories\AdminRepositories\AuthenticationRepository;
 use App\Repositories\AdminRepositories\ParkingLotCommentRepository;
+use App\Repositories\AdminRepositories\ReservationRepository;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,16 @@ use App\Repositories\AdminRepositories\ParkingLotCommentRepository;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::prefix('admin')->group(function(){
+    // Auth
+    Route::post('/checkUser',[AuthenticationRepository::class,'checkUser'])->name('api.checkUser');
+    Route::get('/getInfo',[AuthenticationRepository::class,'getInfo'])->middleware('auth:sanctum')->name('api.getInfo');
+    Route::post('/logout',[AuthenticationRepository::class,'logout'])->middleware('auth:sanctum')->name('api.logout');
+    Route::post('/updatePassword',[AuthenticationRepository::class,'updatePassword'])->middleware('auth:sanctum')->name('api.updatePassword');
+    // Get Data
+    Route::get('/getTotalReservation',[ReservationRepository::class,'getTotalReservation'])->middleware('auth:sanctum')->name('api.getTotalReservation');
 });
 
 Route::prefix('parkingLot')->group(function(){
@@ -44,11 +55,3 @@ Route::prefix('reserve')->group(function(){
     Route::post('/payment',[ReserveController::class,'payment'])->name('api.makePayment');
     Route::get('/payment/success',[ReserveController::class,'success'])->name('api.paymentSuccess');
 });
-
-Route::get('userData',function(){
-    dd(User::all());    
-});
-
-Route::post('checkUser',[AuthenticationRepository::class,'checkUser'])->name('api.checkUser');
-Route::get('getInfo',[AuthenticationRepository::class,'getInfo'])->middleware('auth:sanctum')->name('api.getInfo');
-Route::post('logout',[AuthenticationRepository::class,'logout'])->middleware('auth:sanctum')->name('api.logout');

@@ -1,32 +1,28 @@
 <template>
     <div>
-        <h1>Dashboard</h1>
-        {{ $store.state.user.userInfo.name }}
-
-        <el-button @click="handleLogout">Logout</el-button>
+        <el-row :gutter="20">
+            <el-col :span="6" :offset="0">
+                <el-card shadow="hover" class="d-flex">
+                    <el-icon><Avatar /></el-icon>
+                    <div>
+                        Reservation
+                    </div>
+                    <div>
+                        {{ panels }}
+                    </div>
+                </el-card>
+            </el-col>
+        </el-row>      
     </div>
 </template>
 
 <script setup>
+    import { getTotalReservation } from '$/api'
+    import { ref } from 'vue'
 
-    import { messageBox,notification } from '$/modules/util'
-    import { logout } from '$/api/manager'
-    import { useRouter } from 'vue-router'
-    import { useStore } from 'vuex'
+    const panels = ref([])
 
-    const router = useRouter()
-    const store = useStore()
-
-    function handleLogout() {
-        messageBox('Confirm Logout?','Warning','warning').then(response=>{
-            logout().finally(()=>{
-                // Redirect To Login Page
-                router.push('/login')
-                // Remove User State
-                store.dispatch('logout')
-                // Show Notification
-                notification('Success','Logout Successfully','success')
-            })
-        })    
-    }
+    getTotalReservation().then((response)=>{
+        panels.value = response
+    })
 </script>

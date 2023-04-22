@@ -3,12 +3,12 @@ import nProgress from "nprogress";
 
 // Display A Notification
 export function notification(title,message,type) {
-    ElNotification({
-        title,
-        message,
-        type,
-        duration: 3000
-    })
+    return ElNotification({
+            title,
+            message,
+            type,
+            duration: 3000
+        })
 }
 
 // Display A Message Box

@@ -31,54 +31,48 @@ const router = createRouter({
             name: 'dashboard',
             component: ()=> import('$/layouts/Admin.vue'),
             // Child Route
-            children: [{
-                path: '/dashboard',
-                component: ()=> import('../pages/Index.vue'),
-                meta: {
-                    title: 'Dashboard'
-                }
-            }]
-            
-        },
-        {
-            path: '/parkingLots',
-            name: 'parkingLots',
-            component: ()=> import('../pages/ParkingLots.vue')
-        },
-        {
-            path: '/parkingLot/:parkingLotId/details',
-            name: 'parkingLotDetails',
-            component: ()=> import('../pages/ParkingLotDetails.vue')
-        },
-        {
-            path: '/parkingLot/:parkingLotId/edit',
-            name: 'parkingLotEdit',
-            component: ()=> import('../pages/ParkingLotEdit.vue')
-        },
-        {
-            path: '/parkingLot/:parkingLotId/delete',
-            name: 'parkingLotDelete'
-        },
-        {
-            path: '/parkingSpaces',
-            name: 'parkingSpaces',
-            component: ()=> import('../pages/ParkingSpaces.vue'),
-        },
-        {
-            path: '/parkingSpace/:parkingSpaceId/details',
-            name: 'parkingSpaceDetails',
-            component: ()=> import('../pages/ParkingSpaceDetails.vue')
-        },
-        {
-            path: '/users',
-            name: 'users',
-            component: ()=> import('../pages/Users.vue')
-        },
-        {
-            path: '/customers',
-            name: 'customers',
-            component: ()=> import('../pages/Customers.vue')
-        },
+            children: [
+                {
+                    path: '/dashboard',
+                    component: ()=> import('../pages/Index.vue'),
+                    meta: {
+                        title: 'Dashboard'
+                    }
+                },
+                {
+                    path: '/parkingLots',
+                    name: 'parkingLots',
+                    component: ()=> import('../pages/ParkingLots.vue'),
+                    meta: {
+                        title: 'ParkingLots'
+                    }
+                },
+                {
+                    path: '/parkingSpaces',
+                    name: 'parkingSpaces',
+                    component: ()=> import('../pages/ParkingSpaces.vue'),
+                    meta: {
+                        title: 'ParkingSpaces'
+                    }
+                },
+                {
+                    path: '/users',
+                    name: 'users',
+                    component: ()=> import('../pages/Users.vue'),
+                    meta: {
+                        title: 'Users'
+                    }
+                },
+                {
+                    path: '/customers',
+                    name: 'customers',
+                    component: ()=> import('../pages/Customers.vue'),
+                    meta: {
+                        title: 'Customers'
+                    }
+                },
+            ]   
+        }
     ]
 })
 

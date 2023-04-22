@@ -1,5 +1,5 @@
 <template>
-  <div class="">
-    <h1>Customers</h1>
-  </div>
+    <div>
+        <h1>Customer</h1>
+    </div>
 </template>

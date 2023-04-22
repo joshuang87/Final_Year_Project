@@ -1,92 +1,94 @@
 <template>
     <div>
-        <h1>Parking Lot data</h1>
-    </div>
-
-    <div>
-        <el-table :data="parkingLotDataList" border fit >
-            <el-table-column type="expand">
-                <template #default="props">
-                    <el-row>
-                        <el-col :span="12">
-                            <div>
-                                <h3>Available Parking Spaces</h3>
-                                <el-table :data="filteredParkingSpaces(props.row.parking_lot_id)">
-                                    <el-table-column prop="parking_space_id" label="Parking Spaces ID" />
-                                </el-table>
-                            </div>
-                        </el-col>
-                        <el-col :span="12">
+        <div>
+            <h1>Parking Lot data</h1>
+        </div>
+    
+        <div>
+            <el-table :data="parkingLotDataList" border fit >
+                <el-table-column type="expand">
+                    <template #default="props">
+                        <el-row>
+                            <el-col :span="12">
                                 <div>
-                                    <h3>Comments History</h3>
-                                    <el-table :data="filteredComments(props.row.parking_lot_id)">
-                                        <el-table-column prop="content" label="Comments" />
+                                    <h3>Available Parking Spaces</h3>
+                                    <el-table :data="filteredParkingSpaces(props.row.parking_lot_id)">
+                                        <el-table-column prop="parking_space_id" label="Parking Spaces ID" />
                                     </el-table>
                                 </div>
-                        </el-col>
-                    </el-row>
-                </template>
-            </el-table-column>
-            <el-table-column prop="parking_lot_id" label="ID" sortable align="center" />
-            <el-table-column prop="open_time" label="Open Time" align="center"/>
-            <el-table-column prop="close_time" label="Close Time" align="center"/>
-            <el-table-column prop="status" label="Status" align="center">
-                <template v-slot="{ row }" >
-                    <el-tag effect="light" type="danger" round v-if="row.status == 0">
-                        Closed
-                    </el-tag>
-                    <el-tag effect="light" type="success" round v-else-if="row.status == 1">
-                        Open
-                    </el-tag>
-                    <el-tag effect="light" type="warning" round v-else>
-                        Undefined State
-                    </el-tag>
-                </template>
-            </el-table-column>
-            <el-table-column prop="content" label="Comment" />
-            <el-table-column fixed="right" label="Operations" align="center">
-                <template #default>
-                    <el-button text type="primary" @click="dialogFormVisible = true" icon="Edit">Edit</el-button>
-                    <el-button text type="danger" icon="Delete" >Delete</el-button>
-                </template>
-              </el-table-column>
-        </el-table>
-    </div>
+                            </el-col>
+                            <el-col :span="12">
+                                    <div>
+                                        <h3>Comments History</h3>
+                                        <el-table :data="filteredComments(props.row.parking_lot_id)">
+                                            <el-table-column prop="content" label="Comments" />
+                                        </el-table>
+                                    </div>
+                            </el-col>
+                        </el-row>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="parking_lot_id" label="ID" sortable align="center" />
+                <el-table-column prop="open_time" label="Open Time" align="center"/>
+                <el-table-column prop="close_time" label="Close Time" align="center"/>
+                <el-table-column prop="status" label="Status" align="center">
+                    <template v-slot="{ row }" >
+                        <el-tag effect="light" type="danger" round v-if="row.status == 0">
+                            Closed
+                        </el-tag>
+                        <el-tag effect="light" type="success" round v-else-if="row.status == 1">
+                            Open
+                        </el-tag>
+                        <el-tag effect="light" type="warning" round v-else>
+                            Undefined State
+                        </el-tag>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="content" label="Comment" />
+                <el-table-column fixed="right" label="Operations" align="center">
+                    <template #default>
+                        <el-button text type="primary" @click="dialogFormVisible = true" icon="Edit">Edit</el-button>
+                        <el-button text type="danger" icon="Delete" >Delete</el-button>
+                    </template>
+                  </el-table-column>
+            </el-table>
+        </div>
+        
+        <el-dialog 
+            v-model="dialogFormVisible"
+            title="Parking Lot Information Edit"
+            align-center
+            draggable
+        >
+            <el-form>
+                <el-form-item label="Parking Lot ID : ">
+                    <el-input clearable v-model="parkingLotDataList.parking_lot_id"/>
+                </el-form-item>
+                <el-form-item label="Status : ">
+                    <el-radio-group>
+                        <el-radio :label="1">Open</el-radio>
+                        <el-radio :label="0">Close</el-radio>
+                    </el-radio-group>
+                </el-form-item>
+                <el-form-item label="Comment : ">
+                    <el-input type="textarea" placeholder="Please Write Some Comment Before Update Information" autosize clearable/>
+                </el-form-item>
+                <el-form-item label="Open Time : ">
+                    <el-input type="time" step="1"/>
+                </el-form-item>
+                <el-form-item label="Close Time : ">
+                    <el-input type="time" step="1"/>
+                </el-form-item>
+            </el-form>
+            <template #footer>
+                <span class="dialog-footer">
+                    <el-button @click="dialogFormVisible = false">Cancel</el-button>
+                    <el-button type="primary" @click="dialogFormVisible = false">Update</el-button>
+                </span>
+            </template>
     
-    <el-dialog 
-        v-model="dialogFormVisible"
-        title="Parking Lot Information Edit"
-        align-center
-        draggable
-    >
-        <el-form>
-            <el-form-item label="Parking Lot ID : ">
-                <el-input clearable v-model="parkingLotDataList.parking_lot_id"/>
-            </el-form-item>
-            <el-form-item label="Status : ">
-                <el-radio-group>
-                    <el-radio :label="1">Open</el-radio>
-                    <el-radio :label="0">Close</el-radio>
-                </el-radio-group>
-            </el-form-item>
-            <el-form-item label="Comment : ">
-                <el-input type="textarea" placeholder="Please Write Some Comment Before Update Information" autosize clearable/>
-            </el-form-item>
-            <el-form-item label="Open Time : ">
-                <el-input type="time" step="1"/>
-            </el-form-item>
-            <el-form-item label="Close Time : ">
-                <el-input type="time" step="1"/>
-            </el-form-item>
-        </el-form>
-        <template #footer>
-            <span class="dialog-footer">
-                <el-button @click="dialogFormVisible = false">Cancel</el-button>
-                <el-button type="primary" @click="dialogFormVisible = false">Update</el-button>
-            </span>
-        </template>
-
-    </el-dialog>
+        </el-dialog>
+    </div>
 </template>
 
 <script>

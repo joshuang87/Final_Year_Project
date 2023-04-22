@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Reserve;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -61,5 +63,6 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\ParkingSpace::factory(50)->create();
 
+        Reserve::factory(100)->create();
     }
 }

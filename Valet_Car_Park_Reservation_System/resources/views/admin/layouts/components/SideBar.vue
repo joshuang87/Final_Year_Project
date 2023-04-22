@@ -1,12 +1,12 @@
 <template>
     <div>
         <el-menu
-            default-active="1"
+            :default-active="defaultActive"
             class="el-menu-vertical-demo"
             :collapse="$store.state.isCollapse"
         >
-            <RouterLink to="/">
-                <el-menu-item index="1">
+            <RouterLink to="/dashboard">
+                <el-menu-item index="/dashboard">
                     <el-icon>
                         <HomeFilled />
                     </el-icon>
@@ -15,7 +15,7 @@
             </RouterLink>
 
             <RouterLink to="/parkingLots">
-                <el-menu-item index="2">
+                <el-menu-item index="/parkingLots">
                     <el-icon>               
                         <List />
                     </el-icon>
@@ -24,7 +24,7 @@
             </RouterLink>
 
             <RouterLink to="/parkingSpaces">
-                <el-menu-item index="3">
+                <el-menu-item index="/parkingSpaces">
                     <el-icon>
                         <List />
                     </el-icon>
@@ -33,7 +33,7 @@
             </RouterLink>
 
             <RouterLink to="/customers">
-                <el-menu-item index="4">
+                <el-menu-item index="/customers">
                     <el-icon>
                         <List />
                     </el-icon>
@@ -42,7 +42,7 @@
             </RouterLink>
 
             <RouterLink to="/users">
-                <el-menu-item index="5">               
+                <el-menu-item index="/users">               
                         <el-icon>
                             <List />
                         </el-icon>              
@@ -54,7 +54,12 @@
 </template>
 
 <script setup>
+    import { ref } from 'vue'
+    import { useRoute } from 'vue-router'
 
+    const route = useRoute()
+
+    const defaultActive = ref(route.path)
 </script>
 
 <style scoped>

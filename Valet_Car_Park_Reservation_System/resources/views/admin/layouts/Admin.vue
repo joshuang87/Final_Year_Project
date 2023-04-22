@@ -1,28 +1,25 @@
 <template>
     <div class="common-layout">
         <el-container>
-            <el-aside width= auto>
-                <SideBar/>
+            <el-aside width="auto">
+                <SideBar />
             </el-aside>
             <el-container>
-                <el-header>
-                    <Header/>
+                <el-header class="d-flex align-items-center border-bottom shadow-sm">
+                    <Header />
                 </el-header>
-                <el-main>
-                    <TagList/>
+                <el-main class="p-0">
+                    <TagList class="d-flex align-items-center border-bottom shadow-sm"/>
 
-                    <RouterView v-slot="{ Component }" >
-                        <template v-if="Component">
-                                <Suspense>
-                                    <!-- 主要内容 -->
-                                    <component :is="Component"></component>
-                            
-                                    <!-- 加载中状态 -->
-                                    <template #fallback>
-                                        <h3>Loading...</h3>
-                                    </template>
-                                </Suspense>
-                        </template>
+                    <RouterView v-slot="{ Component }" class="p-3">
+                        <transition
+                            enter-active-class="animate__animated animate__fadeIn animate__delay-1s"
+                            leave-active-class="animate__animated animate__fadeOut"
+                        >
+                            <keep-alive :max="10">
+                                <component :is="Component" />
+                            </keep-alive>
+                        </transition>    
                     </RouterView>
                 </el-main>
             </el-container>
@@ -31,9 +28,14 @@
 </template>
 
 <script setup>
-
-    import Header from './components/Header.vue'
-    import SideBar from './components/SideBar.vue'
-    import TagList from './components/TagList.vue'
-
+    import Header from "./components/Header.vue"
+    import SideBar from "./components/SideBar.vue"
+    import TagList from "./components/TagList.vue"
 </script>
+
+<style scoped>
+
+    :root {
+        --animate-duration: .5s;
+    }
+</style>

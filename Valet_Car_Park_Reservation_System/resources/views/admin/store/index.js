@@ -9,7 +9,7 @@ const store = createStore({
             // User Data
             user: {},
             // Side Bar State
-            isCollapse: false,
+            isCollapse: true,
 
         }
     },
@@ -20,7 +20,7 @@ const store = createStore({
         },
         // Change Side Bar State
         changeState(state) {
-            return state.isCollapse == false ? state.isCollapse = true : state.isCollapse = false
+            return state.isCollapse == true ? state.isCollapse = false : state.isCollapse = true
         }
     },
     actions: {

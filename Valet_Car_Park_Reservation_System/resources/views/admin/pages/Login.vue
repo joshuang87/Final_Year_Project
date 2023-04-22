@@ -9,15 +9,15 @@
             <el-input v-model="form.password" show-password />
         </el-form-item>
         <el-form-item>
-            <el-button type="primary" @click="onSubmit"  :loading="loading">Login</el-button>
+            <el-button type="primary" @click="onSubmit" :loading="loading">Login</el-button>
         </el-form-item>
     </el-form>
 </template>
 
 <script setup>
-    import { reactive,ref,onMounted,onBeforeMount } from 'vue'
+    import { reactive,ref } from 'vue'
     import { notification } from '$/modules/util.js'
-    import { useRouter } from 'vue-router'
+    import { useRouter,onBeforeRouteUpdate } from 'vue-router'
     import { useStore } from 'vuex'
 
     const router = useRouter()
@@ -66,8 +66,8 @@
             loading.value = true
 
             store.dispatch('login',form).then((response)=>{
-                notification('Success',response.message,'success')
                 router.push('/')
+                notification('Success',response.message,'success')
             })
             .finally(()=>{
                 loading.value = false

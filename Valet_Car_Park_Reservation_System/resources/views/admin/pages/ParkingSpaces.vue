@@ -1,11 +1,14 @@
 <template>
     <div>
-        <h1>Parking Spaces Data</h1>
-    </div>
+        <div>
+            <h1>Parking Spaces Data</h1>
+        </div>
 
-    <div>
-       {{  parkingSpacesDataList }}
+        <div>
+        {{  parkingSpacesDataList }}
+        </div>
     </div>
+    
 </template>
 
 <script>

@@ -3,6 +3,8 @@ import { getToken } from '$/modules/auth'
 import { notification,showFullLoading,hideFullLoading } from '$/modules/util'
 import store from './store'
 
+let hasGetIfo = false
+
 router.beforeEach(async(to,from,next)=>{
     
     // Show Loading Animation
@@ -20,8 +22,10 @@ router.beforeEach(async(to,from,next)=>{
         return next({ path: from.path ? from.path: '/' })
     }
     // If User Logged, User Data Will Store In vuex
-    if(token) {
+    if(token && !hasGetIfo) {
         await store.dispatch('getInfo')
+        // Avoid Repeat Execute getInfo function
+        hasGetIfo = true
     }
     // Setting Page Title
     let title = to.meta.title ? to.meta.title : 'Title'
