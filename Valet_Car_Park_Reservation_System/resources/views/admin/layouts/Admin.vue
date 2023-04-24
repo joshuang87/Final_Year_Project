@@ -32,10 +32,3 @@
     import SideBar from "./components/SideBar.vue"
     import TagList from "./components/TagList.vue"
 </script>
-
-<style scoped>
-
-    :root {
-        --animate-duration: .5s;
-    }
-</style>

@@ -10,9 +10,18 @@ class ReservationRepository implements ReservationRepositoryInterface
     public function getTotalReservation()
     {
         $totalReservation = Reserve::count();
+        $totalProfit = Reserve::all()->sum('price');
 
-        return $totalReservation;
+        return response([
+            'totalReservation' => $totalReservation,
+            'totalProfit' => $totalProfit
+        ],200);
     }
+
+    // public function testCase()
+    // {
+    //     Reserve::
+    // }
 }
 
 ?>

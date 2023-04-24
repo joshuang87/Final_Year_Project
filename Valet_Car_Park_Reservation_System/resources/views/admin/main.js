@@ -14,6 +14,8 @@ import 'nprogress/nprogress.css'
 import 'animate.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap.min.js'
+import 'virtual:windi.css'
+import '@icon-park/vue-next/styles/index.css'
 
 const adminApp = createApp(AdminApp);
 

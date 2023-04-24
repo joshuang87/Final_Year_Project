@@ -1,9 +1,8 @@
 <template>
-    <div class=" d-flex align-items-center">
+    <div class=" tabDiv d-flex align-items-center">
         <el-tabs
             v-model="activeTab"
             type="card"
-            tab-position="bottom"
             @tab-change="changeTab"
             @tab-remove="removeTab"
         >
@@ -17,7 +16,7 @@
             </el-tab-pane>
         </el-tabs>
         <div class="flex-grow-1"/>
-        <span>
+        <span class="d-flex align-items-center pe-3">
             <el-dropdown @command="handleClear">
                 <span class="el-dropdown-link">
                     <el-icon class="el-icon--right">
@@ -46,3 +45,23 @@
         handleClear
     } = useTabList()
 </script>
+
+<style scoped>
+
+    .tabDiv {
+        @apply bg-gray-50 h-50px;
+    }
+    :deep(.el-tabs__header) {
+        border: 0 !important;
+        @apply my-0;
+    }
+
+    :deep(.el-tabs__nav) {
+        border: 0 !important;
+    }
+
+    :deep(.el-tabs__item) {
+        border: 0 !important;
+        @apply mx-1 bg-light-100 text-xs h-35px;
+    }
+</style>

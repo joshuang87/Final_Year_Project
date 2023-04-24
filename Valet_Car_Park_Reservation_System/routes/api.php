@@ -55,3 +55,5 @@ Route::prefix('reserve')->group(function(){
     Route::post('/payment',[ReserveController::class,'payment'])->name('api.makePayment');
     Route::get('/payment/success',[ReserveController::class,'success'])->name('api.paymentSuccess');
 });
+
+Route::get('test',[ReservationRepository::class,'testCase']);
