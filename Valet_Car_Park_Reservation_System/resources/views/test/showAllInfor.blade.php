@@ -7,9 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Home</h1>
-    <button>
-        <a href="{{route('test.inforGetting')}}">Reserve</a>
-    </button>
+    <h1>All Infor for a client</h1>
+    
 </body>
 </html>

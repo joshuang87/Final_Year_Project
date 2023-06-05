@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Reserve extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+
+        'reserve_id',
+        'phone_number',
+        'car_plate',
+        'client_id'
+        
+    ];
+
 }

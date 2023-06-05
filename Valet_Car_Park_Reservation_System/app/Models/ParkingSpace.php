@@ -11,10 +11,18 @@ class ParkingSpace extends Model
 
     protected $fillable = [
 
+        'parking_space_id',
+        'parking_lot_id',
         'car_plate',
         'open_time',
-        'close_time'
+        'close_time',
+        'status'
 
     ];
+
+    public function parkingLot()
+    {
+        return $this->belongsTo(ParkingLot::class);
+    }
     
 }

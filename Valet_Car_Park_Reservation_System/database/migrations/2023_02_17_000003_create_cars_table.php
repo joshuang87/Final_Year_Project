@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('cars', function (Blueprint $table) {
             $table->string('car_plate')->primary();
-            $table->unsignedBigInteger('client_id');
-            $table->foreign('client_id')->references('client_id')->on('clients')->onDelete('cascade');
             $table->string('phone_number');
-            // $table->unsignedBigInteger('reserve_id');
-            // $table->foreign('reserve_id')->references('reserve_id')->on('reserves')->onDelete('cascade');
             $table->timestamps();
+            $table->string('client_id');
+            $table->foreign('client_id')->references('client_id')->on('clients')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->string('reserve_id');
+            $table->foreign('reserve_id')->references('reserve_id')->on('clients')->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 
