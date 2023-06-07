@@ -14,7 +14,7 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 // app.component('testing', Testing);
 
 // Admin site
-import adminRouter from './adminRouter'
+import adminRouter from '../views/admin/router'
 import AdminApp from '../views/admin/App.vue'
 
 const adminApp = createApp(AdminApp);
