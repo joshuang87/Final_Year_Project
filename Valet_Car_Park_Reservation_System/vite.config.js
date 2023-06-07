@@ -38,5 +38,9 @@ export default defineConfig({
             vue: 'vue/dist/vue.esm-bundler.js',
             '$': path.resolve(__dirname,'resources/views/admin')
         },
+        alias: {
+            vue: 'vue/dist/vue.esm-bundler.js',
+            'V': path.resolve(__dirname,'resources/views/client')
+        }
     },
 });
