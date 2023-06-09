@@ -14,6 +14,7 @@ export default defineConfig({
             input: [
                 'resources/sass/app.scss',
                 'resources/views/admin/main.js',
+                'resources/views/client/main.js',
             ],
             refresh: true,
         }),

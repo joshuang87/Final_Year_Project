@@ -1,8 +1,8 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../V/clientPage/HomeView.vue'
+import { createRouter, createWebHistory,createWebHashHistory } from 'vue-router'
+import HomeView from 'V/clientPage/HomeView.vue'
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(),
   routes: [
     {
       path: '/',
@@ -12,32 +12,32 @@ const router = createRouter({
     {
       path: '/about',
       name: 'about',
-      component: () => import('../V/clientPage/AboutView.vue')
+      component: () => import('V/clientPage/AboutView.vue')
     },
     {
       path: '/signup',
       name: 'signup',
-      component: () => import('../V/clientPage/SignUpView.vue')
+      component: () => import('V/clientPage/SignUpView.vue')
     },
     {
       path: '/login',
       name: 'login',
-      component: () => import('../V/clientPage/LoginView.vue')
+      component: () => import('V/clientPage/LoginView.vue')
     },
     {
       path: '/tutorial',
       name: 'tutorial',
-      component: () => import('../V/clientPage/TutorialView.vue')
+      component: () => import('V/clientPage/TutorialView.vue')
     },
     {
       path: '/booking',
       name: 'booking',
-      component: () => import('../V/clientPage/BookingView.vue')
+      component: () => import('V/clientPage/BookingView.vue')
     },
     {
       path: '/payment',
       name: 'payment',
-      component: () => import('../V/clientPage/PaymentView.vue')
+      component: () => import('V/clientPage/PaymentView.vue')
     },
   ]
 })

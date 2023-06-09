@@ -12,7 +12,7 @@
 
 
 <script>
-import home from '/V/components/home.vue';
+import home from 'V/components/home.vue';
 
   export default{
     components: {
