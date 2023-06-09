@@ -18,7 +18,7 @@ class ParkingLotController extends Controller
 
     public function show()
     {
-        
+        return view('test.adminAllParkingLot')->with('parkingLots',$this->parkingLot->showParkingLots());
     }
 
     public function create()
@@ -26,14 +26,34 @@ class ParkingLotController extends Controller
         return view('test.adminAddParkingLot');
     }
 
+    public function edit($parkingLotId)
+    {
+        return view('test.adminParkingLotEdit')->with('parkingLot',$this->parkingLot->showParkingLotDetails($parkingLotId));
+    }
+
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'parking_lot_id' => 'required|string|max:255'
-        ]);
-
-        $this->parkingLot->storeParkingLotData($data);
+        $this->parkingLot->storeParkingLot($request);
 
         return redirect(route('test.adminHome'));
+    }
+
+    public function destroy($parkingLotId)
+    {
+        $this->parkingLot->deleteParkingLot($parkingLotId);
+
+        return redirect(route('test.adminAllParkingLot'));
+    }
+
+    public function update(Request $request,$parkingLotId)
+    {
+        $this->parkingLot->updateParkingLotInformation($request,$parkingLotId);
+            
+        return redirect(route('test.adminAllParkingLot'));
+    }
+
+    public function detail($parkingLotId)
+    {
+        return view('test.adminParkingLotDetail')->with('parkingLot',$this->parkingLot->showParkingLots($parkingLotId));
     }
 }

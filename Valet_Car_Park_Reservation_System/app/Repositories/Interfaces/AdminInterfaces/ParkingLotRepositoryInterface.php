@@ -2,15 +2,19 @@
 
 namespace App\Repositories\Interfaces\AdminInterfaces;
 
+use Illuminate\Http\Request;
+
 interface ParkingLotRepositoryInterface
 {
+    public function showParkingLots();
 
-    public function allParkingLotId();
+    public function showParkingLotDetails($parkingLotId);
 
-    public function showAvailableParkingLot();
+    public function storeParkingLot($data);
 
-    public function storeParkingLotData($data);
+    public function updateParkingLotInformation($parkingLotId,Request $request);
 
+    public function deleteParkingLot($parkingLotId);
 }
 
 ?>

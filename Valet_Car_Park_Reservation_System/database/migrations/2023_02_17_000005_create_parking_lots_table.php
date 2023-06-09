@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Carbon\Carbon;
 
 return new class extends Migration
 {
@@ -17,7 +16,7 @@ return new class extends Migration
             $table->time('open_time')->default('08:00:00');
             $table->time('close_time')->default('23:30:00');
             $table->timestamps();
-            $table->boolean('status')->default(true);
+            $table->boolean('status')->default(false);
         });
     }
 

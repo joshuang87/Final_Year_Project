@@ -8,9 +8,14 @@ use App\Repositories\Interfaces\AdminInterfaces\ParkingSpaceRepositoryInterface;
 class ParkingSpaceRepository implements ParkingSpaceRepositoryInterface
 {
 
-    public function allParkingSpaceData()
+    public function showParkingSpaces()
     {
         return ParkingSpace::all();
+    }
+
+    public function showParkingSpaceDetails($parkingSpaceId)
+    {
+        
     }
 
     public function showAvailableParkingSpace()

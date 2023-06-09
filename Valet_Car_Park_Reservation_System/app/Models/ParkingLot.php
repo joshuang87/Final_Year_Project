@@ -18,12 +18,6 @@ class ParkingLot extends Model
         
     ];
 
-    // protected $casts = [
-
-    //     'open_time' => 'h:i:s A',
-    //     'close_time' => 'h:i:s A'
-    // ];
-
     public function parkingSpaces()
     {
         return $this->hasMany(ParkingSpace::class);

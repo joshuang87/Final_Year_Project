@@ -18,13 +18,13 @@ class ParkingSpaceController extends Controller
     public function showAvailable()
     {
         return view('test.getClientParkingSpace',[
-            'parkingSpaces' => $this->parkingSpace->allParkingSpaceData()
+            'parkingSpaces' => $this->parkingSpace->showParkingSpaces()
         ]);
     }
 
     public function fetch(){
         
-        $all = $this->parkingSpace->allParkingSpaceData();
+        $all = $this->parkingSpace->showParkingSpaces();
 
         return $all;
     }

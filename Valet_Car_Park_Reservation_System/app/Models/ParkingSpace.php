@@ -16,7 +16,8 @@ class ParkingSpace extends Model
         'car_plate',
         'open_time',
         'close_time',
-        'status'
+        'status',
+        'comment'
 
     ];
 

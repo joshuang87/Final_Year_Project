@@ -1,13 +1,20 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import WindiCSS from 'vite-plugin-windicss'
+
+import path from 'path'
 
 export default defineConfig({
     plugins: [
         laravel({
             input: [
                 'resources/sass/app.scss',
-                'resources/js/app.js',
+                'resources/views/admin/main.js',
+                'resources/views/client/main.js',
             ],
             refresh: true,
         }),
@@ -19,10 +26,19 @@ export default defineConfig({
                 },
             },
         }),
+        AutoImport({
+            resolvers: [ElementPlusResolver()],
+          }),
+        Components({
+            resolvers: [ElementPlusResolver()],
+        }),
+        WindiCSS(),
     ],
     resolve: {
         alias: {
             vue: 'vue/dist/vue.esm-bundler.js',
+            '$': path.resolve(__dirname,'resources/views/admin'),
+            'V': path.resolve(__dirname,'resources/views/client')
         },
     },
 });

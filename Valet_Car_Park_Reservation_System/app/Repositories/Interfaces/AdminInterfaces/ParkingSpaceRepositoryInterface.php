@@ -5,7 +5,9 @@ namespace App\Repositories\Interfaces\AdminInterfaces;
 interface ParkingSpaceRepositoryInterface
 {
 
-    public function allParkingSpaceData();
+    public function showParkingSpaces();
+
+    public function showParkingSpaceDetails($parkingSpaceId);
 
     public function showAvailableParkingSpace();
 
