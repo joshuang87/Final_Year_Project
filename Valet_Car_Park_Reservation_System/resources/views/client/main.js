@@ -7,6 +7,8 @@ import '@fortawesome/fontawesome-free/css/all.css'
 import '@fortawesome/fontawesome-free/js/all.js'
 import Vuex from 'vuex'
 import store from './store'
+import { loadStripe } from '@stripe/stripe-js'
+import axios from 'axios'
 
 const app = createApp(App)
 

@@ -7,11 +7,11 @@ use App\Http\Controllers\Controller;
 
 class ReserveController extends Controller
 {
-    
+
     public function payment()
     {
 
-        $stripe = new \Stripe\StripeClient(env('sk_test_51MHkNwAAIANGTO9uoqPugwERYm6l3kvVouBqADX5QC4zcKrmQgnN81h1Q7XUYKjxyiZvMgpY8x8wuFiUjY9GnS7j00qYrqwmsU'));
+        $stripe = new \Stripe\StripeClient(env('pk_test_51NGxNDGmA7QKNFMQAHGPm8IVsFAp2dqD7P5tvURFQCz3iDIAu0kWnOJgZ2mpVGSatoJxAKQRguqFqWC9FxYWOno800PHJXypYc'));
 
         $checkout_session = $stripe->checkout->sessions->create([
             'line_items' => [[
