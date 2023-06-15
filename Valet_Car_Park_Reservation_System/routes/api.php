@@ -4,11 +4,12 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Client\ReserveController;
+use App\Repositories\ClientRepositories\ReserveRepository;
 use App\Repositories\AdminRepositories\ParkingLotRepository;
+use App\Repositories\AdminRepositories\ReservationRepository;
 use App\Repositories\AdminRepositories\ParkingSpaceRepository;
 use App\Repositories\AdminRepositories\AuthenticationRepository;
 use App\Repositories\AdminRepositories\ParkingLotCommentRepository;
-use App\Repositories\AdminRepositories\ReservationRepository;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,3 +58,5 @@ Route::prefix('reserve')->group(function(){
 });
 
 Route::get('test',[ReservationRepository::class,'testCase']);
+
+Route::post('bookTest',[ReserveRepository::class,'storeReserveData'])->name('api.book');

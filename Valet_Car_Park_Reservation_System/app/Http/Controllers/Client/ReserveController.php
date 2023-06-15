@@ -36,4 +36,9 @@ class ReserveController extends Controller
     {
         return view('test.paymentSuccess');
     }
+
+    public function booking()
+    {
+        
+    }
 }

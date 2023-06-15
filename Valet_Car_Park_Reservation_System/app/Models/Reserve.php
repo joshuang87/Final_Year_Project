@@ -12,11 +12,16 @@ class Reserve extends Model
     protected $fillable = [
 
         'reserve_id',
-        'price',
+        // 'price',
         'phone_number',
         'car_plate',
-        'client_id'
-        
+        'client_id',
+        'parking_lot_id',
+        'parking_space_id',
+        'time',
+        'date',
+        'duration'
+
     ];
 
 }
