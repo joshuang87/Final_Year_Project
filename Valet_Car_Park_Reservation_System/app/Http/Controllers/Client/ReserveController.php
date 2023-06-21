@@ -6,6 +6,7 @@ use App\Models\Client;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Repositories\Interfaces\ClientInterfaces\CarRepositoryInterface;
 use App\Repositories\Interfaces\ClientInterfaces\ClientRepositoryInterface;
 use App\Repositories\Interfaces\ClientInterfaces\ReserveRepositoryInterface;
 
@@ -13,11 +14,13 @@ class ReserveController extends Controller
 {
     public $reserve;
     public $client;
+    public $car;
 
-    public function __construct(ReserveRepositoryInterface $reserve,ClientRepositoryInterface $client)
+    public function __construct(ReserveRepositoryInterface $reserve,ClientRepositoryInterface $client,CarRepositoryInterface $car)
     {
         $this->reserve = $reserve;
         $this->client = $client;
+        $this->car = $car;
     }
 
     public function payment()
@@ -72,8 +75,14 @@ class ReserveController extends Controller
         // get current client id who is making reserve
         $currentClientId = Client::where('car_plate',$data['car_plate'])->first()['client_id'];
 
-        $reserveData = [
+        $this->car->storeCarData([
+            'car_plate' => $data['car_plate'],
+            'phone_number' => $data['phone_number'],
+            'reserve_id' => $data['reserve_id'],
+            'client_id' => $currentClientId
+        ]);
 
+        $reserveData = [
             'reserve_id' => $data['reserve_id'],
             'car_plate' => $request->car_plate,
             'phone_number' => $request->phone_number,
@@ -84,7 +93,6 @@ class ReserveController extends Controller
             'time' => $request->time,
             'duration' => $request->duration,
             'client_id' => $currentClientId
-
         ];
 
         $this->reserve->storeReserveData($reserveData);
