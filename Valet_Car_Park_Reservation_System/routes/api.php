@@ -59,4 +59,4 @@ Route::prefix('reserve')->group(function(){
 
 Route::get('test',[ReservationRepository::class,'testCase']);
 
-Route::post('bookTest',[ReserveRepository::class,'storeReserveData'])->name('api.book');
+Route::post('bookTest',[ReserveController::class,'booking'])->name('api.book');

@@ -42,13 +42,13 @@
                                 <h2 class="mb-4" style="text-align: center;">Book</h2>
                                 <form class="form-container" @submit.prevent="submitBooking">
                                     <div class="form-group">
-                                        <label class="form-label" for="carPlate">Car Plate:</label>
-                                        <input class="form-control" type="text" id="carPlate" v-model="booking.carPlate" required>
+                                        <label class="form-label" for="car_plate">Car Plate:</label>
+                                        <input class="form-control" type="text" id="car_plate" v-model="booking.car_plate" required>
                                     </div>
                                         <hr>
                                         <div class="form-group">
-                                        <label class="form-label" for="phoneNumber">Phone Number:</label>
-                                        <input class="form-control" type="tel" id="phoneNumber" v-model="booking.phoneNumber" required>
+                                        <label class="form-label" for="phone_number">Phone Number:</label>
+                                        <input class="form-control" type="tel" id="phone_number" v-model="booking.phone_number" required>
                                     </div>
                                         <hr>
                                         <div class="form-group">
@@ -57,13 +57,13 @@
                                     </div>
                                         <hr>
                                         <div class="form-group">
-                                        <label class="form-label" for="parkingSpaceId">Parking Space ID:</label>
-                                        <input class="form-control" type="text" id="parkingSpaceId" v-model="booking.parkingSpaceId" required>
+                                        <label class="form-label" for="parking_space_id">Parking Space ID:</label>
+                                        <input class="form-control" type="text" id="parking_space_id" v-model="booking.parking_space_id" required>
                                     </div>
                                         <hr>
                                         <div class="form-group">
-                                        <label class="form-label" for="parkingLotId">Parking Lot ID:</label>
-                                        <input class="form-control" type="text" id="parkingLotId" v-model="booking.parkingLotId" required>
+                                        <label class="form-label" for="parking_lot_id">Parking Lot ID:</label>
+                                        <input class="form-control" type="text" id="parking_lot_id" v-model="booking.parking_lot_id" required>
                                     </div>
                                         <hr>
                                         <div class="form-group">
@@ -102,11 +102,11 @@
       return {
         items: [],
         booking: {
-            carPlate: '',
-            phoneNumber: '',
+            car_plate: '',
+            phone_number: '',
             email: '',
-            parkingSpaceId: '',
-            parkingLotId: '',
+            parking_space_id: '',
+            parking_lot_id: '',
             date: '',
             time: '',
             duration: 0
@@ -133,13 +133,14 @@
           });
       },
       submitBooking() {
-        axios.post('/api/parkingSpace', this.booking)
+        axios.post('/api/bookTest', this.booking)
             .then(response => {
-
+                console.log(response);
             // Handle successful booking and proceed to payment
             })
             .catch(error => {
             // Handle booking error
+            console.log(error);
             });
         }
     },

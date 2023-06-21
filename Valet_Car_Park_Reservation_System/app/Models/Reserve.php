@@ -12,7 +12,7 @@ class Reserve extends Model
     protected $fillable = [
 
         'reserve_id',
-        // 'price',
+        'price',
         'phone_number',
         'car_plate',
         'client_id',
@@ -20,7 +20,8 @@ class Reserve extends Model
         'parking_space_id',
         'time',
         'date',
-        'duration'
+        'duration',
+        'email'
 
     ];
 
