@@ -133,6 +133,20 @@
             console.error(error);
           });
       },
+      async redirectToStripe() {
+        // Make an API request to your Laravel backend
+        const response = await axios.post('/create-payment-intent');
+        const clientSecret = response.data.clientSecret;
+
+        // Redirect the user to the Stripe checkout page
+        const stripe = Stripe('pk_test_51NGxNDGmA7QKNFMQAHGPm8IVsFAp2dqD7P5tvURFQCz3iDIAu0kWnOJgZ2mpVGSatoJxAKQRguqFqWC9FxYWOno800PHJXypYc');
+        const { error } = await stripe.redirectToCheckout({ clientSecret });
+
+        if (error) {
+            // Handle any errors during redirection
+            console.error(error);
+        }
+    },
       async startCheckout() {
       const stripe = await loadStripe('pk_test_51NGxNDGmA7QKNFMQAHGPm8IVsFAp2dqD7P5tvURFQCz3iDIAu0kWnOJgZ2mpVGSatoJxAKQRguqFqWC9FxYWOno800PHJXypYc');
 
