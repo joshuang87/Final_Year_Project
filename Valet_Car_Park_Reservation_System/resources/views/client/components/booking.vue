@@ -164,6 +164,7 @@
       }
     },
       submitBooking() {
+        //this.redirectToStripe();
         this.startCheckout();
         axios.post('/api/bookTest', this.booking)
             .then(response => {
