@@ -95,6 +95,7 @@
 
   <script>
   import axios from 'axios';
+  import { loadStripe } from '@stripe/stripe-js';
   import PaymentForm from 'V/components/PaymentForm.vue';
 
   export default {
@@ -132,10 +133,28 @@
             console.error(error);
           });
       },
+      async startCheckout() {
+      const stripe = await loadStripe('pk_test_51NGxNDGmA7QKNFMQAHGPm8IVsFAp2dqD7P5tvURFQCz3iDIAu0kWnOJgZ2mpVGSatoJxAKQRguqFqWC9FxYWOno800PHJXypYc');
+
+      const { error } = await stripe.redirectToCheckout({
+        lineItems: [
+          { price: 'price_1NHVB6GmA7QKNFMQJNx8Wpe0', quantity: 1 } // Replace with your Stripe price ID
+        ],
+        mode: 'payment',
+        successUrl: 'http://127.0.0.1:8000/client#/', // Redirect URL after successful payment
+        cancelUrl: 'http://127.0.0.1:8000/client#/bookTest' // Redirect URL if the payment is canceled
+      });
+
+      if (error) {
+        console.error('Error:', error);
+      }
+    },
       submitBooking() {
+        this.startCheckout();
         axios.post('/api/bookTest', this.booking)
             .then(response => {
-                console.log(response);
+
+                console.log(response)
             // Handle successful booking and proceed to payment
             })
             .catch(error => {
