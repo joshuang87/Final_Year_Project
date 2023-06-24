@@ -135,7 +135,7 @@
       },
       async redirectToStripe() {
         // Make an API request to your Laravel backend
-        const response = await axios.post('/create-payment-intent');
+        const response = await axios.post('api/createPaymentIntent');
         const clientSecret = response.data.clientSecret;
 
         // Redirect the user to the Stripe checkout page
@@ -164,8 +164,8 @@
       }
     },
       submitBooking() {
-        //this.redirectToStripe();
-        this.startCheckout();
+        this.redirectToStripe();
+        // this.startCheckout();
         axios.post('/api/bookTest', this.booking)
             .then(response => {
 

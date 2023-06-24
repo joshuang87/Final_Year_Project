@@ -10,6 +10,8 @@ use App\Repositories\AdminRepositories\ReservationRepository;
 use App\Repositories\AdminRepositories\ParkingSpaceRepository;
 use App\Repositories\AdminRepositories\AuthenticationRepository;
 use App\Repositories\AdminRepositories\ParkingLotCommentRepository;
+use Stripe\PaymentIntent;
+use Stripe\Stripe;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,3 +62,18 @@ Route::prefix('reserve')->group(function(){
 Route::get('test',[ReservationRepository::class,'testCase']);
 
 Route::post('bookTest',[ReserveController::class,'booking'])->name('api.book');
+
+Route::post('createPaymentIntent',function(){
+    Stripe::setApiKey(
+        'sk_test_51NGxNDGmA7QKNFMQrP4MPFIhMVbOSNUbf6dhn14kfcD1ADA475LvCBIdnUVgzd5onkdhXDVcglo68NXhzHnZXdDw001ZgTmc7h'
+    );
+
+    $paymentIntent = PaymentIntent::create([
+        'amount' => 20000,
+        'currency' => 'usd'
+    ]);
+
+    return response()->json([
+        'clientSecret' => $paymentIntent->client_secret
+    ]);
+});
