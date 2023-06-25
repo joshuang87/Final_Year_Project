@@ -24,6 +24,10 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::get('/',function(){
+    return view('welcome');
+});
+
 // ADMIN_ROUTE
 
 Route::prefix('admin')->group(function(){
@@ -36,8 +40,12 @@ Route::prefix('admin')->group(function(){
 
 // CLIENT_ROUTE
 
-Route::get('/', function () {
-    return view('welcome');
+Route::prefix('client')->group(function(){
+
+    Route::get('/', function () {
+        return view('client.app');
+    });
+
 });
 
 // TESTING_ROUTE

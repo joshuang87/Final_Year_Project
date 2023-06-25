@@ -19,6 +19,11 @@
         "windicss": "^3.5.6"
     },
     "dependencies": {
+        "@fortawesome/fontawesome-free": "^6.4.0",
+        "@iconify/iconify": "^3.1.0",
+        "@iconify/vue": "^4.1.1",
+        "@popperjs/core": "^2.11.7",
+        "bootstrap": "^5.2.3",
         "@element-plus/icons-vue": "^2.1.0",
         "@icon-park/vue-next": "^1.4.2",
         "@vueuse/core": "^10.0.2",

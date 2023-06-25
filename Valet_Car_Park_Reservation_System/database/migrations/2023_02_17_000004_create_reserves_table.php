@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('reserves', function (Blueprint $table) {
             $table->string('reserve_id')->primary();
-            $table->integer('price');
+            $table->integer('price')->default(50);
             $table->string('phone_number');
             $table->timestamps();
             $table->string('car_plate');
