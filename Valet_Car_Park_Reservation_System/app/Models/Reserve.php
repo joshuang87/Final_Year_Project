@@ -15,7 +15,8 @@ class Reserve extends Model
         'price',
         'phone_number',
         'car_plate',
-        'client_id'
+        'client_id',
+        'day_of_week'
         
     ];
 

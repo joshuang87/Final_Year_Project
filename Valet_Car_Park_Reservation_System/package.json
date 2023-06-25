@@ -24,14 +24,12 @@
         "@vueuse/core": "^10.0.2",
         "@vueuse/integrations": "^10.0.2",
         "animate.css": "^4.1.1",
-        "chart.js": "^4.2.1",
         "echarts": "^5.4.2",
         "element-plus": "^2.3.3",
         "gsap": "^3.11.5",
         "nprogress": "^0.2.0",
         "universal-cookie": "^4.0.4",
         "vue-axios": "^3.5.2",
-        "vue-chartjs": "^5.2.0",
         "vue-router": "^4.1.6",
         "vuex": "^4.0.2"
     }

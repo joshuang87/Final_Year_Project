@@ -63,6 +63,6 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\ParkingSpace::factory(50)->create();
 
-        Reserve::factory(100)->create();
+        Reserve::factory(1000)->create();
     }
 }

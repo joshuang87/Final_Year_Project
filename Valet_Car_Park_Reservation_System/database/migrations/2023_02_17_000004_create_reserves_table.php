@@ -20,6 +20,7 @@ return new class extends Migration
             // $table->foreign('car_plate')->references('car_plate')->on('cars')->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('client_id');
             // $table->foreign('client_id')->references('client_id')->on('clients')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->string('day_of_week');
         });
     }
 

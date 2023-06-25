@@ -47,47 +47,47 @@ class AuthenticationRepository implements AuthenticationRepositoryInterface
 
     public function updatePassword(Request $request)
     {
-        return [
-            auth('sanctum')->user()
-        ];
-        // $passwords = $request->validate([
-        //     'oldPassword' => 'required|min:8',
-        //     'newPassword' => 'required|min:8',
-        //     'confirmPassword' => 'required|min:8'
-        // ]);
+        // return [
+        //     auth('sanctum')->user()
+        // ];
+        $passwords = $request->validate([
+            'oldPassword' => 'required|min:8',
+            'newPassword' => 'required|min:8',
+            'confirmPassword' => 'required|min:8'
+        ]);
 
-        // $oldPassword = Auth::user()->getAuthPassword();
+        $oldPassword = Auth::user()->getAuthPassword();
 
-        // // If Old Password Is Correct
-        // if(Hash::check($passwords['oldPassword'],$oldPassword))
-        // {
-        //     // If New Password Is Same As Old Password
-        //     if(Hash::check($passwords['newPassword'],$oldPassword))
-        //     {
-        //         return response('New and Old Password Cannot Be Same',405);
-        //     }
-        //     // If New Password Is Not Same As Confirm Password
-        //     elseif($passwords['newPassword'] != $passwords['confirmPassword'])
-        //     {
-        //         return response('New and Confirm Password Are Different',400);
-        //     }
-        //     // Hash New Password And Update
-        //     else
-        //     {
-        //         $hashedPassword = Hash::make($passwords['newPassword']);
-        //         $currentUserId = Auth::user()->id;
-        //         User::where('id',$currentUserId)->update([
-        //             'password' => $hashedPassword
-        //         ]);
+        // If Old Password Is Correct
+        if(Hash::check($passwords['oldPassword'],$oldPassword))
+        {
+            // If New Password Is Same As Old Password
+            if(Hash::check($passwords['newPassword'],$oldPassword))
+            {
+                return response('New and Old Password Cannot Be Same',405);
+            }
+            // If New Password Is Not Same As Confirm Password
+            elseif($passwords['newPassword'] != $passwords['confirmPassword'])
+            {
+                return response('New and Confirm Password Are Different',400);
+            }
+            // Hash New Password And Update
+            else
+            {
+                $hashedPassword = Hash::make($passwords['newPassword']);
+                $currentUserId = Auth::user()->id;
+                User::where('id',$currentUserId)->update([
+                    'password' => $hashedPassword
+                ]);
 
-        //         return response('Password Updated',200);
-        //     }
+                return response('Password Updated',200);
+            }
             
-        // }
-        // else
-        // {
-        //     return response('Original Password Wrong',401);
-        // }
+        }
+        else
+        {
+            return response('Original Password Wrong',401);
+        }
         
     }
 
