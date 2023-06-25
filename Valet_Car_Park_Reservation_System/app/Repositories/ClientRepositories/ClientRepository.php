@@ -20,7 +20,7 @@ class ClientRepository implements ClientRepositoryInterface
             'client_id' => Str::uuid()->toString(),
             'car_plate' => $data['car_plate'],
             'phone_number' => $data['phone_number'],
-            'reserve_id' => Str::uuid()->toString()
+            'reserve_id' => $data['reserve_id']
         ];
         
         return Client::create($data);

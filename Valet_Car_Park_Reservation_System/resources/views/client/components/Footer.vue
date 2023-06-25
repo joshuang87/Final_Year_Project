@@ -1,7 +1,7 @@
 <template>
-    <footer class="bg-light text-black">
+    <footer class="bg-dark text-white">
         <div class="container">
-            
+
           <div class="row">
             <div class="col-md-4" style="margin-top: 50px;">
               <h4>Company Name</h4>

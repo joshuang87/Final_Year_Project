@@ -3,10 +3,36 @@
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
-  
-  
+
+
 
     <br><br><br><br><br><br><br><br><br><br><br><br>
+    <div class="container mt-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-6">
+          <div class="card shadow">
+            <div class="card-body">
+                <form class="form-container" @submit="submitForm">
+                        <div class="form-group">
+                            <label for="parkingSpace">Select Parking Space:</label>
+                            <select v-model="selectedParkingSpace" class="form-control" id="parkingSpace">
+                                <option v-for="space in parkingSpaces" :key="space.id" :value="space.id">{{ space.name }}</option>
+                            </select>
+                            </div>
+                            <div class="form-group">
+                            <label for="dateTime">Select Date and Time:</label>
+                            <input v-model="selectedDateTime" type="datetime-local" class="form-control" id="dateTime">
+                            </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Book Parking</button>
+                        </div>
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="container">
       <div class="row">
         <div class="col-md-8 offset-md-2">
@@ -25,7 +51,7 @@
         </div>
       </div>
     </div>
-  
+
     <!--modal-->
 
           <div class="modal fade" id="bookingModal" tabindex="-1" role="dialog" aria-labelledby="bookingModalLabel" aria-hidden="true">
@@ -72,7 +98,7 @@
           <br><br><br><br><br><br><br><br><br><br><br><br>
 
   </template>
-  
+
   <script>
   export default{
     data(){
