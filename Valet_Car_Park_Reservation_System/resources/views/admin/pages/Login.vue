@@ -75,3 +75,31 @@
         })
     }
 </script>
+
+<style>
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.login-form {
+    width: 400px;
+    margin-top: 20px;
+}
+
+.el-form-item {
+    margin-bottom: 20px;
+}
+
+.el-form-item__label {
+    text-align: left;
+    font-weight: bold;
+}
+
+.el-form-item__content {
+    text-align: left;
+}
+</style>

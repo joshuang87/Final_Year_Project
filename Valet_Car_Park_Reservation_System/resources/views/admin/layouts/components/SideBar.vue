@@ -17,7 +17,7 @@
             <RouterLink to="/parkingLots">
                 <el-menu-item index="/parkingLots">
                     <el-icon>               
-                        <List />
+                        <OfficeBuilding />
                     </el-icon>
                     <template #title>Parking Lots</template>
                 </el-menu-item>
@@ -26,7 +26,7 @@
             <RouterLink to="/parkingSpaces">
                 <el-menu-item index="/parkingSpaces">
                     <el-icon>
-                        <List />
+                        <Place />
                     </el-icon>
                     <template #title>Parking Spaces</template>
                 </el-menu-item>
@@ -35,7 +35,7 @@
             <RouterLink to="/customers">
                 <el-menu-item index="/customers">
                     <el-icon>
-                        <List />
+                        <Ticket />
                     </el-icon>
                     <template #title>Customers</template>
                 </el-menu-item>
@@ -44,7 +44,7 @@
             <RouterLink to="/users">
                 <el-menu-item index="/users">               
                         <el-icon>
-                            <List />
+                            <User />
                         </el-icon>              
                         <template #title>Users</template>
                 </el-menu-item>
