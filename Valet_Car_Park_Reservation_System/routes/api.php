@@ -1,14 +1,14 @@
 <?php
 
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Client\PaymentController;
 use App\Http\Controllers\Client\ReserveController;
 use App\Repositories\AdminRepositories\ParkingLotRepository;
+use App\Repositories\AdminRepositories\ReservationRepository;
 use App\Repositories\AdminRepositories\ParkingSpaceRepository;
 use App\Repositories\AdminRepositories\AuthenticationRepository;
 use App\Repositories\AdminRepositories\ParkingLotCommentRepository;
-use App\Repositories\AdminRepositories\ReservationRepository;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,7 +52,9 @@ Route::prefix('comments')->group(function(){
 });
 
 Route::prefix('reserve')->group(function(){
-    Route::post('/payment',[ReserveController::class,'payment'])->name('api.makePayment');
+    Route::post('/',[ReserveController::class,'booking'])->name('api.book');
+    Route::post('/payment',[PaymentController::class,'payment'])->name('api.makePayment');
+    Route::post('/payment/store',[PaymentController::class,'store'])->name('api.storePayment');
     Route::get('/payment/success',[ReserveController::class,'success'])->name('api.paymentSuccess');
 });
 

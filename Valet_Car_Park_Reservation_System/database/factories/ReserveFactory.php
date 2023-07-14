@@ -22,7 +22,8 @@ class ReserveFactory extends Factory
             'price' => rand(20,100),
             'phone_number' => fake()->numerify('###########'),
             'car_plate' => fake()->country(),
-            'client_id' => Str::uuid()->toString() 
+            'client_id' => Str::uuid()->toString(),
+            'day_of_week' => fake()->dayOfWeek() 
         ];
     }
 }

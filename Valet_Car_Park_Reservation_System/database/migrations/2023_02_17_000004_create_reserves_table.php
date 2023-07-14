@@ -13,8 +13,14 @@ return new class extends Migration
     {
         Schema::create('reserves', function (Blueprint $table) {
             $table->string('reserve_id')->primary();
-            $table->integer('price')->default(50);
             $table->string('phone_number');
+            $table->string('email');
+            $table->string('parking_space_id');
+            $table->string('parking_lot_id');
+            $table->date('date');
+            $table->time('time');
+            $table->string('duration');
+            $table->integer('price')->default(50);
             $table->timestamps();
             $table->string('car_plate');
             // $table->foreign('car_plate')->references('car_plate')->on('cars')->cascadeOnUpdate()->cascadeOnDelete();

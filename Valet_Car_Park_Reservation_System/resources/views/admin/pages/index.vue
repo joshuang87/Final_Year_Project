@@ -75,21 +75,85 @@
                 </el-col>
             </template>
         </el-row>
+
+        <el-card shadow="never">
+            <template #header>
+            <div class="d-flex">
+                <span>HELLo</span>
+            </div>
+            </template>
+            <div id="chart"></div>
+        </el-card>
     </div>
 </template>
 
 <script setup>
-    import { getTotalReservation } from '$/api'
-    import { ref } from 'vue'
+    import { getTotalReservation,getData } from '$/api'
+    import { ref,onMounted } from 'vue'
     import { IncomeOne,EveryUser,PageTemplate } from '@icon-park/vue-next'
     import Count from '$/layouts/components/Count.vue'
+    // import * as echarts from 'echarts'
 
     const panels = ref([])
 
     getTotalReservation().then((response)=>{
         panels.value = response
     })
+    
+//     let myChart = null
 
+//     onMounted(() => {
+//   var chartDom = document.getElementById('chart');
+//   myChart = echarts.init(chartDom, null, {
+//     renderer: 'svg'
+//   });
+
+//   var option;
+  
+//   // 等待 DOM 加载完成后再进行初始化
+//   if (chartDom.clientWidth && chartDom.clientHeight) {
+//     option = {
+//       xAxis: {
+//         type: 'category',
+//         data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+//       },
+//       yAxis: {
+//         type: 'value'
+//       },
+//       series: [
+//         {
+//           data: [820, 932, 901, 934, 1290, 1330, 1320],
+//           type: 'line',
+//           smooth: true
+//         }
+//       ]
+//     };
+
+//     option && myChart.setOption(option);
+//   } else {
+//     // 如果 DOM 尚未加载完成，则等待一段时间后再尝试初始化
+//     setTimeout(() => {
+//       option = {
+//         xAxis: {
+//           type: 'category',
+//           data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+//         },
+//         yAxis: {
+//           type: 'value'
+//         },
+//         series: [
+//           {
+//             data: [820, 932, 901, 934, 1290, 1330, 1320],
+//             type: 'line',
+//             smooth: true
+//           }
+//         ]
+//       };
+
+//       option && myChart.setOption(option);
+//     }, 500);
+//   }
+// });
 </script>
 
 <style scoped>

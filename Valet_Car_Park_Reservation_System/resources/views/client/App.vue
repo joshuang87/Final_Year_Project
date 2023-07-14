@@ -20,6 +20,7 @@
   import Header from 'V/components/Header.vue';
   import Footer from 'V/components/Footer.vue';
 
+
   export default{
     components: {
       BackToTopButton,
