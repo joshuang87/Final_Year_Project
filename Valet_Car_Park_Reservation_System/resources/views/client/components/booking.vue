@@ -136,7 +136,7 @@ import PaymentForm from 'V/components/PaymentForm.vue';
             },
             async redirectToStripe() {
                 // Make an API request to your Laravel backend
-                const response = await axios.post('api/reserve/payment');
+                const response = await axios.post('api/reserve/payment',this.booking);
                 const sessionId = response.data.sessionId;
                 // Redirect the user to the Stripe checkout page
                 const stripe = Stripe('pk_test_51MHkNwAAIANGTO9uk5MsvOteodjvYlAIBwMZRaTj71eMAtWISNGHrJD5UCzc2a7BAbQxn3QdUB6N8uvyvuriFCuP00ASOZdJWw');
@@ -171,16 +171,16 @@ import PaymentForm from 'V/components/PaymentForm.vue';
             submitBooking() {
                 this.redirectToStripe();
                 // this.startCheckout();
-                axios.post('/api/reserve', this.booking)
-                    .then(response => {
-                        console.log(response)
-                    // Handle successful booking and proceed to payment
-                        // this.storePayment(response.reserve_id)
-                    })
-                    .catch(error => {
-                    // Handle booking error
-                    console.log(error);
-                    });
+                // axios.post('/api/reserve', this.booking)
+                //     .then(response => {
+                //         console.log(response)
+                //     // Handle successful booking and proceed to payment
+                //         // this.storePayment(response.reserve_id)
+                //     })
+                //     .catch(error => {
+                //     // Handle booking error
+                //     console.log(error);
+                //     });
 
             },
             storePayment() {
