@@ -48,6 +48,15 @@
                         </el-icon>              
                         <template #title>Users</template>
                 </el-menu-item>
+            </RouterLink>
+            
+            <RouterLink to="/parkingMap">
+                <el-menu-item index="/parkingMap">               
+                        <el-icon>
+                            <List />
+                        </el-icon>              
+                        <template #title>Parking Map</template>
+                </el-menu-item>
             </RouterLink> 
         </el-menu>
     </div>

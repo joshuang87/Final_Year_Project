@@ -71,6 +71,14 @@ const router = createRouter({
                         title: 'Customers'
                     }
                 },
+                {
+                    path: '/parkingMap',
+                    name: 'parkingMap',
+                    component: ()=> import('../pages/ParkingMap.vue'),
+                    meta: {
+                        title: 'ParkingMap'
+                    }
+                },
             ]   
         }
     ]
