@@ -9,8 +9,6 @@
       <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
         <RouterLink to="/"><li><a href="#" class="nav-link px-2 link-secondary">Home</a></li></RouterLink>
         <RouterLink to="/booking"><li><a href="#" class="nav-link px-2 link-dark">Booking</a></li></RouterLink>
-        <RouterLink to="#"><li><a href="#" class="nav-link px-2 link-dark">Pricing</a></li></RouterLink>
-        <RouterLink to="/tutorial"><li><a href="#" class="nav-link px-2 link-dark">Tutorial</a></li></RouterLink>
         <RouterLink to="/about"><li><a href="#" class="nav-link px-2 link-dark">About</a></li></RouterLink>
       </ul>
 

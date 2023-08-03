@@ -8,7 +8,7 @@
         {{  parkingSpacesDataList }}
         </div>
     </div>
-    
+
 </template>
 
 <script>

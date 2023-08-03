@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Client;
 
 use Error;
 use App\Models\Client;
-use App\Models\Reserve;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
