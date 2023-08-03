@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Client;
 
 use App\Models\Client;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\Interfaces\ClientInterfaces\CarRepositoryInterface;

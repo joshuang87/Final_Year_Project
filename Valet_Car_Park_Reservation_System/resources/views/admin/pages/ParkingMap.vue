@@ -2,7 +2,7 @@
     <div id="content">
         <grid-layout
             ref="gridlayout" :layout.sync="layout"
-            :col-num="30"
+            :col-num= colNum
             :row-height="120"
             class="layout"
         >
@@ -29,22 +29,29 @@
             </template>
         </grid-layout>
     </div>
-    <div class="droppable-element" @click="add" @drag="drag" @dragend="dragend" draggable="true">Add Box</div>
+    <div class="droppable-element" @drag="drag" @dragend="dragend" draggable="true">Add Box</div>
 </template>
   
 <script setup>
-    import { getCurrentInstance, onMounted, ref } from "vue"
+    import { onMounted, ref } from "vue"
     import { GridLayout, GridItem } from "vue3-drr-grid-layout"
     import "vue3-drr-grid-layout/dist/style.css"
 
-    let mouseXY = {"x": null, "y": null};
-    let DragPos = {"x": null, "y": null, "w": 1, "h": 1, "i": null};
+    let mouseXY = {"x": null, "y": null}
+    let DragPos = {"x": null, "y": null, "w": 1, "h": 1, "i": null}
+    let colNum = 30
 
     onMounted(()=>{
         document.addEventListener("dragover", function (e) {
             mouseXY.x = e.clientX;
             mouseXY.y = e.clientY;
-        }, false);
+            console.log(mouseXY.x,mouseXY.y)
+        });
+
+        // document.addEventListener('mousemove', function(e) {
+        //     console.log('Mouse position:', e.clientX, e.clientY);
+        // });
+
     })
     const layout = ref([
         { x: 0, y: 0, w: 2, h: 2, i: 0 },
@@ -75,52 +82,47 @@
 
     const drag = (e) => {
 
-        let parentRect = document.getElementById('content').getBoundingClientRect()
+        // let parentRect = document.getElementById('content').getBoundingClientRect()
 
-        let mouseInGrid = false
+        // let mouseInGrid = false
 
-        if (((mouseXY.x > parentRect.left) && (mouseXY.x < parentRect.right)) && ((mouseXY.y > parentRect.top) && (mouseXY.y < parentRect.bottom))) {
-            mouseInGrid = true
-        }
+        // if (((mouseXY.x > parentRect.left) && (mouseXY.x < parentRect.right)) && ((mouseXY.y > parentRect.top) && (mouseXY.y < parentRect.bottom))) {
+        //     mouseInGrid = true
+        // }
 
-        if (mouseInGrid === true && (layout.findIndex(item => item.i === 'drop')) === -1) {
-            layout.push({
-                x: (this.layout.length * 2) % (this.colNum || 12),
-                y: this.layout.length + (this.colNum || 12), // puts it at the bottom
-                w: 1,
-                h: 1,
-                i: 'drop',
-            });
-        }
+        // if (mouseInGrid === true && (layout.value.findIndex(item => item.i === 'drop')) === -1) {
+        //     layout.value.push({
+        //         x: (layout.value.length * 2) % (colNum || 12),
+        //         y: layout.value.length + (colNum || 12), // puts it at the bottom
+        //         w: 1,
+        //         h: 1,
+        //         i: 'drop',
+        //     });
+        // }
 
-        let index = this.layout.findIndex(item => item.i === 'drop')
+        // let index = layout.value.findIndex(item => item.i === 'drop')
 
-        if (index !== -1) {
-            try {
-                this.$refs.gridlayout.$children[this.layout.length].$refs.item.style.display = "none";
-            } catch {
+        // if (index !== -1) {
 
-            }
+        //     let el = this.$refs.gridlayout.$children[index];
 
-            let el = this.$refs.gridlayout.$children[index];
-
-            el.dragging = {"top": mouseXY.y - parentRect.top, "left": mouseXY.x - parentRect.left};
+        //     el.dragging = {"top": mouseXY.y - parentRect.top, "left": mouseXY.x - parentRect.left};
             
-            let new_pos = el.calcXY(mouseXY.y - parentRect.top, mouseXY.x - parentRect.left);
+        //     let new_pos = el.calcXY(mouseXY.y - parentRect.top, mouseXY.x - parentRect.left);
 
-            if (mouseInGrid === true) {
-                this.$refs.gridlayout.dragEvent('dragstart', 'drop', new_pos.x, new_pos.y, 1, 1);
-                DragPos.i = String(index);
-                DragPos.x = this.layout[index].x;
-                DragPos.y = this.layout[index].y;
-            }
+        //     if (mouseInGrid === true) {
+        //         this.$refs.gridlayout.dragEvent('dragstart', 'drop', new_pos.x, new_pos.y, 1, 1);
+        //         DragPos.i = String(index);
+        //         DragPos.x = this.layout[index].x;
+        //         DragPos.y = this.layout[index].y;
+        //     }
 
-            if (mouseInGrid === false) {
-                this.$refs.gridlayout.dragEvent('dragend', 'drop', new_pos.x, new_pos.y, 1, 1);
-                this.layout = this.layout.filter(obj => obj.i !== 'drop');
-            }
+        //     if (mouseInGrid === false) {
+        //         this.$refs.gridlayout.dragEvent('dragend', 'drop', new_pos.x, new_pos.y, 1, 1);
+        //         layout = this.layout.filter(obj => obj.i !== 'drop');
+        //     }
 
-        }
+        // }
     }
 
     const dragend = (e) => {
@@ -135,21 +137,22 @@
 
         if (mouseInGrid === true) {
             alert(`Dropped element props:\n${JSON.stringify(DragPos, ['x', 'y', 'w', 'h'], 2)}`);
-            this.$refs.gridlayout.dragEvent('dragend', 'drop', DragPos.x, DragPos.y, 1, 1);
-            this.layout = this.layout.filter(obj => obj.i !== 'drop');
+            GridLayout.dragEvent('dragend', 'drop', mouseXY.x, mouseXY.y, 1, 1);
+            layout.value = layout.value.filter(obj => obj.i !== 'drop');
 
-            this.layout.push({
+            layout.value.push({
                     x: DragPos.x,
                     y: DragPos.y,
                     w: 1,
                     h: 1,
                     i: DragPos.i,
                 });
-                this.$refs.gridLayout.dragEvent('dragend', DragPos.i, DragPos.x,DragPos.y,1,1);
+            gridLayout.dragEvent('dragend', DragPos.i, DragPos.x,DragPos.y,1,1);
                 try {
                     this.$refs.gridLayout.$children[this.layout.length].$refs.item.style.display="block";
                 } catch {
                 }
+                
         }
     }
 </script>
@@ -180,6 +183,9 @@
 
     .layout {
         background-color: #000;
+        background-color: rgb(171, 171, 171);
+        color: #000;
+        font-size: 11px;
     }
     
 </style>
