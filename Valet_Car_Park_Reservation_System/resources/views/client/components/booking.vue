@@ -243,7 +243,7 @@ import PaymentForm from 'V/components/PaymentForm.vue';
                         ],
                         mode: 'payment',
                         successUrl: 'http://127.0.0.1:8000/client#/', // Redirect URL after successful payment
-                        cancelUrl: 'http://127.0.0.1:8000/client#/bookTest' // Redirect URL if the payment is canceled
+                        cancelUrl: 'http://127.0.0.1:8000/client#/booking' // Redirect URL if the payment is canceled
                     }
                 );
 
