@@ -12,6 +12,8 @@ class Reserve extends Model
     protected $fillable = [
 
         'reserve_id',
+        'status',
+        'price',
         'car_plate',
         'phone_number',
         'email',

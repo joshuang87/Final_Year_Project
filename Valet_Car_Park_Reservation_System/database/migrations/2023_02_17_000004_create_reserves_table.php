@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('reserves', function (Blueprint $table) {
             $table->string('reserve_id')->primary();
+            $table->string('status');
             $table->string('phone_number');
             $table->string('email');
             $table->string('parking_space_id');

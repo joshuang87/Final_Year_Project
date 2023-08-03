@@ -43,7 +43,7 @@ class PaymentController extends Controller
                 ]
             ],
             'mode' => 'payment',
-            'success_url' => route('api.book',$data),
+            'success_url' => 'http://127.0.0.1:8000/client#/',
             'cancel_url' => 'http://127.0.0.1:8000/client#/booking',
         ]);
 

@@ -49,6 +49,16 @@ const router = createRouter({
         name: 'booktest',
         component: () => import('V/clientPage/bookTest.vue')
     },
+    {
+      path: '/success',
+      name: 'paymentSuccess',
+      component: () => import('V/clientPage/SuccessView.vue')
+    },
+    {
+      path: '/cancel',
+      name: 'paymentCancel',
+      component: () => import('V/clientPage/CancelView.vue')
+    },
   ]
 })
 

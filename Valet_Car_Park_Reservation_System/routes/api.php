@@ -55,7 +55,13 @@ Route::prefix('reserve')->group(function(){
     Route::post('/',[ReserveController::class,'booking'])->name('api.book');
     Route::post('/payment',[PaymentController::class,'payment'])->name('api.makePayment');
     Route::post('/payment/store',[PaymentController::class,'store'])->name('api.storePayment');
-    Route::get('/payment/success',[ReserveController::class,'success'])->name('api.paymentSuccess');
+    // Route::get('/payment/success',[ReserveController::class,'success'])->name('api.paymentSuccess');
+
+    Route::post('/checkout',[ReserveController::class,'checkout'])->name('api.reserve.checkout');
+    Route::get('/checkout/success',[ReserveController::class,'success'])->name('api.reserve.success');
+    Route::get('/checkout/cancel',[ReserveController::class,'cancel'])->name('api.reserve.cancel');
+    Route::post('/checkout/webhook',[ReserveController::class,'webhook'])->name('api.reserve.webhook');
+
 });
 
 Route::get('test',[ReservationRepository::class,'testCase']);
