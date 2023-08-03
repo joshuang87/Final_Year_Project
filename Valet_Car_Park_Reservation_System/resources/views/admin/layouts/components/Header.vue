@@ -147,44 +147,57 @@
     profileModalVisible.value = false
   }
 
-  // 头像上传相关逻辑
-  const uploadEndpoint = '/api/upload'
+ // 头像上传相关逻辑
+const uploadEndpoint = '/api/updateProfileImage'
 
-  const beforeAvatarUpload = (file) => {
-    const isJPG = file.type === 'image/jpeg'
-    const isPNG = file.type === 'image/png'
-    const isLt2M = file.size / 1024 / 1024 < 2
+const beforeAvatarUpload = (file) => {
+  const isJPG = file.type === 'image/jpeg'
+  const isPNG = file.type === 'image/png'
+  const isLt2M = file.size / 1024 / 1024 < 2
 
-    if (!isJPG && !isPNG) {
-      // 校验文件类型，只支持 JPEG 和 PNG
-      // 返回 false 可以取消上传
-      return false
-    }
-
-    if (!isLt2M) {
-      // 校验文件大小，限制为 2MB 以下
-      // 返回 false 可以取消上传
-      return false
-    }
-
-    return true
+  if (!isJPG && !isPNG) {
+    // 校验文件类型，只支持 JPEG 和 PNG
+    // 返回 false 可以取消上传
+    return false
   }
 
-  const handleAvatarSuccess = (response, file) => {
-    // 上传成功后的处理逻辑
-    // 更新 profileImage 变量
-    profileImage.value = URL.createObjectURL(file.raw)
+  if (!isLt2M) {
+    // 校验文件大小，限制为 2MB 以下
+    // 返回 false 可以取消上传
+    return false
   }
 
-  const handleAvatarError = (err, file) => {
-    // 上传失败后的处理逻辑
-    console.log('Avatar upload failed:', err)
-  }
+  return true
+}
 
-  const saveProfile = () => {
-    const profileContent = '这里是要保存的 profile 内容';
-    const blob = new Blob([profileContent], { type: 'text/plain' });
-    const profileURL = URL.createObjectURL(blob);
-    // 在这里可以使用 profileURL 进行保存操作
+const handleAvatarSuccess = (response, file) => {
+  // 上传成功后的处理逻辑
+  // 更新 profileImage 变量
+  profileImage.value = URL.createObjectURL(file.raw)
+}
+
+const handleAvatarError = (err, file) => {
+  // 上传失败后的处理逻辑
+  console.log('Avatar upload failed:', err)
+}
+
+const saveProfile = async () => {
+  try {
+    const response = await fetch('/api/updateProfileImage', {
+      method: 'POST',
+      headers: {
+        'Content-Type': '/api/updateProfileImage'
+      },
+      body: JSON.stringify({
+        image: profileImage.value,
+        introduction: introduction.value
+      })
+    })
+    const data = await response.json()
+    // handle successful update
+  } catch (error) {
+    // handle error
   }
+}
+
 </script>
