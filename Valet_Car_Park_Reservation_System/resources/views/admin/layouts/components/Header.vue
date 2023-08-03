@@ -68,12 +68,7 @@
     </el-form>
   </el-dialog>
     
-    <el-drawer 
-        v-model="showDrawer" 
-        title="Reset Password" 
-        size="30%"
-        :close-on-click-modal="false"
-    >
+    <el-drawer v-model="showDrawer" title="Reset Password" size="30%" :close-on-click-modal="false">
         <el-form ref="formRef" :rules="rules" :model="form" @keyup.enter="onSubmit" label-width="150px">
             <el-form-item label="Old Password" prop="oldPassword">
                 <el-input v-model="form.oldPassword" show-password placeholder="Please Input Old Password" type="password"/>
