@@ -5,6 +5,7 @@
             <div class="col-md-6">
                 <br>
                     <div class="container">
+                        <h2>Parking</h2>
                         <div class="scrollable-table">
                             <div class="row">
                             <!-- Use nested v-for to create the grid layout -->

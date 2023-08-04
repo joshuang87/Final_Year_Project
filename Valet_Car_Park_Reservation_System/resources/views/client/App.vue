@@ -30,5 +30,16 @@
   }
 
   </script>
+
   <style>
+
+    .zoom-effect {
+        text-decoration: none;
+        transition: transform 0.6s ease;
+    }
+
+    .zoom-effect:hover {
+        transform: scale(1.1);
+    }
+
   </style>
