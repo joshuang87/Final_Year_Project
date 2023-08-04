@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
             <div class="col-md-6">
                 <br>
@@ -35,7 +35,7 @@
             <div class="col-md-6 border-start">
                 <div class="container mt-5">
                     <div class="row justify-content-center">
-                        <div class="col-lg-6">
+                        <div class="col-lg-10">
                             <div class="card shadow">
                                 <div class="card-body">
                                     <h2 class="mb-4" style="text-align: center;">Book</h2>
@@ -45,7 +45,7 @@
                                             <label class="form-label" for="car_plate">Car Plate:</label>
                                             <input class="form-control" type="text" id="car_plate" v-model="booking.car_plate" required>
                                         </div>
-                                        <hr/>    
+                                        <hr/>
                                         <div class="form-group">
                                             <label class="form-label" for="phone_number">Phone Number:</label>
                                             <input class="form-control" type="tel" id="phone_number" v-model="booking.phone_number" required>
