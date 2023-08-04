@@ -47,11 +47,6 @@ const router = createRouter({
         component: () => import('V/clientPage/PaymentTesting.vue')
     },
 
-    {
-        path: '/booktest',
-        name: 'booktest',
-        component: () => import('V/clientPage/bookTest.vue')
-    },
   ]
 })
 
