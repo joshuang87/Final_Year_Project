@@ -1,6 +1,6 @@
 <template>
-
-    <div class="container-fluid">
+<div class="container-fluid">
+    <div class="container">
         <div class="row">
             <div class="col-md-6">
                 <br>
@@ -25,7 +25,7 @@
             <div class="col-md-6 border-start">
                 <div class="container mt-5">
                     <div class="row justify-content-center">
-                        <div class="col-lg-6">
+                        <div class="col-lg-10">
                             <div class="card shadow">
                                 <div class="card-body">
                                     <h2 class="mb-4" style="text-align: center;">Cart</h2>
@@ -53,6 +53,51 @@
                                             </button>
                                         </tbody>
                                     </table>
+                                    <h2 class="mb-4" style="text-align: center;">Book</h2>
+                                    <form class="form-container" @submit.prevent="redirectToStripe">
+
+                                        <div class="form-group">
+                                            <label class="form-label" for="car_plate">Car Plate:</label>
+                                            <input class="form-control" type="text" id="car_plate" v-model="booking.car_plate" required>
+                                        </div>
+                                        <hr/>
+                                        <div class="form-group">
+                                            <label class="form-label" for="phone_number">Phone Number:</label>
+                                            <input class="form-control" type="tel" id="phone_number" v-model="booking.phone_number" required>
+                                        </div>
+                                        <hr/>
+                                        <div class="form-group">
+                                            <label class="form-label" for="email">Email:</label>
+                                            <input class="form-control" type="email" id="email" v-model="booking.email">
+                                        </div>
+                                        <hr/>
+                                        <div class="form-group">
+                                            <label class="form-label" for="parking_space_id">Parking Space ID:</label>
+                                            <input class="form-control" type="text" id="parking_space_id" v-model="booking.parking_space_id" required>
+                                        </div>
+                                        <hr/>
+                                        <div class="form-group">
+                                            <label class="form-label" for="parking_lot_id">Parking Lot ID:</label>
+                                            <input class="form-control" type="text" id="parking_lot_id" v-model="booking.parking_lot_id" required>
+                                        </div>
+                                        <hr/>
+                                        <div class="form-group">
+                                            <label class="form-label" for="date">Date:</label>
+                                            <input class="form-control" type="date" id="date" v-model="booking.date" required>
+                                        </div>
+                                        <hr/>
+                                        <div class="form-group">
+                                            <label class="form-label" for="time">Time:</label>
+                                            <input class="form-control" type="time" id="time" v-model="booking.time" required>
+                                        </div>
+                                        <hr/>
+                                        <div class="form-group">
+                                            <label class="form-label" for="duration">Duration (hours):</label>
+                                            <input class="form-control" type="number" id="duration" v-model="booking.duration" required>
+                                        </div>
+                                        <hr/>
+                                        <button class="btn btn-primary" type="submit">Book Car Park</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -131,12 +176,11 @@
             </div>
         </div>
     </div>
-
+</div>
 </template>
 
 <script>
 import axios from 'axios';
-import { loadStripe } from '@stripe/stripe-js';
 import PaymentForm from 'V/components/PaymentForm.vue';
 // import { fetchAllParkingSpacesData } from 'V/api'
 
@@ -219,7 +263,7 @@ import PaymentForm from 'V/components/PaymentForm.vue';
 
             async redirectToStripe() {
                 // Make an API request to your Laravel backend
-                const response = await axios.post('api/reserve/payment',this.booking);
+                const response = await axios.post('api/reserve/checkout',this.booking);
                 const sessionId = response.data.sessionId;
                 // Redirect the user to the Stripe checkout page
                 const stripe = Stripe('pk_test_51MHkNwAAIANGTO9uk5MsvOteodjvYlAIBwMZRaTj71eMAtWISNGHrJD5UCzc2a7BAbQxn3QdUB6N8uvyvuriFCuP00ASOZdJWw');
@@ -255,17 +299,16 @@ import PaymentForm from 'V/components/PaymentForm.vue';
 
             submitBooking() {
                 this.redirectToStripe();
-                // this.startCheckout();
-                // axios.post('/api/reserve', this.booking)
-                //     .then(response => {
-                //         console.log(response)
-                //     // Handle successful booking and proceed to payment
-                //         // this.storePayment(response.reserve_id)
-                //     })
-                //     .catch(error => {
-                //     // Handle booking error
-                //     console.log(error);
-                //     });
+                axios.post('/api/reserve', this.booking)
+                    .then(response => {
+                        console.log(response)
+                    // Handle successful booking and proceed to payment
+                        // this.storePayment(response.reserve_id)
+                    })
+                    .catch(error => {
+                    // Handle booking error
+                    console.log(error);
+                    });
 
             },
 

@@ -6,6 +6,15 @@ const router = createRouter({
   routes: [
 
     {
+        path: '/:catchAll(.*)',
+        name: 'pageNotFound',
+        component: ()=> import('V/clientPage/404.vue'),
+        meta: {
+            title: '404 Page Not Found'
+        }
+    },
+
+    {
       path: '/',
       name: 'home',
       component: HomeView

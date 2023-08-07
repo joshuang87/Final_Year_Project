@@ -1,6 +1,6 @@
 <template>
-<div class="container-fluid">
-    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+<div class="container">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom zoom-effect">
 
       <RouterLink to="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none navbar-brand zoom-effect">
           <p>Home logo</p>
@@ -12,10 +12,11 @@
         <RouterLink to="/about"><li><a href="#" class="nav-link px-2 link-dark">About</a></li></RouterLink>
       </ul>
 
-      <div class="col-md-3 text-end">
-        <RouterLink to="/login"><button type="button" class="btn btn-outline-primary me-2">Login</button></RouterLink>
-        <RouterLink to="/signup"><button type="button" class="btn btn-primary">Sign-up</button></RouterLink>
-      </div>
+        <div class="col-md-3 text-end">
+            <RouterLink to="/login"><button type="button" class="btn btn-outline-primary me-2">Login</button></RouterLink>
+            <RouterLink to="/signup"><button type="button" class="btn btn-primary">Sign-up</button></RouterLink>
+
+        </div>
     </header>
 </div>
 </template>

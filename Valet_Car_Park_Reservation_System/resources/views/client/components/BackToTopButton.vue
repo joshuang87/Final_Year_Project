@@ -1,38 +1,43 @@
 <template>
-    <button @click="scrollToTop" class="btn btn-primary back-to-top" v-show="showButton">
+
+    <button @click="scrollToTop" class="btn btn-primary back-to-top zoom-effect" v-show="showButton">
       To Top
     </button>
+
 </template>
-  
+
   <script>
   export default {
     name: 'BackToTopButton',
     data() {
-      return {
-        showButton: false,
-        scrollThreshold: 300,
+        return {
+            showButton: false,
+            scrollThreshold: 300,
       };
     },
+
     mounted() {
-      window.addEventListener('scroll', this.handleScroll);
+        window.addEventListener('scroll', this.handleScroll);
     },
     beforeUnmount() {
-      window.removeEventListener('scroll', this.handleScroll);
+        window.removeEventListener('scroll', this.handleScroll);
     },
     methods: {
-      handleScroll() {
-        this.showButton = window.scrollY > this.scrollThreshold;
-      },
-      scrollToTop() {
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth',
-        });
-      },
+        handleScroll() {
+            this.showButton = window.scrollY > this.scrollThreshold;
+        },
+
+        scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth',
+            });
+        },
     },
+
   };
   </script>
-  
+
   <style>
   .back-to-top {
     position: fixed;
@@ -42,11 +47,10 @@
     z-index: 999;
   }
   </style>
- 
-  
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
+
