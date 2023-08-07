@@ -46,3 +46,17 @@ export default {
 }
 </style>
 
+  <style>
+  @media (min-width: 1024px) {
+    .about {
+      margin-left: 37%;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      text-align: center;
+    }
+    .btn{
+      align-items: center;
+    }
+  }
+  </style>

@@ -26,7 +26,7 @@ class ReserveController extends Controller
     public function booking(Request $request)
     {
         $data = [
-            'reserve_id' => Str::uuid()->toString(),
+            'reserve_id' => $request->reserve_id,
             'car_plate' => $request->car_plate,
             'phone_number' => $request->phone_number,
             'email' => $request->email,
@@ -68,8 +68,10 @@ class ReserveController extends Controller
 
         $this->reserve->storeReserveData($reserveData);
 
-        return response()->json([
-            'reserve_id' => $data['reserve_id']
-        ]);
+        // return response()->json([
+        //     'reserve_id' => $data['reserve_id']
+        // ]);
+
+        return redirect('http://127.0.0.1:8000/client#/');
     }
 }

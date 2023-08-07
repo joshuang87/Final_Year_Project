@@ -11,7 +11,7 @@
           <div class="card-body text-center col mt-5 mb-5">
               <h1 class="">Welcome to Our Website</h1>
               <p class="lead">Easy & Fast Reservation a parking space.</p>
-              <RouterLink to="/booking"><button class="btn btn-primary">Start Booking !</button></RouterLink>
+              <RouterLink to="/booking"><button class="btn btn-primary zoom-effect">Start Booking !</button></RouterLink>
           </div>
         </div>
       </div>

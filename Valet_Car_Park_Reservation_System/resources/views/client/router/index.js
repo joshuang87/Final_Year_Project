@@ -4,51 +4,49 @@ import HomeView from 'V/clientPage/HomeView.vue'
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
+
     {
       path: '/',
       name: 'home',
       component: HomeView
     },
+
     {
       path: '/about',
       name: 'about',
       component: () => import('V/clientPage/AboutView.vue')
     },
+
     {
       path: '/signup',
       name: 'signup',
       component: () => import('V/clientPage/SignUpView.vue')
     },
+
     {
       path: '/login',
       name: 'login',
       component: () => import('V/clientPage/LoginView.vue')
     },
-    {
-      path: '/tutorial',
-      name: 'tutorial',
-      component: () => import('V/clientPage/TutorialView.vue')
-    },
+
     {
       path: '/booking',
       name: 'booking',
       component: () => import('V/clientPage/BookingView.vue')
     },
+
     {
       path: '/payment',
       name: 'payment',
       component: () => import('V/clientPage/PaymentView.vue')
     },
+
     {
         path: '/paymentTest',
         name: 'paymentTest',
         component: () => import('V/clientPage/PaymentTesting.vue')
     },
-    {
-        path: '/booktest',
-        name: 'booktest',
-        component: () => import('V/clientPage/bookTest.vue')
-    },
+
   ]
 })
 

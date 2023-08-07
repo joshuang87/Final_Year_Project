@@ -1,17 +1,40 @@
 <template>
-    <h1>Login</h1>
 
-    <el-form ref="formRef" :rules="rules" :model="form" @keyup.enter="onSubmit">
-        <el-form-item label="Username" prop="name">
-            <el-input v-model="form.name" clearable />
-        </el-form-item>
-        <el-form-item label="Password" prop="password">
-            <el-input v-model="form.password" show-password />
-        </el-form-item>
-        <el-form-item>
-            <el-button type="primary" @click="onSubmit" :loading="loading">Login</el-button>
-        </el-form-item>
-    </el-form>
+    <head>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    </head>
+
+    <br><br><br><br><br><br><br><br>
+
+    <div class="container mt-5">
+       <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card shadow">
+                    <div class="card-body">
+
+                        <h1 class="mb-4" style="text-align: center;">Login</h1>
+
+                        <el-form ref="formRef" :rules="rules" :model="form" @keyup.enter="onSubmit">
+                            <el-form-item label="Username" prop="name">
+                                <el-input v-model="form.name" clearable />
+                            </el-form-item>
+                            <el-form-item label="Password" prop="password">
+                                <el-input v-model="form.password" show-password />
+                            </el-form-item>
+                            <el-form-item>
+                                    <el-button type="primary" @click="onSubmit" :loading="loading" class="toRight">Login</el-button>
+                            </el-form-item>
+                        </el-form>
+
+                    </div>
+                 </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
 </template>
 
 <script setup>
@@ -32,7 +55,7 @@
     const formRef = ref(null)
 
     const loading = ref(false)
-    
+
     // Setting The Rules For The Form
     const rules = {
         name: [
@@ -77,6 +100,7 @@
 </script>
 
 <style>
+
 .login-container {
     display: flex;
     flex-direction: column;
@@ -102,4 +126,8 @@
 .el-form-item__content {
     text-align: left;
 }
+
+.toRight {
+        margin-left: auto;
+    }
 </style>
