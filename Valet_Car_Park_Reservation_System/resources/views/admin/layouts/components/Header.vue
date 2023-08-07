@@ -69,20 +69,20 @@
   </el-dialog>
     
     <el-drawer v-model="showDrawer" title="Reset Password" size="30%" :close-on-click-modal="false">
-        <el-form ref="formRef" :rules="rules" :model="form" @keyup.enter="onSubmit" label-width="150px">
-            <el-form-item label="Old Password" prop="oldPassword">
-                <el-input v-model="form.oldPassword" show-password placeholder="Please Input Old Password" type="password"/>
-            </el-form-item>
-            <el-form-item label="New Password" prop="newPassword">
-                <el-input v-model="form.newPassword" show-password placeholder="Please Input New Password" type="password"/>
-            </el-form-item>
-            <el-form-item label="Confirm Password" prop="confirmPassword">
-                <el-input v-model="form.confirmPassword" show-password placeholder="Please Confirm Your Password"/>
-            </el-form-item>
-            <el-form-item>
-                <el-button type="primary" @click="onSubmit"  :loading="loading">Reset</el-button>
-            </el-form-item>
-        </el-form>
+            <el-form ref="formRef" :rules="rules" :model="form" @keyup.enter="onSubmit" label-width="150px">
+                <el-form-item label="Old Password" prop="oldPassword">
+                    <el-input v-model="form.oldPassword" show-password placeholder="Please Input Old Password" type="password"/>
+                </el-form-item>
+                <el-form-item label="New Password" prop="newPassword">
+                    <el-input v-model="form.newPassword" show-password placeholder="Please Input New Password" type="password"/>
+                </el-form-item>
+                <el-form-item label="Confirm Password" prop="confirmPassword">
+                    <el-input v-model="form.confirmPassword" show-password placeholder="Please Confirm Your Password"/>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="onSubmit"  :loading="loading">Reset</el-button>
+                </el-form-item>
+            </el-form>
     </el-drawer>
 </template>
 
