@@ -25,11 +25,8 @@
         "@iconify/iconify": "^3.1.0",
         "@iconify/vue": "^4.1.1",
         "@popperjs/core": "^2.11.7",
-<<<<<<< HEAD
-=======
         "@stripe/stripe-js": "^1.54.0",
         "@vue/runtime-core": "^3.3.4",
->>>>>>> 89f6fcff0a0aee0f4332c27e3e304faafd345f81
         "@vueuse/core": "^10.0.2",
         "@vueuse/integrations": "^10.0.2",
         "animate.css": "^4.1.1",
