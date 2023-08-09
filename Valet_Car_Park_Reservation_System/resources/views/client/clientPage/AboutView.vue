@@ -18,9 +18,7 @@ export default {
   data(){
     return {
       images:[
-        "../../../picture/car parking system.jpg",
-        "../../../picture/OIP.jpeg",
-        "../../../picture/Smart-Parking-System.jpg",
+        '../picture/OIP.jpeg'
       ]
     }
   }
