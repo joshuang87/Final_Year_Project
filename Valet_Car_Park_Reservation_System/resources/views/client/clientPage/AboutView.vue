@@ -12,8 +12,7 @@
     <img v-for="(image, index) in images" :key="index" :src="image" />
   </div>  
 </div>
-</template>
-
+</template><s></s>
 <script>
 export default {
   data(){
