@@ -23,7 +23,11 @@ class ParkingSpaceFactory extends Factory
             'close_time' => null,
             'parking_lot_id' => fake()->numerify('G#'),
             'car_plate' => null,
-            'client_id' => null
+            'client_id' => null,
+
+            'x' => fake()->numberBetween(0,11),
+            'y' => fake()->numberBetween(0,6),
+            'i' => fake()->name()
         ];
     }
 }

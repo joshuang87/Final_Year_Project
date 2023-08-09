@@ -16,7 +16,8 @@
                      :row-height="80"
                      :is-draggable="draggable"
                      :is-resizable="resizable"
-                     :vertical-compact="true"
+                     :vertical-compact="false"
+                     :prevent-collision="true"
                      :use-css-transforms="true"
         >
             <grid-item v-for="item in layout"
@@ -36,16 +37,38 @@
 </template>
 
 <script setup>
+    import axios from 'axios';
     import { ref,onMounted} from 'vue'
+    import { useStore } from 'vuex'
 
-    const layout = ref([
-        { x: 0, y: 0, w: 2, h: 2, i: "0" },
-        { x: 2, y: 0, w: 2, h: 2, i: "1" },
-        { x: 4, y: 0, w: 2, h: 2, i: "2" },
-        { x: 6, y: 0, w: 2, h: 2, i: "3" },
-        { x: 8, y: 0, w: 2, h: 2, i: "4" },
-    ])
+    const store = useStore()
+    let parkingLotId = store.state.parkingLotId
+    const getLayout = async() => {
+        try {
+            const response = await axios.get('api/parkingSpace/filter/' + parkingLotId)
+            const data = response.data
 
+            return data
+        }
+        catch(error) {
+            console.log(error)
+        }
+    }
+
+    const pLotLayout = await getLayout()
+
+    const layout = ref(
+        // [
+        //     { x: 0, y: 0, w: 1, h: 1, i: "haha" },
+        //     { x: 1, y: 0, w: 1, h: 1, i: "1" },
+        //     { x: 2, y: 0, w: 1, h: 1, i: "2" },
+        //     { x: 3, y: 0, w: 1, h: 1, i: "3" },
+        //     { x: 4, y: 0, w: 1, h: 1, i: "4" },
+        // ]
+        pLotLayout
+    )
+
+    console.log(pLotLayout);
     const draggable = ref(true)
     const resizable = ref(true)
     let colNum = 12
