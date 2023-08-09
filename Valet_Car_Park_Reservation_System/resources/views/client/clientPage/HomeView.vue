@@ -24,16 +24,15 @@ import home from 'V/components/home.vue';
 
 <style>
 @media (min-width: 1024px) {
-    .home {
-    margin:150px;
-  }
-}
+        .home {
+        margin:150px;
+        }
+    }
+    .titleBox{
+        margin-left: 150px;
+        margin-right: 150px;
+        margin-top: 40px;
+        margin-bottom: 40px;
+    }
 
-
-  .titleBox{
-    margin-left: 150px;
-    margin-right: 150px;
-    margin-top: 40px;
-    margin-bottom: 40px;
-  }
 </style>
