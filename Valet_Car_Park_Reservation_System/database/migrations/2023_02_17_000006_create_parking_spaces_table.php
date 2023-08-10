@@ -23,6 +23,12 @@ return new class extends Migration
             $table->string('client_id')->nullable()->default(null);
             $table->foreign('client_id')->references('client_id')->on('clients')->cascadeOnUpdate()->cascadeOnDelete();
             $table->boolean('status')->default(true);
+
+            $table->integer('x');
+            $table->integer('y');
+            $table->integer('w')->default(1);
+            $table->integer('h')->default(1);
+            $table->string('i');
         });
     }
 

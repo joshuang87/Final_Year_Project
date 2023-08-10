@@ -62,3 +62,36 @@
         }
     }
 </script>
+
+<style>
+.parking-lot-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.details-container {
+    width: 400px;
+    margin-top: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h4 {
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+hr {
+    margin: 10px 0;
+}
+
+p {
+    margin: 5px 0;
+}
+</style>

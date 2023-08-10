@@ -41,4 +41,5 @@ export default defineConfig({
             'V': path.resolve(__dirname,'resources/views/client')
         },
     },
+    transpileDependencies: ['vue-grid-layout'],
 });

@@ -1,189 +1,183 @@
 <template>
-    <div id="content">
-        <grid-layout
-            ref="gridlayout" :layout.sync="layout"
-            :col-num="30"
-            :row-height="120"
-            class="layout"
+    <div>
+        <div class="layoutJSON">
+            Displayed as <code>[x, y, w, h]</code>:
+            <div class="columns">
+                <div class="layoutItem" v-for="item in layout" :key="item.i">
+                    <b>{{item.i}}</b>: [{{item.x}}, {{item.y}}, {{item.w}}, {{item.h}}]
+                </div>
+            </div>
+        </div>
+        <button @click="addItem">Add an item dynamically</button>
+        <input type="checkbox" v-model="draggable" /> Draggable
+        <input type="checkbox" v-model="resizable" /> Resizable
+        <grid-layout :layout.sync="layout"
+                     :col-num="colNum"
+                     :row-height="80"
+                     :is-draggable="draggable"
+                     :is-resizable="resizable"
+                     :vertical-compact="false"
+                     :prevent-collision="true"
+                     :use-css-transforms="true"
         >
-            <template #default="{ gridItemProps }">
-                <grid-item
-                    v-for="item in layout"
-                    :key="item.i"
-                    v-bind="gridItemProps"
-                    :x="item.x"
-                    :y="item.y"
-                    :w="item.w"
-                    :h="item.h"
-                    :i="item.i"
-                >
-                    <div class="item">
-                        <label>
-                            {{ item.i }}
-                        </label>
-                        <span @click="del(item.i)">
-                            删除x
-                        </span>
-                    </div>
-                </grid-item>
-            </template>
+            <grid-item v-for="item in layout"
+                       :static="item.static"
+                       :x="item.x"
+                       :y="item.y"
+                       :w="item.w"
+                       :h="item.h"
+                       :i="item.i"
+                       :key="item.i"
+            >
+                <span class="text">{{item.i}}</span>
+                <span class="remove" @click="removeItem(item.i)">x</span>
+            </grid-item>
         </grid-layout>
     </div>
-    <div class="droppable-element" @drag="drag" @dragend="dragend" draggable="true">Add Box</div>
 </template>
-  
+
 <script setup>
-    import { onMounted, ref } from "vue"
-    import { GridLayout, GridItem } from "vue3-drr-grid-layout"
-    import "vue3-drr-grid-layout/dist/style.css"
+    import axios from 'axios';
+    import { ref,onMounted} from 'vue'
+    import { useStore } from 'vuex'
 
-    let mouseXY = {"x": null, "y": null};
-    let DragPos = {"x": null, "y": null, "w": 1, "h": 1, "i": null};
+    const store = useStore()
+    let parkingLotId = store.state.parkingLotId
+    const getLayout = async() => {
+        try {
+            const response = await axios.get('api/parkingSpace/filter/' + parkingLotId)
+            const data = response.data
 
-    onMounted(()=>{
-        document.addEventListener("dragover", function (e) {
-            mouseXY.x = e.clientX;
-            mouseXY.y = e.clientY;
-            console.log(mouseXY.x,mouseXY.y)
-        });
+            return data
+        }
+        catch(error) {
+            console.log(error)
+        }
+    }
 
-        // document.addEventListener('mousemove', function(e) {
-        //     console.log('Mouse position:', e.clientX, e.clientY);
-        // });
+    const pLotLayout = await getLayout()
 
+    const layout = ref(
+        // [
+        //     { x: 0, y: 0, w: 1, h: 1, i: "haha" },
+        //     { x: 1, y: 0, w: 1, h: 1, i: "1" },
+        //     { x: 2, y: 0, w: 1, h: 1, i: "2" },
+        //     { x: 3, y: 0, w: 1, h: 1, i: "3" },
+        //     { x: 4, y: 0, w: 1, h: 1, i: "4" },
+        // ]
+        pLotLayout
+    )
+
+    console.log(pLotLayout);
+    const draggable = ref(true)
+    const resizable = ref(true)
+    let colNum = 12
+    let index = 0
+
+    onMounted(() => {
+        index = layout.value.length
     })
-    const layout = ref([
-        { x: 0, y: 0, w: 2, h: 2, i: 0 },
-        { x: 2, y: 0, w: 2, h: 2, i: 1 },
-        { x: 4, y: 0, w: 2, h: 2, i: 2 },
-        { x: 0, y: 1, w: 6, h: 2, i: 3 },
-    ]);
-  
-  //删除单元格
-    const del = (i) => {
-        layout.value = layout.value.filter((a) => a.i != i);
-    };
-    
-    //添加一个单元格
-    const add = () => {
-        let y = 0;
-        layout.value.forEach((a) => {
-        if (a.y > y) y = a.y + 1;
-        });
+
+    const addItem = () => {
+        // Add a new item. It must have a unique key!
         layout.value.push({
-        x: 0,
-        y: y,
-        w: 2,
-        h: 2,
-        i: layout.value.length,
+            x: (layout.value.length * 2) % (colNum || 12),
+            y: layout.value.length + (colNum || 12), // puts it at the bottom
+            w: 2,
+            h: 2,
+            i: index,
         });
-    };
-
-    const drag = (e) => {
-
-        // let parentRect = document.getElementById('content').getBoundingClientRect()
-
-        // let mouseInGrid = false
-
-        // if (((mouseXY.x > parentRect.left) && (mouseXY.x < parentRect.right)) && ((mouseXY.y > parentRect.top) && (mouseXY.y < parentRect.bottom))) {
-        //     mouseInGrid = true
-        // }
-
-        if (mouseInGrid === true && (layout.findIndex(item => item.i === 'drop')) === -1) {
-            layout.push({
-                x: (this.layout.length * 2) % (this.colNum || 12),
-                y: this.layout.length + (this.colNum || 12), // puts it at the bottom
-                w: 1,
-                h: 1,
-                i: 'drop',
-            });
-        }
-
-        let index = this.layout.findIndex(item => item.i === 'drop')
-
-        // if (index !== -1) {
-
-        //     let el = this.$refs.gridlayout.$children[index];
-
-        //     el.dragging = {"top": mouseXY.y - parentRect.top, "left": mouseXY.x - parentRect.left};
-            
-        //     let new_pos = el.calcXY(mouseXY.y - parentRect.top, mouseXY.x - parentRect.left);
-
-        //     if (mouseInGrid === true) {
-        //         this.$refs.gridlayout.dragEvent('dragstart', 'drop', new_pos.x, new_pos.y, 1, 1);
-        //         DragPos.i = String(index);
-        //         DragPos.x = this.layout[index].x;
-        //         DragPos.y = this.layout[index].y;
-        //     }
-
-            if (mouseInGrid === false) {
-                this.$refs.gridlayout.dragEvent('dragend', 'drop', new_pos.x, new_pos.y, 1, 1);
-                this.layout = this.layout.filter(obj => obj.i !== 'drop');
-            }
-
-        // }
+        // Increment the counter to ensure key is always unique.
+        index++;
     }
 
-    // const dragend = (e) => {
-
-    //     let parentRect = document.getElementById('content').getBoundingClientRect()
-
-    //     let mouseInGrid = false
-
-    //     if (((mouseXY.x > parentRect.left) && (mouseXY.x < parentRect.right)) && ((mouseXY.y > parentRect.top) && (mouseXY.y < parentRect.bottom))) {
-    //             mouseInGrid = true;
-    //     }
-
-        if (mouseInGrid === true) {
-            alert(`Dropped element props:\n${JSON.stringify(DragPos, ['x', 'y', 'w', 'h'], 2)}`);
-            this.$refs.gridlayout.dragEvent('dragend', 'drop', DragPos.x, DragPos.y, 1, 1);
-            this.layout = this.layout.filter(obj => obj.i !== 'drop');
-
-            this.layout.push({
-                    x: DragPos.x,
-                    y: DragPos.y,
-                    w: 1,
-                    h: 1,
-                    i: DragPos.i,
-                });
-                this.$refs.gridLayout.dragEvent('dragend', DragPos.i, DragPos.x,DragPos.y,1,1);
-                try {
-                    this.$refs.gridLayout.$children[this.layout.length].$refs.item.style.display="block";
-                } catch {
-                }
-        }
+    const removeItem = (val) => {
+        const index = layout.value.map(item => item.i).indexOf(val);
+        layout.value.splice(index, 1);
     }
+
 </script>
-  
-<style scoped>
 
-    .droppable-element {
-        width: 120px;
-        text-align: center;
-        background: #fdd;
-        border: 1px solid black;
-        margin: 10px 0;
-        padding: 10px;
-    }
-    .item {
-        display: flex;
-        justify-content: space-between;
-    }
-    .item > span {
-        margin-left: 10px;
-        padding: 1px;
-        border: solid 1px #ddd;
-        cursor: pointer;
-        background-color: rgb(171, 171, 171);
-        color: #000;
-        font-size: 11px;
-    }
+<style>
+.layoutJSON {
+    background: #ddd;
+    border: 1px solid black;
+    margin-top: 10px;
+    padding: 10px;
+}
 
-    .layout {
-        background-color: #000;
-        background-color: rgb(171, 171, 171);
-        color: #000;
-        font-size: 11px;
-    }
-    
+.columns {
+    -moz-columns: 120px;
+    -webkit-columns: 120px;
+    columns: 120px;
+}
+
+/*************************************/
+
+.remove {
+    position: absolute;
+    right: 2px;
+    top: 0;
+    cursor: pointer;
+}
+
+.vue-grid-layout {
+    background: #eee;
+}
+
+.vue-grid-item:not(.vue-grid-placeholder) {
+    background: #ccc;
+    border: 1px solid black;
+}
+
+.vue-grid-item .resizing {
+    opacity: 0.9;
+}
+
+.vue-grid-item .static {
+    background: #cce;
+}
+
+.vue-grid-item .text {
+    font-size: 24px;
+    text-align: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    height: 100%;
+    width: 100%;
+}
+
+.vue-grid-item .no-drag {
+    height: 100%;
+    width: 100%;
+}
+
+.vue-grid-item .minMax {
+    font-size: 12px;
+}
+
+.vue-grid-item .add {
+    cursor: pointer;
+}
+
+.vue-draggable-handle {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 0;
+    left: 0;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10'><circle cx='5' cy='5' r='5' fill='#999999'/></svg>") no-repeat;
+    background-position: bottom right;
+    padding: 0 8px 8px 0;
+    background-repeat: no-repeat;
+    background-origin: content-box;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+
 </style>

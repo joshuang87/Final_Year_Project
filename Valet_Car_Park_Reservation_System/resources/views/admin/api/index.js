@@ -7,3 +7,7 @@ export function getTotalReservation() {
 export function getData() {
     return axios.get('/api/test')
 }
+
+export function getParkingLotData() {
+    return axios.get('api/parkingLot/allData')
+}

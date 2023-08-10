@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\ParkingSpace;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Repositories\Interfaces\AdminInterfaces\ParkingLotRepositoryInterface;
 use App\Repositories\Interfaces\AdminInterfaces\ParkingSpaceRepositoryInterface;
-use Illuminate\Http\Request;
 
 class ParkingSpaceController extends Controller
 {
@@ -41,5 +43,15 @@ class ParkingSpaceController extends Controller
         return view('test.adminAllParkingData',[
             'parkingSpaces' => $this->parkingLot->showParkingLots()
         ]);
+    }
+ 
+    public function getLayout($parkingLotId)
+    {   
+        return DB::table('parking_spaces')->where('parking_lot_id', $parkingLotId)
+                                            ->get(['x', 'y', 'w', 'h', 'i'])
+                                            ->map(function ($parkingSpace) {
+                                                return (array) $parkingSpace; // Convert to associative array
+                                            });
+    
     }
 }
