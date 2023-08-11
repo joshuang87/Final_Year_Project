@@ -10,7 +10,6 @@
 
           <BackToTopButton />
 
-          <br><br>
           <Footer />
   </template>
 

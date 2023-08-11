@@ -5,6 +5,7 @@
     </head>
 
 <br><br><br><br><br><br><br><br><br><br>
+
     <div class="container zoom-effect">
         <div class="row">
             <div class="col-md-8 offset-md-2">
@@ -19,33 +20,69 @@
         </div>
     </div>
 
-  <br><br><br><br><br><br><br><br><br><br>
-
+  <section :class="['scroll-transition', { active: scrolled }]"><about/></section>
 
 </template>
 
 
 <script>
+  import about from 'V/clientPage/AboutView.vue';
 
   export default{
+    components: {
+      about,
+    },
+
     data(){
       return{
-        homeSizeClass:'home'
+        scrolled: false,
       }
-    }
+    },
+
+    mounted() {
+      window.addEventListener('scroll', this.handleScroll);
+    },
+    beforeDestroy() {
+      window.removeEventListener('scroll', this.handleScroll);
+    },
+
+    methods: {
+      handleScroll() {
+        const scrollY = window.scrollY;
+        const transitionStart = 100;
+
+        if (scrollY >= transitionStart && !this.scrolled) {
+          this.scrolled = true;
+        }
+        else if (scrollY < transitionStart && this.scrolled) {
+          this.scrolled = false;
+        }
+      },
+    },
+
   }
 
 </script>
 
 <style>
-  .home {
-        margin:150px;
+
+  .centered-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
   }
 
-  .titleBox{
-        margin-left: 150px;
-        margin-right: 150px;
-        margin-top: 40px;
-        margin-bottom: 40px;
+  .scroll-transition {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 3s ease, transform 3s ease;
   }
+
+  .scroll-transition.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
 </style>
