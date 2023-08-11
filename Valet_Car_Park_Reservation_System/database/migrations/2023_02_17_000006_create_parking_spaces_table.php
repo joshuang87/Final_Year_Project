@@ -27,7 +27,7 @@ return new class extends Migration
             $table->integer('x');
             $table->integer('y');
             $table->integer('w')->default(1);
-            $table->integer('h')->default(1);
+            $table->integer('h')->default(2);
             $table->string('i');
         });
     }

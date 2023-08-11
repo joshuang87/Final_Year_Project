@@ -63,7 +63,7 @@ const store = createStore({
         },
         getParkingLotId({ commit }, parkingLotId) {
             commit('setParkingLotId',parkingLotId)
-        }
+        } 
     }
 })
 
