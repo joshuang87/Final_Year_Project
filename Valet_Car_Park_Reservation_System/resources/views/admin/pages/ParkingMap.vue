@@ -55,18 +55,7 @@
         null
     )
 
-    const draggable = ref(true)
-    const resizable = ref(true)
-    const collision = ref(true)
-
-    let colNum = 12
-    let index = 0
-
-    onMounted(async() => {
-        // const pLotLayout = await getLayout()
-        // layout.value = pLotLayout
-
-        let parkingLotId = ref(store.state.parkingLotId)
+    let parkingLotId = ref(store.state.parkingLotId)
 
         const getLayout = async() => {
             try {
@@ -83,6 +72,35 @@
         const pLotLayout = await getLayout()
 
         layout.value = pLotLayout
+
+    const draggable = ref(true)
+    const resizable = ref(true)
+    const collision = ref(true)
+
+    let colNum = 12
+    let index = 0
+
+    onMounted(async() => {
+        // const pLotLayout = await getLayout()
+        // layout.value = pLotLayout
+
+        // let parkingLotId = ref(store.state.parkingLotId)
+
+        // const getLayout = async() => {
+        //     try {
+        //         const response = await axios.get('api/parkingSpace/filter/' + parkingLotId.value)
+        //         const data = response.data
+
+        //         return data
+        //     }
+        //     catch(error) {
+        //         console.log(error)
+        //     }
+        // }
+
+        // const pLotLayout = await getLayout()
+
+        // layout.value = pLotLayout
         
         index = layout.value.length
     })
