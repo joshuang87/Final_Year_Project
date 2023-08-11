@@ -47,11 +47,14 @@ class ParkingSpaceController extends Controller
  
     public function getLayout($parkingLotId)
     {   
-        return DB::table('parking_spaces')->where('parking_lot_id', $parkingLotId)
-                                            ->get(['x', 'y', 'w', 'h', 'i'])
-                                            ->map(function ($parkingSpace) {
-                                                return (array) $parkingSpace; // Convert to associative array
-                                            });
+        // return DB::table('parking_spaces')->where('parking_lot_id', $parkingLotId)
+        //                                     ->get(['x', 'y', 'w', 'h', 'i'])
+        //                                     ->map(function ($parkingSpace) {
+        //                                         return (array) $parkingSpace; // Convert to associative array
+        //                                     });
+
+        return ParkingSpace::all();
+        // dd(ParkingSpace::all());
     
     }
 }

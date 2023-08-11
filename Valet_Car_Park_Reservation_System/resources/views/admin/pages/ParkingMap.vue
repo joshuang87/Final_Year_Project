@@ -18,7 +18,7 @@
                        :h="item.h"
                        :i="item.i"
                        :key="item.i"
-                       @click="test"
+                       @click="test(item.i)"
             >
                 <span class="text">
                     {{item.i}}
@@ -103,6 +103,7 @@
         // layout.value = pLotLayout
         
         index = layout.value.length
+        console.log(pLotLayout);
     })
 
     watchEffect(async() => {
@@ -113,7 +114,7 @@
             try {
                 const response = await axios.get('api/parkingSpace/filter/' + parkingLotId.value)
                 const data = response.data
-
+                // console.log(data);
                 return data
             }
             catch(error) {
@@ -124,6 +125,14 @@
         const pLotLayout = await getLayout()
 
         layout.value = pLotLayout
+
+        // for(i = 0) {
+
+        // }
+
+        const spData = layout.value.filter(item => item.parking_lot_id === 'G0')
+
+        console.log(spData);
 
     })
 
@@ -147,8 +156,10 @@
         layout.value.splice(index, 1)
     }
 
-    const test = () => {
-        console.log('test');
+    const test = (val) => {
+        const index = layout.value.map(item => item.i).indexOf(val)
+        console.log(pLotLayout[index])
+        // layout.value.splice(index, 1)
     }
 
 </script>
