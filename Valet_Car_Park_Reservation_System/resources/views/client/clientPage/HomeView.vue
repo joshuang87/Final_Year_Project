@@ -157,7 +157,7 @@ beforeDestroy() {
     },
     handleScroll() {
       const scrollY = window.scrollY;
-      const transitionStart = 450;
+      const transitionStart = 300;
 
       if (scrollY >= transitionStart && !this.scrolled) {
         this.scrolled = true;
@@ -190,6 +190,13 @@ beforeDestroy() {
         background-color: #99ccff;
     }
 
+    .colored-text h2 {
+  color: #f80707,#ffdd99, #ffffcc,#ccffcc,#99ccff,#6447e6,#a42bfa; /* Set your desired color for the heading */
+}
+
+.colored-text p {
+  color: #00ff00; /* Set your desired color for the paragraph */
+}
     .centered-content {
   display: flex;
   flex-direction: column;

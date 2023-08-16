@@ -38,7 +38,7 @@
               :xlink:href="member.image"
             />
           </svg>
-          <h2 style="color:darkblue">{{ member.name }}</h2>
+          <h2>{{ member.name }}</h2>
           <p>{{ member.role }}</p>
         </div>
       </div>
@@ -47,11 +47,11 @@
 
         <div class="row featurette">
           <div class="col-md-7">
-            <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It’ll blow your mind.</span></h2>
-            <p class="lead">Some great placeholder content for the first featurette here. Imagine some exciting prose here.</p>
+            <h2 class="featurette-heading">Our Commision</h2>
+            <p class="lead">Our mission is to create a convenient and comfortable parking experience for every driver in the city. Through innovative technology and user-friendly solutions, we are committed to eliminating parking challenges and making your parking process smoother and more enjoyable. Our goal is to save you time and energy, allowing you to focus on your day-to-day business without the hassle of parking. Whether you are a busy weekday commuter or a casual weekend driver, we are committed to providing efficient, safe and convenient parking solutions that create a hassle-free parking experience.</p>
           </div>
           <div class="col-md-5">
-            <!-- Add your image or any content here -->
+            <img style="width: 100%; height: 90%; object-fit: cover " src="images/commission.png">
           </div>
         </div>
 
@@ -59,11 +59,11 @@
 
         <div class="row featurette">
           <div class="col-md-7 order-md-2">
-            <h2 class="featurette-heading">Oh yeah, it’s that good. <span class="text-muted">See for yourself.</span></h2>
-            <p class="lead">Another featurette? Of course. More placeholder content here to give you an idea of how this layout would work with some actual real-world content in place.</p>
+            <h2 class="featurette-heading">Our Story</h2>
+            <p class="lead">TThe story starts with TAN Karma meeting NG, an editing genius known for hard work. They befriended CHONG, a tech expert. Despite being a "soy sauce" player in tech talks, TAN's humor and optimism brightened the team. TAN proposed a solution to a common problem: finding parking spaces. NG handled back-end development, CHONG designed the app. The team's effort birthed a smart parking system, showcasing their collaboration, innovation, and hard work.</p>
           </div>
           <div class="col-md-5 order-md-1">
-            <!-- Add your image or any content here -->
+            <img style="width: 100%; height: 80%; object-fit: cover" src="images/our.png" alt="">
           </div>
         </div>
 
@@ -71,11 +71,11 @@
 
         <div class="row featurette">
           <div class="col-md-7">
-            <h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
-            <p class="lead">And yes, this is the last block of representative placeholder content. Again, not really intended to be actually read, simply here to give you a better view of what this would look like with some actual content. Your content.</p>
+            <h2 class="featurette-heading">Our Location</h2>
+            <p class="lead"></p>
           </div>
           <div class="col-md-5">
-            <!-- Add your image or any content here -->
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7976.789054662156!2d103.67153374062367!3d1.5307258438197593!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da73c109632e0b%3A0x74cda51bf210c304!2z5Y2X5pa55aSn5a2m5a2m6Zmi!5e0!3m2!1szh-CN!2smy!4v1692172763381!5m2!1szh-CN!2smy" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
           </div>
         </div>
         <hr class="featurette-divider">
