@@ -1,7 +1,7 @@
 <template>
    <div style="background: linear-gradient(to bottom, transparent,  #ffcccc, #ffcccc, #ffbbdd,#ffbbdd,#eebbff)"><home /></div>
 
-<div class="scroll-container" style="background-color:white">
+<div class="scroll-container">
 <!-- 添加滚动渐变效果的内容 -->
 <!-- <section :class="['scroll-transition', { active: scrolled }]">内容</section> -->
 
@@ -135,12 +135,6 @@ import home from 'V/components/home.vue';
   },
   data() {
     return {
-      carouselImages: [
-        "images/Smart-Parking-System.jpg",
-        "images/OIP.jpeg",
-        "images/car parking system.jpg",
-        // Add more image paths as needed
-      ],
       activeIndex: 0,
       scrolled: false,
       scrolledSections:[],

@@ -26,13 +26,7 @@
 
 
 <script>
-  import about from 'V/clientPage/AboutView.vue';
-
   export default{
-    components: {
-      about,
-    },
-
     data(){
       return{
         scrolled: false,
