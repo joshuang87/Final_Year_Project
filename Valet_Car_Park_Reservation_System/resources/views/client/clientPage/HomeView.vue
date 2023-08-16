@@ -6,9 +6,9 @@
 <!-- <section :class="['scroll-transition', { active: scrolled }]">内容</section> -->
 
 <!-- 添加滚动渐变效果的左图右字内容 -->
- <section :class="['scroll-transition', { active: scrolled }]" style="background: linear-gradient(to bottom, #eebbff,#ccbbff)"> 
-  <div class="container"> 
-    <div class="row"> 
+ <section  style="background: linear-gradient(to bottom, #eebbff,#ccbbff)"> 
+  <div class="container "> 
+    <div class="row" :class="['scroll-transition', { active: scrolled }]"> 
       <!-- 左边图片 --> 
       <div class="col-md-6"> 
         <img src="images/Intro1.png" alt="Image" class="w-100" /> 
@@ -39,9 +39,9 @@
 
 <!-- 分割行 --> 
 <!-- 添加滚动渐变效果的右图左字内容 --> 
-<section :class="['scroll-transition', { active: scrolled }]" style="background: linear-gradient(to bottom, #ccbbff,#aaccff,#aaccff)"> 
+<section style="background: linear-gradient(to bottom, #ccbbff,#aaccff,#aaccff)"> 
   <div class="container"> 
-    <div class="row"> 
+    <div class="row" :class="['scroll-transition', { active: scrolled }]"> 
     <!-- 左边介绍 --> 
     <div class="col-md-6"> 
       <h2>Payment Sytem </h2> 
@@ -70,9 +70,9 @@
 </div> 
 </section> 
 
-<section :class="['scroll-transition', { active: scrolled }]" style="background: linear-gradient(to bottom,#aaccff, #99ddff)"> 
+<section style="background: linear-gradient(to bottom,#aaccff, #99ddff)"> 
   <div class="container"> 
-    <div class="row"> 
+    <div class="row" :class="['scroll-transition', { active: scrolled }]"> 
       <!-- 左边图片 --> 
       <div class="col-md-6"> 
         <img src="images/Intro3.png" alt="Image" class="w-100" /> 
@@ -99,9 +99,9 @@
   </div> 
 </section>
 
-<section :class="['scroll-transition', { active: scrolled }]" style="background: linear-gradient(to bottom, #99ddff, #99ffff,#99ffff,transparent)"> 
+<section style="background: linear-gradient(to bottom, #99ddff, #99ffff,#99ffff,transparent)"> 
   <div class="container"> 
-    <div class="row"> 
+    <div class="row" :class="['scroll-transition', { active: scrolled }]"> 
     <!-- 左边介绍 --> 
     <div class="col-md-6"> 
       <h2>Cancellation System </h2> 
