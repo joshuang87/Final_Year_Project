@@ -12,13 +12,13 @@
         </el-icon>
     </div>
 
-    <div class="p-2">
-        <el-avatar
-            :size="35"
-            src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
-            @click="openProfileModal"
-        />
-    </div>
+     <!-- 添加头像点击事件，弹出管理员个人信息对话框 -->
+  <div class="p-2" @click="openAdminProfileDialog">
+    <el-avatar
+      :size="35"
+      src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+    />
+  </div>
     <div class="d-flex align-items-center p-2">
         <el-dropdown @command="handleCommand">
             <span class="d-flex align-items-center">
@@ -36,14 +36,66 @@
             </template>
         </el-dropdown>
     </div>
+  
+  <!-- 管理员个人信息对话框 -->
+  <el-dialog
+    title="Admin Profile"
+    v-model="adminProfileDialogVisible"
+    @close="closeAdminProfileDialog"
+    width="30%"
+  >
+    <div class="d-flex justify-content-center align-items-center flex-column">
+      <img
+        src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+        class="rounded-circle"
+        style="width: 100px; height: 100px;"
+      />
+      <h4 class="mt-2">Admin</h4>
+    </div>
+    <el-form>
+      <el-form-item label="User Name">
+        <p>User Name</p>
+      </el-form-item>
+      <el-form-item label="User Email">
+        <p>User Email</p>
+      </el-form-item>
+      <el-form-item label="Birth Month">
+        <p>January</p>
+      </el-form-item>
+      <el-form-item label="Introduction">
+        <el-input
+          v-model="adminIntroduction"
+          type="textarea"
+          :rows="4"
+          readonly
+        ></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="openProfileModal">Edit Profile</el-button>
 
+        <el-upload
+          class="avatar-uploader"
+          :action="uploadEndpoint"
+          :show-file-list="false"
+          :before-upload="beforeAvatarUpload"
+          :on-success="handleAvatarSuccess"
+          :on-error="handleAvatarError"
+        >
+          <img v-if="profileImage" :src="profileImage" class="avatar">
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          <br><br><br><br><br>
+          <el-button type="primary">Change Your Image</el-button>
+        </el-upload>
+      </el-form-item>
+    </el-form>
+  </el-dialog>
     <el-dialog
     title="Edit Profile"
     v-model="profileModalVisible"
     @close="closeProfileModal"
     width="30%"
     >
-    <!-- 编写头像修改和自我简介的表单代码 -->
+     <!-- 编写头像修改和自我简介的表单代码 -->
     <el-form>
       <el-form-item label="Profile Image">
         <el-upload
@@ -56,7 +108,7 @@
         >
           <img v-if="profileImage" :src="profileImage" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-          <button>Upload image</button>
+          <button>Change Your Image</button>
         </el-upload>
             </el-form-item>
             <el-form-item label="Introduction">
@@ -140,6 +192,26 @@
 
   const closeProfileModal = () => {
     profileModalVisible.value = false
+  }
+
+    // 管理员个人信息对话框相关逻辑
+  const adminProfileDialogVisible = ref(false)
+  const adminIntroduction = ref('Administrator Introduction')
+
+  const openAdminProfileDialog = () => {
+    adminProfileDialogVisible.value = true
+  }
+
+  const closeAdminProfileDialog = () => {
+    adminProfileDialogVisible.value = false
+  }
+
+  const openAdminEditProfileDialog = () => {
+    // Logic to open the edit profile dialog for admin
+  }
+
+  const openAdminChangeAvatarDialog = () => {
+    // Logic to open the change avatar dialog for admin
   }
 
  // 头像上传相关逻辑
