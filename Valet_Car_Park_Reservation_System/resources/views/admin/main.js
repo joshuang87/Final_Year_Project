@@ -7,6 +7,7 @@ import store from '$/store'
 import AdminRouter from '$/router'
 import AdminApp from '$/App.vue'
 import '$/permission'
+import VueGridLayout from 'vue-grid-layout'
 // CSS Import
 import 'element-plus/theme-chalk/index.css'
 import 'element-plus/dist/index.css'
@@ -26,5 +27,6 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 adminApp.use(AdminRouter)
 adminApp.use(VueAxios,axios)
 adminApp.use(store)
+adminApp.use(VueGridLayout)
 adminApp.provide('axios',adminApp.config.globalProperties.axios)
-adminApp.mount('#adminApp');
+adminApp.mount('#adminApp')

@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\Admin\ParkingLotController;
+use App\Http\Controllers\Admin\ParkingSpaceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Client\PaymentController;
 use App\Http\Controllers\Client\ReserveController;
+use App\Models\ParkingLot;
 use App\Repositories\AdminRepositories\ParkingLotRepository;
 use App\Repositories\AdminRepositories\ReservationRepository;
 use App\Repositories\AdminRepositories\ParkingSpaceRepository;
@@ -45,6 +48,8 @@ Route::prefix('parkingLot')->group(function(){
 Route::prefix('parkingSpace')->group(function(){
     Route::get('/allData',[ParkingSpaceRepository::class,'showParkingSpaces'])->name('api.showParkingSpaces');
     Route::get('/{parkingSpaceId}/details',[ParkingLotRepository::class,'showParkingSpaceDetails'])->name('api.showParkingSpaceDetails');
+    Route::get('filter/{parkingLotId}',[ParkingSpaceController::class,'getLayout'])->name('api.filter');
+
 });
 
 Route::prefix('comments')->group(function(){
@@ -64,4 +69,4 @@ Route::prefix('reserve')->group(function(){
 
 });
 
-Route::get('test',[ReservationRepository::class,'testCase']);
+Route::get('test/{parkingLotId}',[ParkingSpaceController::class,'getLayout'])->name('api.name');

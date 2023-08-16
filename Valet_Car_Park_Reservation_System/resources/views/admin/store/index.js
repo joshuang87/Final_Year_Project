@@ -10,6 +10,7 @@ const store = createStore({
             user: {},
             // Side Bar State
             isCollapse: true,
+            parkingLotId: 'G0',
 
         }
     },
@@ -21,6 +22,9 @@ const store = createStore({
         // Change Side Bar State
         changeState(state) {
             return state.isCollapse == true ? state.isCollapse = false : state.isCollapse = true
+        },
+        setParkingLotId(state,parkingLotId) {
+            state.parkingLotId = parkingLotId
         }
     },
     actions: {
@@ -56,7 +60,10 @@ const store = createStore({
         },
         collapse({ commit }) {
             commit('changeState')
-        }
+        },
+        getParkingLotId({ commit }, parkingLotId) {
+            commit('setParkingLotId',parkingLotId)
+        } 
     }
 })
 

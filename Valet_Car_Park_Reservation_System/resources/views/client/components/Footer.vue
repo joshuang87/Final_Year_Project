@@ -1,5 +1,6 @@
 <template>
-    <footer class="bg-dark text-white zoom-effect" >
+
+    <footer class="bg-dark text-white" >
         <div class="container">
 
           <div class="row">
@@ -41,4 +42,5 @@
 
         </div>
     </footer>
+
 </template>
