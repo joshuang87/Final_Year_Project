@@ -18,9 +18,8 @@
                        :h="item.h"
                        :i="item.i"
                        :key="item.i"
-                       @click="test(item.i)"
             >
-                <button @click="centerDialogVisible = true">
+                <button @click="test(item.i)">
                     {{ item.i }}
                 </button>
                 <span class="remove" @click="removeItem(item.i)">
@@ -41,6 +40,7 @@
         <input type="checkbox" v-model="resizable" /> Resizable
         <input type="checkbox" v-model="collision" /> Collision
 
+        <!-- EDIT FORM -->
         <el-dialog
             v-model="centerDialogVisible"
             title="Parking Space Information Edit"
@@ -49,7 +49,7 @@
         >
             <el-form>
                 <el-form-item label="Parking Space ID : ">
-                    <el-input clearable/>
+                    <el-input clearable/> {{ parkingSpaceDetails.parking_space_id }}
                 </el-form-item>
                 <el-form-item label="Status : ">
                     <el-radio-group>
@@ -87,11 +87,12 @@
     const store = useStore()
 
     const draggable = ref(false)
-    const resizable = ref(true)
+    const resizable = ref(false)
     const collision = ref(true)
-    const centerDialogVisible = ref(false)  
+    const centerDialogVisible = ref(false)
 
     const layout = ref(null)
+    const parkingSpaceDetails = ref(null)
 
     let parkingLotId = store.state.parkingLotId
 
@@ -168,10 +169,10 @@
         layout.value.splice(index, 1)
     }
 
-    const test = (val) => {
+    const test = async(val) => {
         const index = layout.value.map(item => item.i).indexOf(val)
-        console.log(layout.value[index])
-        // layout.value.splice(index, 1)
+        parkingSpaceDetails.value = layout.value[index]
+        centerDialogVisible.value = true
     }
 
 </script>

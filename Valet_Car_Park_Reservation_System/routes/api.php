@@ -47,7 +47,7 @@ Route::prefix('parkingLot')->group(function(){
 
 Route::prefix('parkingSpace')->group(function(){
     Route::get('/allData',[ParkingSpaceRepository::class,'showParkingSpaces'])->name('api.showParkingSpaces');
-    Route::get('/{parkingSpaceId}/details',[ParkingLotRepository::class,'showParkingSpaceDetails'])->name('api.showParkingSpaceDetails');
+    Route::get('/{parkingSpaceId}/details',[ParkingSpaceRepository::class,'showParkingSpaceDetails'])->name('api.showParkingSpaceDetails');
     Route::get('filter/{parkingLotId}',[ParkingSpaceController::class,'getLayout'])->name('api.filter');
 
 });

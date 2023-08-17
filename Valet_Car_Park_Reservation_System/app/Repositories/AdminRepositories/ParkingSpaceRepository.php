@@ -15,7 +15,7 @@ class ParkingSpaceRepository implements ParkingSpaceRepositoryInterface
 
     public function showParkingSpaceDetails($parkingSpaceId)
     {
-        
+        return ParkingSpace::where('parking_space_id',$parkingSpaceId)->first();
     }
 
     public function showAvailableParkingSpace()
