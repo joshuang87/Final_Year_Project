@@ -20,9 +20,9 @@
                        :key="item.i"
                        @click="test(item.i)"
             >
-                <span class="text">
-                    {{item.i}}
-                </span>
+                <button @click="centerDialogVisible = true">
+                    {{ item.i }}
+                </button>
                 <span class="remove" @click="removeItem(item.i)">
                     x
                 </span>
@@ -31,9 +31,51 @@
 
         <br>
         <button @click="addItem">Add Parking Space</button>
-        <input type="checkbox" v-model="draggable" /> Draggable
+        <div v-if="draggable">
+            <input type="checkbox" v-model="draggable"/> Edit Mode (ON)
+        </div>
+        <div v-else>
+            <input type="checkbox" v-model="draggable"/> Edit Mode (OFF)
+        </div>
+        
         <input type="checkbox" v-model="resizable" /> Resizable
         <input type="checkbox" v-model="collision" /> Collision
+
+        <el-dialog
+            v-model="centerDialogVisible"
+            title="Parking Space Information Edit"
+            align-center
+            draggable
+        >
+            <el-form>
+                <el-form-item label="Parking Space ID : ">
+                    <el-input clearable/>
+                </el-form-item>
+                <el-form-item label="Status : ">
+                    <el-radio-group>
+                        <el-radio :label="1">Open</el-radio>
+                        <el-radio :label="0">Close</el-radio>
+                    </el-radio-group>
+                </el-form-item>
+                <el-form-item label="Comment : ">
+                    <el-input type="textarea" placeholder="Please Write Some Comment Before Update Information" autosize clearable/>
+                </el-form-item>
+                <el-form-item label="Open Time : ">
+                    <el-input type="time" step="1"/>
+                </el-form-item>
+                <el-form-item label="Close Time : ">
+                    <el-input type="time" step="1"/>
+                </el-form-item>
+            </el-form>
+            <template #footer>
+                <span class="dialog-footer">
+                    <el-button @click="centerDialogVisible = false">Cancel</el-button>
+                    <el-button type="primary" @click="centerDialogVisible = false">
+                        Confirm
+                    </el-button>
+                </span>
+            </template>
+        </el-dialog>
     </div>
 </template>
 
@@ -44,77 +86,52 @@
 
     const store = useStore()
 
-    const layout = ref(
-        // [
-        //     { x: 0, y: 0, w: 1, h: 1, i: "haha" },
-        //     { x: 1, y: 0, w: 1, h: 1, i: "1" },
-        //     { x: 2, y: 0, w: 1, h: 1, i: "2" },
-        //     { x: 3, y: 0, w: 1, h: 1, i: "3" },
-        //     { x: 4, y: 0, w: 1, h: 1, i: "4" },
-        // ]
-        null
-    )
-
-    let parkingLotId = ref(store.state.parkingLotId)
-
-        const getLayout = async() => {
-            try {
-                const response = await axios.get('api/parkingSpace/filter/' + parkingLotId.value)
-                const data = response.data
-
-                return data
-            }
-            catch(error) {
-                console.log(error)
-            }
-        }
-
-        const pLotLayout = await getLayout()
-
-        layout.value = pLotLayout
-
-    const draggable = ref(true)
+    const draggable = ref(false)
     const resizable = ref(true)
     const collision = ref(true)
+    const centerDialogVisible = ref(false)  
+
+    const layout = ref(null)
+
+    let parkingLotId = store.state.parkingLotId
+
+    const getAllParkingSpacesData = async() => {
+        try {
+            const response = await axios.get('api/parkingSpace/filter/' + parkingLotId)
+            const data = response.data
+
+            return data
+        }
+        catch(error) {
+            console.log(error)
+        }
+    }
+
+    const parkingSpaces = await getAllParkingSpacesData()
+    const specificParkingSpaceData = parkingSpaces.filter(item => item.parking_lot_id === parkingLotId)
+
+    layout.value = specificParkingSpaceData
 
     let colNum = 12
     let index = 0
+    let x = 0
 
     onMounted(async() => {
-        // const pLotLayout = await getLayout()
-        // layout.value = pLotLayout
-
-        // let parkingLotId = ref(store.state.parkingLotId)
-
-        // const getLayout = async() => {
-        //     try {
-        //         const response = await axios.get('api/parkingSpace/filter/' + parkingLotId.value)
-        //         const data = response.data
-
-        //         return data
-        //     }
-        //     catch(error) {
-        //         console.log(error)
-        //     }
-        // }
-
-        // const pLotLayout = await getLayout()
-
-        // layout.value = pLotLayout
         
         index = layout.value.length
-        console.log(pLotLayout);
+        console.log(parkingSpaces)
+
     })
 
     watchEffect(async() => {
 
-        let parkingLotId = ref(store.state.parkingLotId)
+        let parkingLotId = store.state.parkingLotId
 
-        const getLayout = async() => {
+        const getAllParkingSpacesData = async() => {
             try {
-                const response = await axios.get('api/parkingSpace/filter/' + parkingLotId.value)
+                const response = await axios.get('api/parkingSpace/filter/' + parkingLotId)
                 const data = response.data
-                // console.log(data);
+
                 return data
             }
             catch(error) {
@@ -122,17 +139,11 @@
             }
         }
 
-        const pLotLayout = await getLayout()
+        const parkingSpaces = await getAllParkingSpacesData()
+        const specificParkingSpaceData = parkingSpaces.filter(item => item.parking_lot_id === parkingLotId)
 
-        layout.value = pLotLayout
-
-        // for(i = 0) {
-
-        // }
-
-        const spData = layout.value.filter(item => item.parking_lot_id === 'G0')
-
-        console.log(spData);
+        layout.value = specificParkingSpaceData
+        console.log(specificParkingSpaceData)
 
     })
 
@@ -140,15 +151,16 @@
         // Add a new item. It must have a unique key!
         layout.value.push({
             // x: (layout.value.length * 2) % (colNum || 12),
-            x: 0,
+            x: x,
             // y: layout.value.length + (colNum || 12), // puts it at the bottom
             y: 0,
             w: 1,
-            h: 2,
-            i: index,
+            h: 1,
+            i: null,
         })
         // Increment the counter to ensure key is always unique.
-        index++
+        x++
+        console.log(layout.value);
     }
 
     const removeItem = (val) => {
@@ -158,7 +170,7 @@
 
     const test = (val) => {
         const index = layout.value.map(item => item.i).indexOf(val)
-        console.log(pLotLayout[index])
+        console.log(layout.value[index])
         // layout.value.splice(index, 1)
     }
 
