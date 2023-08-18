@@ -108,7 +108,6 @@
         }
     }
 
-
     const getAllParkingLotComments = async()=>{
         try {
             const response = await axios.get('/api/comments/allComments')
