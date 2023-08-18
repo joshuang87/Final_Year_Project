@@ -12,6 +12,7 @@ use App\Repositories\AdminRepositories\ReservationRepository;
 use App\Repositories\AdminRepositories\ParkingSpaceRepository;
 use App\Repositories\AdminRepositories\AuthenticationRepository;
 use App\Repositories\AdminRepositories\ParkingLotCommentRepository;
+use App\Repositories\AdminRepositories\UserRepository;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,3 +71,5 @@ Route::prefix('reserve')->group(function(){
 });
 
 Route::get('test/{parkingLotId}',[ParkingSpaceController::class,'getLayout'])->name('api.name');
+
+Route::get('/getUserInfo',[UserRepository::class, 'getUserInfo'])->name('api.getUserInfo');
