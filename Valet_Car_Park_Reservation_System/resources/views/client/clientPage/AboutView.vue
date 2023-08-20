@@ -1,47 +1,9 @@
 <template>
+  <div><space/></div>
   <div class="data">
-    <div class="carousel">
-      <svg class="carousel-image" width="140" height="140">
-        <!-- Replace circle and text with an image -->
-        <image
-          x="0"
-          y="0"
-          width="140"
-          height="140"
-          :xlink:href="carouselImages[activeIndex]"
-        />
-      </svg>
-    </div>
-  
-
   <div>
     <div class="container marketing">
-      <div class="row">
-        <div v-for="(member, index) in teamMembers" :key="index" class="col-lg-4">
-          <svg
-            class="bd-placeholder-img rounded-circle"
-            width="140"
-            height="140"
-            xmlns="http://www.w3.org/2000/svg"
-            role="img"
-            aria-label="Placeholder: 140x140"
-            preserveAspectRatio="xMidYMid slice"
-            focusable="false"
-          >
-            <title>Us</title>
-            <!-- Replace circle and text with an image -->
-            <image
-              x="0"
-              y="0"
-              width="140"
-              height="140"
-              :xlink:href="member.image"
-            />
-          </svg>
-          <h2>{{ member.name }}</h2>
-          <p>{{ member.role }}</p>
-        </div>
-      </div>
+      
 
         <hr class="featurette-divider">
 
@@ -60,7 +22,7 @@
         <div class="row featurette">
           <div class="col-md-7 order-md-2">
             <h2 class="featurette-heading">Our Story</h2>
-            <p class="lead">TThe story starts with TAN Karma meeting NG, an editing genius known for hard work. They befriended CHONG, a tech expert. Despite being a "soy sauce" player in tech talks, TAN's humor and optimism brightened the team. TAN proposed a solution to a common problem: finding parking spaces. NG handled back-end development, CHONG designed the app. The team's effort birthed a smart parking system, showcasing their collaboration, innovation, and hard work.</p>
+            <p class="lead">The story starts with TAN Karma meeting NG, an editing genius known for hard work. They befriended CHONG, a tech expert. Despite being a "soy sauce" player in tech talks, TAN's humor and optimism brightened the team. TAN proposed a solution to a common problem: finding parking spaces. NG handled back-end development, CHONG designed the app. The team's effort birthed a smart parking system, showcasing their collaboration, innovation, and hard work.</p>
           </div>
           <div class="col-md-5 order-md-1">
             <img style="width: 100%; height: 80%; object-fit: cover" src="images/our.png" alt="">
@@ -69,6 +31,38 @@
 
         <hr class="featurette-divider">
 
+        <li class="row">
+          <h2>Our Team</h2>
+          <div><space/></div>
+  <ul v-for="(member, index) in teamMembers" :key="index" class="col-lg-4">
+    <div class="d-flex flex-column align-items-center">
+      <svg
+        class="bd-placeholder-img rounded-circle"
+        width="140"
+        height="140"
+        xmlns="http://www.w3.org/2000/svg"
+        role="img"
+        aria-label="Placeholder: 140x140"
+        preserveAspectRatio="xMidYMid slice"
+        focusable="false"
+      >
+        <title>Us</title>
+        <!-- Replace circle and text with an image -->
+        <image
+          x="0"
+          y="0"
+          width="140"
+          height="140"
+          :xlink:href="member.image"
+        />
+      </svg>
+      <h2>{{ member.name }}</h2>
+      <p>{{ member.role }}</p>
+    </div>
+  </ul>
+</li>
+
+<div><space/></div>
         <div class="row featurette">
           <div class="col-md-7">
             <h2 class="featurette-heading">Our Location</h2>
@@ -85,7 +79,14 @@
 </template>
 
 <script>
-export default {
+import home from 'V/components/home.vue';
+import space from 'V/components/space.vue';
+  export default{
+    components: {
+      home,
+      space,
+  },
+
   data() {
     return {
       carouselImages: [
@@ -111,6 +112,8 @@ export default {
           image: "images/Ng.png", // Path to Ng's image
         },
       ],
+      scrolled: false,
+      scrolledSections:[],
     };
   },
   mounted() {

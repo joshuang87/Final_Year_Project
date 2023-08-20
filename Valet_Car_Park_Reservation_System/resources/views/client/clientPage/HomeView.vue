@@ -1,10 +1,10 @@
 <template>
-   <div style="background: linear-gradient(to bottom, transparent,  #ffcccc, #ffcccc, #ffbbdd,#ffbbdd,#eebbff)"><home /></div>
+  <div> <space/></div>
+   <div  style="background: linear-gradient(to bottom, transparent,  #ffcccc, #ffcccc, #ffbbdd,#ffbbdd,#eebbff)"><home  /></div>
 
 <div class="scroll-container">
 <!-- 添加滚动渐变效果的内容 -->
 <!-- <section :class="['scroll-transition', { active: scrolled }]">内容</section> -->
-
 <!-- 添加滚动渐变效果的左图右字内容 -->
  <section  style="background: linear-gradient(to bottom, #eebbff,#ccbbff)"> 
   <div class="container "> 
@@ -13,8 +13,8 @@
       <div class="col-md-6"> 
         <img src="images/Intro1.png" alt="Image" class="w-100" /> 
       </div> <!-- 右边介绍 --> 
-      <br><br>
       <div class="col-md-6"> 
+        <br><br><br>
         <h2>Valet Parking  Reservation System</h2> 
         <p>Say goodbye to the hassle of finding parking with our 
         valet car park reserve system!Our online reservation
@@ -44,6 +44,7 @@
     <div class="row" :class="['scroll-transition', { active: scrolled }]"> 
     <!-- 左边介绍 --> 
     <div class="col-md-6"> 
+      <br><br><br>
       <h2>Payment Sytem </h2> 
       <p> Our payment system has been upgraded to make your
         parking experience even more convenient!We now
@@ -78,6 +79,7 @@
         <img src="images/Intro3.png" alt="Image" class="w-100" /> 
       </div> <!-- 右边介绍 --> 
       <div class="col-md-6"> 
+        <br><br><br>
         <h2>Availability Check </h2> 
         <p style="" > Now you can check the availability of parking spots before arriving at the car park!Our parking system
           provides real-time information on available parking
@@ -104,6 +106,7 @@
     <div class="row" :class="['scroll-transition', { active: scrolled }]"> 
     <!-- 左边介绍 --> 
     <div class="col-md-6"> 
+      <br><br><br>
       <h2>Cancellation System </h2> 
       <p> Our car park reservation system allows you to reserve
         a
@@ -123,15 +126,17 @@
 </div> 
 </section> 
 </div>
+<div> <space/></div>
   </template>
 
 
 <script>
 import home from 'V/components/home.vue';
-
+import space from 'V/components/space.vue';
   export default{
     components: {
       home,
+      space,
   },
   data() {
     return {
@@ -157,7 +162,7 @@ beforeDestroy() {
     },
     handleScroll() {
       const scrollY = window.scrollY;
-      const transitionStart = 300;
+      const transitionStart = 200;
 
       if (scrollY >= transitionStart && !this.scrolled) {
         this.scrolled = true;
