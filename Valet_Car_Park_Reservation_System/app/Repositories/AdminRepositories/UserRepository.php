@@ -8,12 +8,9 @@ use App\Repositories\Interfaces\AdminInterfaces\UserRepositoryInterface;
 class UserRepository implements UserRepositoryInterface
 {
     public function getUserInfo()
-{
-
-    return User::all();
-
-
-}
+    {
+        return User::all();
+    }   
 
 }
 

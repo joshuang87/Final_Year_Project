@@ -2,6 +2,21 @@ import { createStore } from "vuex"
 import { getInfo } from '$/api/manager.js'
 import { login } from "../api/manager"
 import { setToken,removeToken } from "../modules/auth"
+import axios from "axios"
+
+const getDefaultParkingLot = async() => {
+    try {
+        const response = await axios.get('api/parkingLot/allData')
+        const data = response.data[0].parking_lot_id
+            
+        return data
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
+const defaultParkingLot = await getDefaultParkingLot()
 
 const store = createStore({
     state() {
@@ -10,7 +25,7 @@ const store = createStore({
             user: {},
             // Side Bar State
             isCollapse: true,
-            parkingLotId: 'G0',
+            parkingLotId: defaultParkingLot,
 
         }
     },

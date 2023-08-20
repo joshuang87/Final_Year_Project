@@ -49,7 +49,7 @@
         >
             <el-form>
                 <el-form-item label="Parking Space ID : ">
-                    <el-input clearable/> {{ parkingSpaceDetails.parking_space_id }}
+                    <el-input clearable v-model="parkingSpaceDetails.parking_space_id"/>
                 </el-form-item>
                 <el-form-item label="Status : ">
                     <el-radio-group>
@@ -127,7 +127,7 @@
     watchEffect(async() => {
 
         let parkingLotId = store.state.parkingLotId
-
+        
         const getAllParkingSpacesData = async() => {
             try {
                 const response = await axios.get('api/parkingSpace/filter/' + parkingLotId)

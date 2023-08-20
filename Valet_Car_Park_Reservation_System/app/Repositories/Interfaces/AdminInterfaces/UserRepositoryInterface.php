@@ -7,8 +7,7 @@ interface UserRepositoryInterface
 {
 
     public function getUserInfo();
-
-
+    
 }
 
 ?>

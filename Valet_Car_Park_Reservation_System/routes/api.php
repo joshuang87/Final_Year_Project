@@ -42,6 +42,7 @@ Route::prefix('admin')->group(function(){
 Route::prefix('parkingLot')->group(function(){
     Route::get('/allData',[ParkingLotRepository::class,'showParkingLots'])->name('api.showParkingLots');
     Route::get('/{parkingLotId}/details',[ParkingLotRepository::class,'showParkingLotDetails'])->name('api.showParkingLotDetails');
+    Route::post('/add',[ParkingLotController::class,'store'])->name('api.storeParkingLot');
     Route::delete('/{parkingLotId}/delete',[ParkingLotRepository::class,'deleteParkingLot'])->name('api.deleteParkingLot');
     Route::patch('/{parkingLotId}/update',[ParkingLotRepository::class,'updateParkingLotInformation'])->name('api.updateParkingLotInformation');
 });

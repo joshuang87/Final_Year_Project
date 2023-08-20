@@ -35,7 +35,8 @@ class ParkingLotController extends Controller
     {
         $this->parkingLot->storeParkingLot($request);
 
-        return redirect(route('test.adminHome'));
+        // return redirect(route('test.adminHome'));
+        return response('Parking Lot Added',200);
     }
 
     public function destroy($parkingLotId)
