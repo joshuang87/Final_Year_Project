@@ -3,6 +3,16 @@
   <div class="data">
   <div>
     <div class="container marketing">
+
+      <div class="row featurette">
+          <div class="col-md-7 order-md-2">
+            <h2 class="featurette-heading">Our Logo</h2>
+            <p class="lead">This is our logo. It was designed by the Project manager. The logo is a symbol of our company.The topic of the Logo is Easy Parking.</p>
+          </div>
+          <div class="col-md-5 order-md-1">
+            <img style="width: 100%; height: 80%; object-fit: cover" src="images/Logo.png" alt="">
+          </div>
+        </div>
       
 
         <hr class="featurette-divider">
