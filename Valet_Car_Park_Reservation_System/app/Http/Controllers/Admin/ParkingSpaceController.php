@@ -57,4 +57,11 @@ class ParkingSpaceController extends Controller
         // dd(ParkingSpace::all());
     
     }
+
+    public function updateLayout(Request $request)
+    {
+        $parkingLotId = $request[0]['parking_lot_id'];
+        // dd($request[0]['parking_lot_id']);
+        
+    }
 }

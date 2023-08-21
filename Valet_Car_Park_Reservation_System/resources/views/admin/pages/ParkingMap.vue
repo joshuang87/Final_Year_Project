@@ -39,6 +39,9 @@
         
         <input type="checkbox" v-model="resizable" /> Resizable
         <input type="checkbox" v-model="collision" /> Collision
+        <button @click="test">
+            Save
+        </button>
 
         <!-- EDIT FORM -->
         <el-dialog
@@ -155,7 +158,7 @@
             y: 0,
             w: 1,
             h: 1,
-            i: null,
+            i: x,
         })
         // Increment the counter to ensure key is always unique.
         x++
@@ -171,6 +174,11 @@
         const index = layout.value.map(item => item.i).indexOf(val)
         parkingSpaceDetails.value = layout.value[index]
         centerDialogVisible.value = true
+    }
+
+    const test = async()=>{
+        await axios.post('api/parkingSpace/updateLayout',layout.value)
+        console.log(layout.value)
     }
 
 </script>
