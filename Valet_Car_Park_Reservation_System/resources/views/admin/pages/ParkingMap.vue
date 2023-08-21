@@ -19,7 +19,7 @@
                        :i="item.i"
                        :key="item.i"
             >
-                <button @click="test(item.i)">
+                <button @click="edit(item.i)">
                     {{ item.i }}
                 </button>
                 <span class="remove" @click="removeItem(item.i)">
@@ -52,7 +52,7 @@
                     <el-input clearable v-model="parkingSpaceDetails.parking_space_id"/>
                 </el-form-item>
                 <el-form-item label="Status : ">
-                    <el-radio-group>
+                    <el-radio-group v-model="parkingSpaceDetails.status">
                         <el-radio :label="1">Open</el-radio>
                         <el-radio :label="0">Close</el-radio>
                     </el-radio-group>
@@ -61,17 +61,17 @@
                     <el-input type="textarea" placeholder="Please Write Some Comment Before Update Information" autosize clearable/>
                 </el-form-item>
                 <el-form-item label="Open Time : ">
-                    <el-input type="time" step="1"/>
+                    <el-input type="time" step="1" v-model="parkingSpaceDetails.open_time"/>
                 </el-form-item>
                 <el-form-item label="Close Time : ">
-                    <el-input type="time" step="1"/>
+                    <el-input type="time" step="1" v-model="parkingSpaceDetails.close_time"/>
                 </el-form-item>
             </el-form>
             <template #footer>
                 <span class="dialog-footer">
                     <el-button @click="centerDialogVisible = false">Cancel</el-button>
                     <el-button type="primary" @click="centerDialogVisible = false">
-                        Confirm
+                        Update
                     </el-button>
                 </span>
             </template>
@@ -151,9 +151,7 @@
     const addItem = () => {
         // Add a new item. It must have a unique key!
         layout.value.push({
-            // x: (layout.value.length * 2) % (colNum || 12),
             x: x,
-            // y: layout.value.length + (colNum || 12), // puts it at the bottom
             y: 0,
             w: 1,
             h: 1,
@@ -169,7 +167,7 @@
         layout.value.splice(index, 1)
     }
 
-    const test = async(val) => {
+    const edit = async(val) => {
         const index = layout.value.map(item => item.i).indexOf(val)
         parkingSpaceDetails.value = layout.value[index]
         centerDialogVisible.value = true

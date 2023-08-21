@@ -8,7 +8,6 @@ use App\Models\ParkingLotComment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Query\JoinClause;
 use App\Repositories\Interfaces\AdminInterfaces\ParkingLotRepositoryInterface;
-use Illuminate\Support\Facades\Http;
 
 class ParkingLotRepository implements ParkingLotRepositoryInterface
 {
