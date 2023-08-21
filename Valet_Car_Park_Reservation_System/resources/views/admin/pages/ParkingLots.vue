@@ -1,17 +1,16 @@
 <template>
+
     <div>
-        <div style="display: flex;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
             <div>
                 <h1>Parking Lots data</h1>
             </div>
-            
+
             <div>
-                <button @click="addFormVisible = true">
-                    Add Parking Lot
-                </button>
+                <el-button type="primary" @click="addFormVisible = true" class="addButton"> Add Parking Lot</el-button>
             </div>
         </div>
-    
+
         <div>
             <el-table :data="parkingLotDataList" border fit >
                 <el-table-column type="expand">
@@ -61,8 +60,8 @@
                   </el-table-column>
             </el-table>
         </div>
-        
-        <el-dialog 
+
+        <el-dialog
             v-model="editFormVisible"
             title="Parking Lot Information Edit"
             align-center
@@ -94,10 +93,10 @@
                     <el-button type="primary" @click="update">Update</el-button>
                 </span>
             </template>
-    
+
         </el-dialog>
 
-        <el-dialog 
+        <el-dialog
             v-model="addFormVisible"
             title="Add Parking Lot"
             align-center
@@ -126,7 +125,7 @@
                     <el-button type="primary" @click="add">Add</el-button>
                 </span>
             </template>
-    
+
         </el-dialog>
     </div>
 </template>
@@ -252,7 +251,7 @@
                     parkingLotData.value.content = comment.value
                     parkingLotData.value.open_time = parkingLotOpenTime.value
                     parkingLotData.value.close_time = parkingLotCloseTime.value
-                    
+
                     const data = parkingLotData.value
                     try {
                         await axios.patch('api/parkingLot/'+ data.parking_lot_id + '/update',data)
@@ -325,9 +324,9 @@
                 this.parkingLotDataList.values = await this.getAllParkingLot()
                 .then(()=> {
                     this.reload()
-                    
+
                 })
-                console.log(this.parkingLotDataList.values);            
+                console.log(this.parkingLotDataList.values);
             },
             reloadPart() {
                 this.isReloadData = false
@@ -348,5 +347,9 @@
         .el-message-box {
             width: 60% !important;
         }
+    }
+
+    .addButton {
+        margin: auto;
     }
 </style>
