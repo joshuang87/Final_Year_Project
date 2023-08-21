@@ -15,7 +15,7 @@ interface ParkingSpaceRepositoryInterface
 
     public function storeParkingSpaceData($data);
 
-    public function updateParkingSpaceData(string $parkingSpaceId,Request $data);
+    // public function updateParkingSpaceData(string $parkingSpaceId,Request $data);
 
 }
 
