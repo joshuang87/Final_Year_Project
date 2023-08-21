@@ -18,16 +18,16 @@
                         <el-row>
                             <el-col :span="12">
                                 <div>
-                                    <h3>Available Parking Spaces</h3>
-                                    <el-table :data="filteredParkingSpaces(props.row.parking_lot_id)">
+                                    <h3 style="margin-left: 10px;">Available Parking Spaces</h3>
+                                    <el-table height='220' border :data="filteredParkingSpaces(props.row.parking_lot_id)">
                                         <el-table-column prop="parking_space_id" label="Parking Spaces ID" />
                                     </el-table>
                                 </div>
                             </el-col>
                             <el-col :span="12">
                                     <div>
-                                        <h3>Comments History</h3>
-                                        <el-table :data="filteredComments(props.row.parking_lot_id)">
+                                        <h3 style="margin-left: 10px;">Comments History</h3>
+                                        <el-table height='220' border :data="filteredComments(props.row.parking_lot_id)">
                                             <el-table-column prop="content" label="Comments" />
                                         </el-table>
                                     </div>
