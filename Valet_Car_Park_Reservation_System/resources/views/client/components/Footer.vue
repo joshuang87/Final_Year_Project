@@ -6,11 +6,11 @@
           <div class="row">
 
                 <div class="col-md-4" style="margin-top: 50px;">
-                    <h4>Company Name</h4>
-                    <p>123 Main St<br>
-                    Anytown, USA 12345</p>
-                    <p>Phone: (123) 456-7890<br>
-                    Email: info@companyname.com</p>
+                    <h4>EASY PARK</h4>
+                    <p>Jalan Selatan Utama,KM 15<br>
+                    off,Skudai Lbh,81300, Skudai</p>
+                    <p>Phone: (+60)12 345 6789<br>
+                    Email: us@easypark.com</p>
                 </div>
 
                 <div class="col-md-4" style="margin-top: 50px;">
@@ -36,7 +36,7 @@
           <div class="row">
             <div class="col-md-12 text-center">
                 <hr>
-                <p>&copy; {{ new Date().getFullYear() }} Company Name. All rights reserved.</p>
+                <p>&copy; {{ new Date().getFullYear() }}  EASY PARK. All rights reserved.</p>
             </div>
           </div>
 
