@@ -18,6 +18,7 @@
                        :h="item.h"
                        :i="item.i"
                        :key="item.i"
+                       style="background-color: RGB(75, 181,67);"
             >
                 <button @click="edit(item.i)">
                     {{ item.i }}
@@ -165,9 +166,11 @@
         console.log(layout.value);
     }
 
-    const removeItem = (val) => {
+    const removeItem = async(val) => {
         const index = layout.value.map(item => item.i).indexOf(val)
+        let parkingSpaceId = layout.value[index].parking_space_id
         layout.value.splice(index, 1)
+        await axios.delete('api/parkingSpace/' + parkingSpaceId + '/delete')
     }
 
     const edit = async(val) => {

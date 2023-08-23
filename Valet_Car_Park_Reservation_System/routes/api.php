@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Client\PaymentController;
 use App\Http\Controllers\Client\ReserveController;
-use App\Models\ParkingLot;
 use App\Repositories\AdminRepositories\ParkingLotRepository;
 use App\Repositories\AdminRepositories\ReservationRepository;
 use App\Repositories\AdminRepositories\ParkingSpaceRepository;
@@ -52,7 +51,7 @@ Route::prefix('parkingSpace')->group(function(){
     Route::get('/{parkingSpaceId}/details',[ParkingSpaceRepository::class,'showParkingSpaceDetails'])->name('api.showParkingSpaceDetails');
     Route::get('filter/{parkingLotId}',[ParkingSpaceController::class,'getLayout'])->name('api.filter');
     Route::post('/updateLayout',[ParkingSpaceController::class,'updateLayout'])->name('api.updateLayout');
-
+    Route::delete('/{parkingSpaceId}/delete',[ParkingSpaceController::class,'delete'])->name('api.deleteParkingSpace');
 });
 
 Route::prefix('comments')->group(function(){

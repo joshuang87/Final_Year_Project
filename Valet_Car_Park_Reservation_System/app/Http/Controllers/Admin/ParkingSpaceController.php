@@ -58,6 +58,13 @@ class ParkingSpaceController extends Controller
     
     }
 
+    public function delete($parkingSpaceId)
+    {
+        ParkingSpace::where('parking_space_id',$parkingSpaceId)->delete();
+
+        return response('Parking Space Deleted',200);
+    }
+
     public function updateLayout(Request $request)
     {
         $data = $request->all();
