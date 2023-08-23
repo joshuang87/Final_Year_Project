@@ -93,8 +93,8 @@
   </template>
 
   <script>
-  import jsPDF from 'jspdf';
-  import QRCode from 'qrcode';
+  //import jsPDF from 'jspdf';
+  //import QRCode from 'qrcode';
 
   export default {
     data() {
@@ -219,7 +219,7 @@
         this.email = ""; // Clear email input
       },
 
-      async generateAndDownloadInvoice(space) {
+      /*async generateAndDownloadInvoice(space) {
         const pdf = new jsPDF();
         pdf.text('Invoice', 10, 10);
         pdf.text(`Parking Space ID: ${space.id}`, 10, 20);
@@ -242,7 +242,7 @@
         link.href = pdfUrl;
         link.download = `invoice_${space.id}_${this.selectedDate}.pdf`;
         link.click();
-      },
+      },*/
 
       async bookParkingSpace() {
         const selectedSpace = this.groupedFilteredSpaces.find(space => space.id === this.selectedSpaceId);
