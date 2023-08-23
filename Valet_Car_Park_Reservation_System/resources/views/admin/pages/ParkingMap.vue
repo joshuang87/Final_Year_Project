@@ -21,7 +21,7 @@
                        style="background-color: RGB(75, 181,67);"
             >
                 <button @click="edit(item.i)">
-                    {{ item.i }}
+                    {{ item.parking_space_id }}
                 </button>
                 <span class="remove" @click="removeItem(item.i)">
                     x
@@ -30,7 +30,7 @@
         </grid-layout>
 
         <br>
-        <button @click="addItem">Add Parking Space</button>
+        <button @click="addFormVisible = true">Add Parking Space</button>
         <div v-if="draggable">
             <input type="checkbox" v-model="draggable"/> Edit Mode (ON)
         </div>
@@ -40,7 +40,7 @@
         
         <input type="checkbox" v-model="resizable" /> Resizable
         <input type="checkbox" v-model="collision" /> Collision
-        <button @click="test">
+        <button @click="saveLayout">
             Save
         </button>
 
@@ -73,9 +73,47 @@
             </el-form>
             <template #footer>
                 <span class="dialog-footer">
-                    <el-button @click="centerDialogVisible = false">Cancel</el-button>
+                    <el-button @click="centerDialogVisible = false">
+                        Cancel
+                    </el-button>
                     <el-button type="primary" @click="centerDialogVisible = false">
                         Update
+                    </el-button>
+                </span>
+            </template>
+        </el-dialog>
+
+        <!-- ADD FORM -->
+        <el-dialog
+            v-model="addFormVisible"
+            title="Parking Space Create Form"
+            align-center
+            draggable
+        >
+            <el-form>
+                <el-form-item label="Parking Space ID : ">
+                    <el-input clearable v-model="createParam.parking_space_id"/>
+                </el-form-item>
+                <el-form-item label="Status : ">
+                    <el-radio-group v-model="createParam.status">
+                        <el-radio :label="1">Open</el-radio>
+                        <el-radio :label="0">Close</el-radio>
+                    </el-radio-group>
+                </el-form-item>
+                <el-form-item label="Open Time : ">
+                    <el-input type="time" step="1" v-model="createParam.open_time"/>
+                </el-form-item>
+                <el-form-item label="Close Time : ">
+                    <el-input type="time" step="1" v-model="createParam.close_time"/>
+                </el-form-item>
+            </el-form>
+            <template #footer>
+                <span class="dialog-footer">
+                    <el-button @click="addFormVisible = false">
+                        Cancel
+                    </el-button>
+                    <el-button type="primary" @click="addItem">
+                        Conform
                     </el-button>
                 </span>
             </template>
@@ -94,9 +132,19 @@
     const resizable = ref(false)
     const collision = ref(true)
     const centerDialogVisible = ref(false)
+    const addFormVisible = ref(false)
 
     const layout = ref(null)
     const parkingSpaceDetails = ref(null)
+    const createParam = ref(
+        {
+            parking_lot_id: null,
+            parking_space_id: null,
+            status: null,
+            open_time: null,
+            close_time: null
+        }
+    )
 
     let parkingLotId = store.state.parkingLotId
 
@@ -154,13 +202,27 @@
 
     const addItem = () => {
         // Add a new item. It must have a unique key!
-        layout.value.push({
-            x: x,
-            y: 0,
-            w: 1,
-            h: 1,
-            i: x,
-        })
+        layout.value.push(
+            {
+                parking_lot_id: store.state.parkingLotId,
+                parking_space_id: createParam.value.parking_space_id,
+                status: createParam.value.status,
+                open_time: createParam.value.open_time,
+                close_time: createParam.value.close_time,
+                x: x,
+                y: 0,
+                w: 1,
+                h: 1,
+                i: createParam.value.parking_space_id
+            }
+        )
+        createParam.value.parking_lot_id = null
+        createParam.value.parking_space_id = null
+        createParam.value.status = null
+        createParam.value.open_time = null
+        createParam.value.close_time = null
+        
+        addFormVisible.value = false
         // Increment the counter to ensure key is always unique.
         x++
         console.log(layout.value);
@@ -179,9 +241,9 @@
         centerDialogVisible.value = true
     }
 
-    const test = async()=>{
-        await axios.post('api/parkingSpace/updateLayout',layout.value)
+    const saveLayout = async()=>{
         console.log(layout.value)
+        await axios.post('api/parkingSpace/updateLayout',layout.value)
     }
 
 </script>
