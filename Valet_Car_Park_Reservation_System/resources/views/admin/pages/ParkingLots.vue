@@ -272,6 +272,7 @@
             const add = async() => {
                 try {
                     await axios.post('api/parkingLot/add',createParam.value)
+                    addFormVisible.value = false
                 }
                 catch (err) {
                     console.log(err);

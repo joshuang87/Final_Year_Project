@@ -60,8 +60,32 @@ class ParkingSpaceController extends Controller
 
     public function updateLayout(Request $request)
     {
-        $parkingLotId = $request[0]['parking_lot_id'];
-        // dd($request[0]['parking_lot_id']);
-        
+        $data = $request->all();
+
+        $count = 0;
+        foreach($data as $parkingSpace)
+        {
+            $x = $data[$count]['x'];
+            $y = $data[$count]['y'];
+            $w = $data[$count]['w'];
+            $h = $data[$count]['h'];
+
+            $oldLayout = DB::table('parking_spaces')->where('parking_space_id',$parkingSpace['parking_space_id'])->first();
+
+            if($oldLayout->x != $x || $oldLayout->y != $y || $oldLayout->w != $w || $oldLayout->h != $h)
+            {
+                $newLayout = [
+                    'x' => $x,
+                    'y' => $y,
+                    'w' => $w,
+                    'h' => $h
+                ];
+
+                ParkingSpace::where('parking_space_id',$parkingSpace['parking_space_id'])->update($newLayout);
+            }
+            $count++;
+        }
+
+        return "GOOD";
     }
 }
