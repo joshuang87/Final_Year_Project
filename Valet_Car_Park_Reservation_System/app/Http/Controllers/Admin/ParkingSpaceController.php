@@ -79,16 +79,23 @@ class ParkingSpaceController extends Controller
 
             $oldLayout = DB::table('parking_spaces')->where('parking_space_id',$parkingSpace['parking_space_id'])->first();
 
-            if($oldLayout->x != $x || $oldLayout->y != $y || $oldLayout->w != $w || $oldLayout->h != $h)
+            if($oldLayout != null)
             {
-                $newLayout = [
-                    'x' => $x,
-                    'y' => $y,
-                    'w' => $w,
-                    'h' => $h
-                ];
+                if($oldLayout->x != $x || $oldLayout->y != $y || $oldLayout->w != $w || $oldLayout->h != $h)
+                {
+                    $newLayout = [
+                        'x' => $x,
+                        'y' => $y,
+                        'w' => $w,
+                        'h' => $h
+                    ];
 
-                ParkingSpace::where('parking_space_id',$parkingSpace['parking_space_id'])->update($newLayout);
+                    ParkingSpace::where('parking_space_id',$parkingSpace['parking_space_id'])->update($newLayout);
+                }
+            }
+            else
+            {
+                ParkingSpace::create($parkingSpace);
             }
             $count++;
         }

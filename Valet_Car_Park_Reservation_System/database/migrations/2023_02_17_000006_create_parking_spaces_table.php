@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('parking_spaces', function (Blueprint $table) {
             $table->string('parking_space_id')->primary();
-            $table->dateTime('open_time')->nullable()->default(null);
-            $table->dateTime('close_time')->nullable()->default(null);
+            $table->time('open_time')->nullable()->default(null);
+            $table->time('close_time')->nullable()->default(null);
             $table->timestamps();
             $table->string('parking_lot_id');
             $table->foreign('parking_lot_id')->references('parking_lot_id')->on('parking_lots')->cascadeOnDelete()->cascadeOnUpdate();
