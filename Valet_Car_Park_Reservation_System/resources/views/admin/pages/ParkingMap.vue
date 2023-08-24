@@ -1,5 +1,21 @@
 <template>
     <div>
+        <div class="container" style="margin: 50px;">
+        <button @click="addItem">Add Parking Space</button>
+        <div v-if="draggable">
+            <input type="checkbox" v-model="draggable"/> Edit Mode (ON)
+        </div>
+        <div v-else>
+            <input type="checkbox" v-model="draggable"/> Edit Mode (OFF)
+        </div>
+
+        <input type="checkbox" v-model="resizable" /> Resizable
+        <input type="checkbox" v-model="collision" /> Collision
+        <button @click="test">
+            Save
+        </button>
+        </div>
+
         <grid-layout :layout.sync="layout"
                      :col-num="colNum"
                      :row-height="80"
@@ -29,20 +45,7 @@
             </grid-item>
         </grid-layout>
 
-        <br>
-        <button @click="addItem">Add Parking Space</button>
-        <div v-if="draggable">
-            <input type="checkbox" v-model="draggable"/> Edit Mode (ON)
-        </div>
-        <div v-else>
-            <input type="checkbox" v-model="draggable"/> Edit Mode (OFF)
-        </div>
-        
-        <input type="checkbox" v-model="resizable" /> Resizable
-        <input type="checkbox" v-model="collision" /> Collision
-        <button @click="test">
-            Save
-        </button>
+
 
         <!-- EDIT FORM -->
         <el-dialog
@@ -122,7 +125,7 @@
     let x = 0
 
     onMounted(async() => {
-        
+
         index = layout.value.length
         console.log(parkingSpaces)
 
@@ -131,7 +134,7 @@
     watchEffect(async() => {
 
         let parkingLotId = store.state.parkingLotId
-        
+
         const getAllParkingSpacesData = async() => {
             try {
                 const response = await axios.get('api/parkingSpace/filter/' + parkingLotId)

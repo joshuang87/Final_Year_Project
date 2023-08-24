@@ -1,4 +1,7 @@
 <template>
+    <div class="d-flex justify-content-center mt-3 border-bottom container">
+      <h2>Reservation</h2>
+    </div>
     <div class="centered-content">
       <div class="container">
         <div class="row">
@@ -12,7 +15,7 @@
           </div>
           <div class="col-md-3 mb-3">
             <label for="dateInput" class="form-label">Date</label>
-            <input v-model="selectedDate" type="date" class="form-control" id="dateInput">
+            <input v-model="selectedDate" type="date" class="form-control" id="dateInput" @change="craeteNewDate">
           </div>
           <div class="col-md-3 mb-3">
             <label for="startTimeInput" class="form-label">Start Time</label>
@@ -93,8 +96,8 @@
   </template>
 
   <script>
-  //import jsPDF from 'jspdf';
-  //import QRCode from 'qrcode';
+  import jsPDF from 'jspdf';
+  import QRCode from 'qrcode';
 
   export default {
     data() {
@@ -144,7 +147,58 @@
 
 
     methods: {
+
+      craeteNewDate(){
+        const currentDate = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+        this.groupedFilteredSpaces = this.groupSpacesByDate(this.spaces.filter(space => {
+          let matches = true;
+          if (this.selectedDate < currentDate || this.selectedDate && space.date !== this.selectedDate) {
+      matches = false;
+    }
+
+    const spaceIdMapping = {
+      1: 101,
+      2: 201,
+      // Add more mappings as needed
+    };
+
+    if (!this.spaces.some(space => space.date === this.selectedDate)) {
+      const parkingLotSpaces = [];
+
+      for (const parkingLot of this.parkingLots) {
+        if (!this.selectedParkingLot || parkingLot.id === this.selectedParkingLot) {
+          // Use the mapping to determine the space ID
+          const spaceId = spaceIdMapping[parkingLot.id];
+
+          for (let hour = 8; hour <= 16; hour++) {
+            const slotStartTime = `${hour.toString().padStart(2, '0')}:00`;
+            const slotEndTime = `${(hour + 1).toString().padStart(2, '0')}:00`;
+
+            parkingLotSpaces.push({
+              parkingLotId: parkingLot.id,
+              date: this.selectedDate,
+              startTime: slotStartTime,
+              endTime: slotEndTime,
+              status: "available",
+              id: spaceId,
+              car_plate: null,
+              email: null
+            });
+          }
+        }
+      }
+
+      // Concatenate the new slots with the existing spaces array
+      this.spaces = this.spaces.concat(parkingLotSpaces);
+      this.groupedFilteredSpaces = this.groupSpacesByDate(this.spaces);
+    }
+    return matches;
+        }))
+
+      },
+
       filterSpaces() {
+        const currentDate = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
         this.groupedFilteredSpaces = this.groupSpacesByDate(this.spaces.filter(space => {
           let matches = true;
 
@@ -156,9 +210,11 @@
             matches = false;
           }
 
-          if (this.selectedDate && space.date !== this.selectedDate) {
-            matches = false;
-          }
+    // Check if selectedDate is today or a future date
+    if (this.selectedDate < currentDate || this.selectedDate && space.date !== this.selectedDate) {
+      matches = false;
+    }
+
 
           // Convert selected start and end times to Date objects for comparison
           const selectedStartTime = new Date(`${this.selectedDate} ${this.selectedStartTime}`);
@@ -186,7 +242,7 @@
             }
           }
 
-          console.log("Filtering space:", space.id,space.startTime,space.endTime,space.status,space.car_plate,space.email);
+          console.log("Filtering space:", space.id,space.startTime,space.endTime,space.date,space.status,space.car_plate,space.email);
           console.log("Matches:", matches);
           return matches;
         }));
@@ -219,7 +275,7 @@
         this.email = ""; // Clear email input
       },
 
-      /*async generateAndDownloadInvoice(space) {
+      async generateAndDownloadInvoice(space) {
         const pdf = new jsPDF();
         pdf.text('Invoice', 10, 10);
         pdf.text(`Parking Space ID: ${space.id}`, 10, 20);
@@ -242,7 +298,7 @@
         link.href = pdfUrl;
         link.download = `invoice_${space.id}_${this.selectedDate}.pdf`;
         link.click();
-      },*/
+      },
 
       async bookParkingSpace() {
         const selectedSpace = this.groupedFilteredSpaces.find(space => space.id === this.selectedSpaceId);
@@ -298,7 +354,7 @@
 
             console.log("Parking space booked successfully:", selectedSpace);
             alert("Booked successfully, The invoice is downloaded automatically, PLease Check, Thank you.");
-            //this.generateAndDownloadInvoice(selectedSpace);
+            this.generateAndDownloadInvoice(selectedSpace);
             // Clear the selected space and form inputs after booking
             this.selectedSpaceId = null;
             this.selectedDate = null;
@@ -326,7 +382,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 60vh;
+      min-height: 50vh;
     }
 
   </style>
