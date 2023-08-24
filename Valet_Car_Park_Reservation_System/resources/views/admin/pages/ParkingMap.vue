@@ -1,21 +1,5 @@
 <template>
     <div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         <grid-layout :layout.sync="layout"
                      :col-num="colNum"
                      :row-height="80"
