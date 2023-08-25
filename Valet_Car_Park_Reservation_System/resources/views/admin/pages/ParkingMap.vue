@@ -1,5 +1,23 @@
 <template>
     <div>
+        <button @click="addFormVisible = true" class="btn btn-primary" style="margin-bottom: 5px;">Add Parking Space</button>
+        <div v-if="draggable" class="form-check form-switch">
+            <input type="checkbox" v-model="draggable" class="form-check-input"/> Edit Mode (ON)
+        </div>
+        <div v-else class="form-check form-switch">
+            <input type="checkbox" v-model="draggable" class="form-check-input"/> Edit Mode (OFF)
+        </div>
+        <div class="form-check form-switch">
+            <input type="checkbox" v-model="resizable" class="form-check-input"/> Resizable
+        </div>
+        <div class="form-check form-switch">
+            <input type="checkbox" v-model="collision" class="form-check-input"/> Collision
+        </div>
+
+        <div>
+            <button @click="saveLayout" class="btn btn-primary" style="margin-bottom: 20px;">Save</button>
+        </div>
+
         <grid-layout :layout.sync="layout"
                      :col-num="colNum"
                      :row-height="80"
@@ -30,19 +48,7 @@
         </grid-layout>
 
         <br>
-        <button @click="addFormVisible = true">Add Parking Space</button>
-        <div v-if="draggable">
-            <input type="checkbox" v-model="draggable"/> Edit Mode (ON)
-        </div>
-        <div v-else>
-            <input type="checkbox" v-model="draggable"/> Edit Mode (OFF)
-        </div>
-        
-        <input type="checkbox" v-model="resizable" /> Resizable
-        <input type="checkbox" v-model="collision" /> Collision
-        <button @click="saveLayout">
-            Save
-        </button>
+
 
         <!-- EDIT FORM -->
         <el-dialog
@@ -170,7 +176,7 @@
     let x = 0
 
     onMounted(async() => {
-        
+
         index = layout.value.length
         console.log(parkingSpaces)
 
@@ -179,7 +185,7 @@
     watchEffect(async() => {
 
         let parkingLotId = store.state.parkingLotId
-        
+
         const getAllParkingSpacesData = async() => {
             try {
                 const response = await axios.get('api/parkingSpace/filter/' + parkingLotId)
@@ -221,7 +227,7 @@
         createParam.value.status = null
         createParam.value.open_time = null
         createParam.value.close_time = null
-        
+
         addFormVisible.value = false
         // Increment the counter to ensure key is always unique.
         x++
@@ -336,13 +342,14 @@
             to right,
             lightgrey 1px,
             transparent 1px
-    ),
-    linear-gradient(to bottom, lightgrey 1px, transparent 1px);
-    height: calc(100% - 5px);
+        ),
+        linear-gradient(to bottom, lightgrey 1px, transparent 1px);
+    height: calc(85% - 5px); /* Adjusted to exclude top 20% */
     width: calc(100% - 5px);
     position: absolute;
     background-repeat: repeat;
-    margin:5px;
+    margin: 5px;
+    top: 15%; /* Position at the top of the remaining 80% */
 }
 
 .vue-grid-item.vue-grid-placeholder {
