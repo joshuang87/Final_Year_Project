@@ -19,7 +19,7 @@ return new class extends Migration
             $table->boolean('status')->default(true);
             $table->string('email')->nullable();
             $table->string('car_plate')->nullable();
-            $table->foreign('car_plate')->references('car_plate')->on('cars')->cascadeOnUpdate()->cascadeOnDelete();
+            // $table->foreign('car_plate')->references('car_plate')->on('cars')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
             $table->string('parking_lot_id');
             $table->foreign('parking_lot_id')->references('parking_lot_id')->on('parking_spaces')->cascadeOnDelete()->cascadeOnUpdate();
