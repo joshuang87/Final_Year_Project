@@ -262,7 +262,13 @@ class ReserveController extends Controller
     {
         $data = $request->all();
 
-        parkingSpaceStatus::create($data);
+        foreach($data as $one)
+        {
+            parkingSpaceStatus::create($one);
+        }
+        // dd($data[0]['']);
+
+        // parkingSpaceStatus::create($data[0]);
 
         return response("GOOD",200);
     }

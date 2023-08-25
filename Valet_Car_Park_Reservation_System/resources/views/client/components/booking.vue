@@ -113,13 +113,15 @@
 
         carPlate: "", //user submit data
         email: "",
-
+        spaceIdMapping: null,
+        spaceIds: []
       };
     },
 
     mounted(){
       this.fetchParkingLots();
       this.fetchSpaces();
+      this.test()
     },
 
     methods: {
@@ -128,8 +130,6 @@
         try{
           const response = await axios.get('/api/parkingLot/allId');
           this.parkingLots = response.data;
-          console.log(this.parkingLots)
-
         }catch(error){
           console.error("error get parking lot:",error);
         }
@@ -139,12 +139,20 @@
         try{
           const response = await axios.get('/api/parkingSpace/allData');
           this.spaces = response.data;
-          console.log(this.spaces)
+          // console.log(this.spaces)
         }catch(error){
           console.log("error get parking space data:",error)
         }
       },
-
+      async test(){
+        try{
+          const response = await axios.get('/api/parkingLotWithParkingSpace');
+          this.spaceIdMapping = response.data;
+          // console.log(this.spaceIdMapping);
+        }catch(error){
+          console.log("error get parking space data:",error)
+        }
+      },
     /*  async craeteNewDate() {
           if (!this.selectedDate) {
               return;
@@ -170,53 +178,135 @@
             matches = false;
           }
 
-          const parkingSpaceIDs = this.spaces.map(space => space.parking_space_id);
-
-          const spaceIdMapping = {
-              G0: parkingSpaceIDs,
-              //G1: parkingSpaceIDs,  // Space IDs for parking lot 1
-            // Add more mappings as needed
-          };
-
+          // console.log(this.spaceIds);
+          
           if (!this.spaces.some(space => space.date === this.selectedDate)) {
           const parkingLotSpaces = [];
 
-          for (const parkingLot of this.parkingLots) {
-            if (!this.selectedParkingLot || parkingLot.parking_lot_id === this.selectedParkingLot) {
-              // Get the space IDs based on the parking lot ID
-              const spaceIds = spaceIdMapping[parkingLot.parking_lot_id];
+            for (let x in this.parkingLots) {
+              console.log(this.parkingLots[x].parking_lot_id);
+              if (!this.selectedParkingLot || this.parkingLots[x].parking_lot_id === this.selectedParkingLot) {
+                // Get the space IDs based on the parking lot ID
+                // const spaceIds = spaceIdMapping[parkingLot.parking_lot_id];
+                for(let z in this.spaceIdMapping){
+                  for(let y in this.spaceIdMapping[z]){
+                      if(this.spaceIdMapping[z][y][0][0].parking_lot_id == this.parkingLots[x].parking_lot_id){
+                        for(let q in this.spaceIdMapping[z][y][1]){
+                          // console.log(this.spaceIdMapping[x][y][1][q].parking_space_id);
+                          // this.spaceIdMapping[x][y][1][q].parking_space_id
+                          this.spaceIds.push({
+                            parkingSpace_id: this.spaceIdMapping[z][y][1][q].parking_space_id
+                          })
 
-              if (spaceIds) {
-                for (let hour = 8; hour <= 17; hour++) {
-                  const slotStartTime = `${hour.toString().padStart(2, '0')}:00`;
-                  const slotEndTime = `${(hour + 1).toString().padStart(2, '0')}:00`;
+                            if (this.spaceIds) {
+                            for (let hour = 8; hour <= 17; hour++) {
+                              const slotStartTime = `${hour.toString().padStart(2, '0')}:00`;
+                              const slotEndTime = `${(hour + 1).toString().padStart(2, '0')}:00`;
 
-                  for (const spaceId of spaceIds) {
-                    parkingLotSpaces.push({
-                      parking_lot_id: parkingLot.parking_lot_id,
-                      date: this.selectedDate,
-                      start_time: slotStartTime,
-                      end_time: slotEndTime,
-                      status: 1,
-                      parking_space_id: spaceId,
-                      car_plate: null,
-                      email: null
-                    });
-                    console.log(parkingLotSpaces);
+                              for (const spaceId of this.spaceIds) {
+                                parkingLotSpaces.push({
+                                  parking_lot_id: this.parkingLots[x].parking_lot_id,
+                                  date: this.selectedDate,
+                                  start_time: slotStartTime,
+                                  end_time: slotEndTime,
+                                  status: 1,
+                                  parking_space_id: spaceId,
+                                  car_plate: null,
+                                  email: null
+                                });
+                                console.log(parkingLotSpaces);
+                              }
+                            }
+                          }
+                          // this.spaceIdMapping = []
+                        }
+                      }
                   }
                 }
+
+                // if (this.spaceIds) {
+                //   for (let hour = 8; hour <= 17; hour++) {
+                //     const slotStartTime = `${hour.toString().padStart(2, '0')}:00`;
+                //     const slotEndTime = `${(hour + 1).toString().padStart(2, '0')}:00`;
+
+                //     for (const spaceId of this.spaceIds) {
+                //       parkingLotSpaces.push({
+                //         parking_lot_id: this.parkingLots[x].parking_lot_id,
+                //         date: this.selectedDate,
+                //         start_time: slotStartTime,
+                //         end_time: slotEndTime,
+                //         status: 1,
+                //         parking_space_id: spaceId,
+                //         car_plate: null,
+                //         email: null
+                //       });
+                //       console.log(parkingLotSpaces);
+                //     }
+                //   }
+                // }
               }
             }
-          }
 
             // Concatenate the new slots with the existing spaces array
             //this.spaces = this.spaces.concat(parkingLotSpaces);
-            axios.post('/api/booking/',parkingLotSpaces);
+            // axios.post('/api/booking/',parkingLotSpaces);
             this.groupedFilteredSpaces = this.groupSpacesByDate(this.spaces);
           }
-          return matches;
+            return matches;
         }))
       },
+//       createNewDate() {
+//   const currentDate = new Date().toISOString().split('T')[0];
+//   const filteredSpaces = this.spaces.filter(space => {
+//     let matches = true;
+//     if (this.selectedDate < currentDate || (this.selectedDate && space.date !== this.selectedDate)) {
+//       matches = false;
+//     }
+//     return matches;
+//   });
+
+//   if (!filteredSpaces.some(space => space.date === this.selectedDate)) {
+//     const parkingLotSpaces = [];
+
+//     for (let x in this.parkingLots) {
+//       if (!this.selectedParkingLot || this.parkingLots[x].parking_lot_id === this.selectedParkingLot) {
+//         for (let x in this.spaceIdMapping) {
+//           for (let y in this.spaceIdMapping[x]) {
+//             if (this.spaceIdMapping[x][y][0][0].parking_lot_id == this.parkingLots[x].parking_lot_id) {
+//               for (let q in this.spaceIdMapping[x][y][1]) {
+//                 this.spaceIds.push({
+//                   parkingSpace_id: this.spaceIdMapping[x][y][1][q].parking_space_id
+//                 });
+//               }
+//               if (this.spaceIds) {
+//                 for (let hour = 8; hour <= 17; hour++) {
+//                   const slotStartTime = `${hour.toString().padStart(2, '0')}:00`;
+//                   const slotEndTime = `${(hour + 1).toString().padStart(2, '0')}:00`;
+
+//                   for (const spaceId of this.spaceIds) {
+//                     parkingLotSpaces.push({
+//                       parking_lot_id: this.parkingLots[x].parking_lot_id,
+//                       date: this.selectedDate,
+//                       start_time: slotStartTime,
+//                       end_time: slotEndTime,
+//                       status: 1,
+//                       parking_space_id: spaceId,
+//                       car_plate: null,
+//                       email: null
+//                     });
+//                   }
+//                   console.log(parkingLotSpaces);
+//                 }
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+
+//     this.groupedFilteredSpaces = this.groupSpacesByDate(filteredSpaces.concat(parkingLotSpaces));
+//   }
+// },
 
       filterSpaces() {
         const currentDate = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
