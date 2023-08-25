@@ -13,7 +13,7 @@
     </div>
 
      <!-- 添加头像点击事件，弹出管理员个人信息对话框 -->
-  <div class="p-2" @click="openAdminProfileDialog">
+     <div class="p-2" @click="openAdminProfileDialog">
     <el-avatar
       :size="35"
       src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
@@ -54,7 +54,7 @@
     </div>
     <el-form>
       <el-form-item label="User Name">
-        <p>User Name</p>
+        <p>{{ $store.state.user.userInfo.name }}</p>
       </el-form-item>
       <el-form-item label="User Email">
         <p>User Email</p>
@@ -97,6 +97,7 @@
   >
     <el-form>
       <el-form-item label="Profile Image">
+  <input type="file" accept="image/*" @change="handleFileChange" />
         <el-upload
           class="avatar-uploader"
           :action="uploadEndpoint"
@@ -111,10 +112,7 @@
         </el-upload>
       </el-form-item>
       <el-form-item label="User Name">
-        <el-input v-model="userName" />
-      </el-form-item>
-      <el-form-item label="User Email">
-        <el-input v-model="userEmail" />
+        <el-input v-model="$store.state.user.userInfo.name" />
       </el-form-item>
       <el-form-item label="Birth Month">
         <el-select v-model="birthMonth">
@@ -137,7 +135,7 @@
         <el-input v-model="introduction" type="textarea" :rows="4" />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="saveProfile">Save</el-button>
+        <el-button type="primary" @click="onSubmit">Save</el-button>
       </el-form-item>
     </el-form>
   </el-dialog>
@@ -165,6 +163,7 @@
     import { useStore } from "vuex"
     import { useFullscreen } from '@vueuse/core'
     import { useUpdatePassword,useLogout } from '$/modules/useManager' 
+    import { updateProfileImage } from '$/api/manager';
 
     const store = useStore()
 
@@ -205,9 +204,10 @@
 
     // Profile Modal State
   const profileModalVisible = ref(false)
-  const profileImage = ref('')
+  const profileImage = ref('images/avatar.png')
   const introduction = ref('')
-  
+  const profileImageFile = ref(null);
+
   // 这些是用来绑定用户信息的变量
   const userName = ref('User Name');
   const userEmail = ref('User Email');
@@ -243,7 +243,7 @@
   }
 
  // 头像上传相关逻辑
-const uploadEndpoint = '/api/updateProfileImage'
+const uploadEndpoint = '/api/admin/updateProfileImage'
 
 const beforeAvatarUpload = (file) => {
   const isJPG = file.type === 'image/jpeg'
@@ -265,12 +265,16 @@ const beforeAvatarUpload = (file) => {
   return true
 }
 
+
+const handleFileChange = (event) => {
+  profileImageFile.value = event.target.files[0];
+};
+
 const handleAvatarSuccess = (response, file) => {
   // 上传成功后的处理逻辑
   // 更新 profileImage 变量
-  profileImage.value = URL.createObjectURL(file.raw)
+  profileImage.value = response.filePath;
 }
-
 const handleAvatarError = (err, file) => {
   // 上传失败后的处理逻辑
   console.log('Avatar upload failed:', err)
@@ -278,7 +282,7 @@ const handleAvatarError = (err, file) => {
 
 const saveProfile = async () => {
   try {
-    const response = await fetch('/api/updateProfileImage', {
+    const response = await axios('/api/updateProfileImage', {
       method: 'POST',
       headers: {
         'Content-Type': '/api/updateProfileImage'
