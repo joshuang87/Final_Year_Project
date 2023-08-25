@@ -14,11 +14,16 @@
             </select>
           </div>
           <div class="col-md-3 mb-3">
-            <label for="dateInput" class="form-label">Date</label>
-            <input v-model="selectedDate" type="date" class="form-control" id="dateInput" @change="craeteNewDate">
+            <!-- <label for="dateInput" class="form-label">Date</label>
+            <input v-model="selectedDate" type="date" class="form-control" id="dateInput" @change="craeteNewDate"> -->
+            <el-date-picker v-model="selectedDate"
+                            type="date"
+                            placeholder="Pick a day"
+                            @change="craeteNewDate"
+            />
           </div>
           <div class="col-md-3 mb-3">
-            <label for="startTimeInput" class="form-label">Start Time</label>
+            <!-- <label for="startTimeInput" class="form-label">Start Time</label>
             <select v-model="selectedStartTime" class="form-select" id="startTimeInput">
               <option value="">Any</option>
               <option value="08:00">08:00 AM</option>
@@ -30,11 +35,18 @@
               <option value="14:00">14:00 PM</option>
               <option value="15:00">15:00 PM</option>
               <option value="16:00">16:00 PM</option>
-              <!-- Add more time options as needed -->
-            </select>
+              Add more time options as needed
+            </select> -->
+            <el-time-select v-model="selectedStartTime"
+                            :max-time="selectedEndTime"
+                            placeholder="Start Time"
+                            start="08:00"
+                            step="01:00"
+                            end="23:00"
+            />
           </div>
           <div class="col-md-3 mb-3">
-            <label for="endTimeInput" class="form-label">End Time</label>
+            <!-- <label for="endTimeInput" class="form-label">End Time</label>
             <select v-model="selectedEndTime" class="form-select" id="endTimeInput">
               <option value="">Any</option>
               <option value="09:00">09:00 AM</option>
@@ -46,8 +58,15 @@
               <option value="15:00">15:00 PM</option>
               <option value="16:00">16:00 PM</option>
               <option value="17:00">17:00 PM</option>
-              <!-- Add more time options as needed -->
-            </select>
+              Add more time options as needed
+            </select> -->
+            <el-time-select v-model="selectedEndTime"
+                            :min-time="selectedStartTime"
+                            placeholder="End Time"
+                            start="08:00"
+                            step="01:00"
+                            end="23:00"
+            />
           </div>
         </div>
       </div>
@@ -370,6 +389,10 @@
           }
         }
       },
+
+      disabledDate(time) {
+          return time.getTime() < Date.now()
+      }
 
     },
   };
