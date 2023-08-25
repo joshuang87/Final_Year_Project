@@ -14,59 +14,35 @@
             </select>
           </div>
           <div class="col-md-3 mb-3">
-            <!-- <label for="dateInput" class="form-label">Date</label>
-            <input v-model="selectedDate" type="date" class="form-control" id="dateInput" @change="craeteNewDate"> -->
-            <el-date-picker v-model="selectedDate"
-                            type="date"
-                            placeholder="Pick a day"
-                            @change="craeteNewDate"
-            />
+            <label for="dateInput" class="form-label">Date</label>
+            <input v-model="selectedDate" type="date" class="form-control" id="dateInput" @change="craeteNewDate">
           </div>
           <div class="col-md-3 mb-3">
-            <!-- <label for="startTimeInput" class="form-label">Start Time</label>
-            <select v-model="selectedStartTime" class="form-select" id="startTimeInput">
-              <option value="">Any</option>
-              <option value="08:00">08:00 AM</option>
-              <option value="09:00">09:00 AM</option>
-              <option value="10:00">10:00 AM</option>
-              <option value="11:00">11:00 AM</option>
-              <option value="12:00">12:00 PM</option>
-              <option value="13:00">13:00 PM</option>
-              <option value="14:00">14:00 PM</option>
-              <option value="15:00">15:00 PM</option>
-              <option value="16:00">16:00 PM</option>
-              Add more time options as needed
-            </select> -->
-            <el-time-select v-model="selectedStartTime"
-                            :max-time="selectedEndTime"
-                            placeholder="Start Time"
-                            start="08:00"
-                            step="01:00"
-                            end="22:00"
-            />
+            <label for="startTimeInput" class="form-label">Start Time: </label>
+            <div>
+                <el-time-select
+                    v-model="selectedStartTime"
+                    :max-time="selectedEndTime"
+                    class="mr-4"
+                    placeholder="Start time"
+                    start="08:00"
+                    step="01:00"
+                    end="17:00"
+                />
+            </div>
           </div>
           <div class="col-md-3 mb-3">
-            <!-- <label for="endTimeInput" class="form-label">End Time</label>
-            <select v-model="selectedEndTime" class="form-select" id="endTimeInput">
-              <option value="">Any</option>
-              <option value="09:00">09:00 AM</option>
-              <option value="10:00">10:00 AM</option>
-              <option value="11:00">11:00 AM</option>
-              <option value="12:00">12:00 PM</option>
-              <option value="13:00">13:00 PM</option>
-              <option value="14:00">14:00 PM</option>
-              <option value="15:00">15:00 PM</option>
-              <option value="16:00">16:00 PM</option>
-              <option value="17:00">17:00 PM</option>
-              Add more time options as needed
-            </select> -->
-            <el-time-select v-model="selectedEndTime"
-                            :min-time="selectedStartTime"
-                            placeholder="End Time"
-                            start="08:00"
-                            step="01:00"
-                            end="22:00"
-            />
+            <label for="endTimeInput" class="form-label">End Time  :</label>
+            <div>
+                <el-time-select
+                    v-model="selectedEndTime"
+                    :min-time="selectedStartTime"
+                    placeholder="End time"
+                    start="09:00"
+                    step="01:00"
+                    end="17:00"
+                />
+            </div>
           </div>
         </div>
       </div>
@@ -117,16 +93,19 @@
   <script>
   import jsPDF from 'jspdf';
   import QRCode from 'qrcode';
+  import axios from "axios";
 
   export default {
     data() {
       return {
-        parkingLots: [
+        parkingLots: [/*
                         { id: 1 },
                         { id: 2 },
-                     ],
+                        { id: 3 },
+                        { id: 4 },
+                     */],
 
-        spaces: [
+        spaces: [/*
                     { parkingLotId: 1, date: "2023-08-21", startTime: "08:00", endTime: "09:00", status: "available", id: 101, car_plate: null, email: null },
                     { parkingLotId: 1, date: "2023-08-21", startTime: "09:00", endTime: "10:00", status: "available", id: 101, car_plate: null, email: null },
                     { parkingLotId: 1, date: "2023-08-21", startTime: "10:00", endTime: "11:00", status: "available", id: 101, car_plate: null, email: null },
@@ -146,7 +125,7 @@
                     { parkingLotId: 2, date: "2023-08-21", startTime: "14:00", endTime: "15:00", status: "available", id: 201, car_plate: null, email: null },
                     { parkingLotId: 2, date: "2023-08-21", startTime: "15:00", endTime: "16:00", status: "available", id: 201, car_plate: null, email: null },
                     { parkingLotId: 2, date: "2023-08-21", startTime: "16:00", endTime: "17:00", status: "available", id: 201, car_plate: null, email: null },
-                ],
+                */],
 
         groupedFilteredSpaces: [],
 
@@ -163,57 +142,100 @@
       };
     },
 
-
+    mounted(){
+      this.fetchParkingLots();
+      this.fetchSpaces();
+    },
 
     methods: {
+
+      async fetchParkingLots(){
+        try{
+          const response = await axios.get('/api/parkingLot/allData');
+          this.parkingLots = response.data;
+        }catch(error){
+          console.error("error get parking lot:",error);
+        }
+      },
+
+      async fetchSpaces(){
+        try{
+          const response = await axios.get('/api/parkingSpace/allData');
+          this.spaces = response.data;
+        }catch(error){
+          console.log("error get parking space data:",error)
+        }
+      },
+
+    /*  async craeteNewDate() {
+          if (!this.selectedDate) {
+              return;
+          }
+
+          try {
+              await axios.post('/api/spaces/create-for-date', {
+                  selectedDate: this.selectedDate
+              });
+
+              // After creating spaces, you might want to refetch the updated spaces data
+              this.fetchSpaces();
+          } catch (error) {
+              console.error('Error creating spaces:', error);
+          }
+      },*/
 
       craeteNewDate(){
         const currentDate = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
         this.groupedFilteredSpaces = this.groupSpacesByDate(this.spaces.filter(space => {
           let matches = true;
           if (this.selectedDate < currentDate || this.selectedDate && space.date !== this.selectedDate) {
-      matches = false;
-    }
-
-    const spaceIdMapping = {
-      1: 101,
-      2: 201,
-      // Add more mappings as needed
-    };
-
-    if (!this.spaces.some(space => space.date === this.selectedDate)) {
-      const parkingLotSpaces = [];
-
-      for (const parkingLot of this.parkingLots) {
-        if (!this.selectedParkingLot || parkingLot.id === this.selectedParkingLot) {
-          // Use the mapping to determine the space ID
-          const spaceId = spaceIdMapping[parkingLot.id];
-
-          for (let hour = 8; hour <= 16; hour++) {
-            const slotStartTime = `${hour.toString().padStart(2, '0')}:00`;
-            const slotEndTime = `${(hour + 1).toString().padStart(2, '0')}:00`;
-
-            parkingLotSpaces.push({
-              parkingLotId: parkingLot.id,
-              date: this.selectedDate,
-              startTime: slotStartTime,
-              endTime: slotEndTime,
-              status: "available",
-              id: spaceId,
-              car_plate: null,
-              email: null
-            });
+            matches = false;
           }
-        }
-      }
 
-      // Concatenate the new slots with the existing spaces array
-      this.spaces = this.spaces.concat(parkingLotSpaces);
-      this.groupedFilteredSpaces = this.groupSpacesByDate(this.spaces);
-    }
-    return matches;
+          const spaceIdMapping = {
+              1: [101, 102, 103],  // Space IDs for parking lot 1
+              2: [201, 202, 203],  // Space IDs for parking lot 2
+              3: [301, 302, 303],
+            // Add more mappings as needed
+          };
+
+          if (!this.spaces.some(space => space.date === this.selectedDate)) {
+          const parkingLotSpaces = [];
+
+          for (const parkingLot of this.parkingLots) {
+            if (!this.selectedParkingLot || parkingLot.id === this.selectedParkingLot) {
+              // Get the space IDs based on the parking lot ID
+              const spaceIds = spaceIdMapping[parkingLot.id];
+
+              if (spaceIds) {
+                for (let hour = 8; hour <= 17; hour++) {
+                  const slotStartTime = `${hour.toString().padStart(2, '0')}:00`;
+                  const slotEndTime = `${(hour + 1).toString().padStart(2, '0')}:00`;
+
+                  for (const spaceId of spaceIds) {
+                    parkingLotSpaces.push({
+                      parking_Lot_Id: parkingLot.id,
+                      date: this.selectedDate,
+                      start_time: slotStartTime,
+                      end_time: slotEndTime,
+                      status: 1,
+                      id: spaceId,
+                      car_plate: null,
+                      email: null
+                    });
+                  }
+                }
+              }
+            }
+          }
+
+            // Concatenate the new slots with the existing spaces array
+            this.spaces = this.spaces.concat(parkingLotSpaces);
+            axios.post('/api/booking/',parkingLotSpaces);
+            this.groupedFilteredSpaces = this.groupSpacesByDate(this.spaces);
+          }
+          return matches;
         }))
-
       },
 
       filterSpaces() {
@@ -229,10 +251,10 @@
             matches = false;
           }
 
-    // Check if selectedDate is today or a future date
-    if (this.selectedDate < currentDate || this.selectedDate && space.date !== this.selectedDate) {
-      matches = false;
-    }
+          // Check if selectedDate is today or a future date
+          if (this.selectedDate < currentDate || this.selectedDate && space.date !== this.selectedDate) {
+            matches = false;
+          }
 
 
           // Convert selected start and end times to Date objects for comparison
@@ -243,7 +265,7 @@
           const bookedTimeRanges = this.spaces.filter(sp =>
             sp.id === space.id &&
             sp.date === this.selectedDate &&
-            sp.status === "occupied"
+            sp.status === 0
           );
 
           // Check for overlap with each booked time range
@@ -351,7 +373,7 @@
               );
 
               if (originalSpace) {
-                originalSpace.status = "occupied";
+                originalSpace.status = 0;
                 originalSpace.car_plate = this.carPlate;
                 originalSpace.email = this.email;
               }
@@ -361,9 +383,34 @@
             // Update the status in the groupedFilteredSpaces array
             const groupedSpace = this.groupedFilteredSpaces.find(space => space.id === selectedSpace.id);
             if (groupedSpace) {
-              groupedSpace.status = "occupied";
+              groupedSpace.status = 0;
               groupedSpace.car_plate = this.carPlate;
               groupedSpace.email = this.email;
+
+              try {
+                const spaceToUpdate = this.spaces.find(space =>
+                  space.id === selectedSpace.id &&
+                  space.date === this.selectedDate &&
+                  new Date(`${this.selectedDate} ${space.startTime}`) >= bookingStartTime &&
+                  new Date(`${this.selectedDate} ${space.endTime}`) <= bookingEndTime
+                );
+
+                if (spaceToUpdate) {
+                  spaceToUpdate.status = 0;
+                  spaceToUpdate.car_plate = this.carPlate;
+                  spaceToUpdate.email = this.email;
+
+                  await axios.patch(`/api/${spaceToUpdate.id}/'bookingStateUpdate/`, {
+                    status: spaceToUpdate.status,
+                    car_plate: spaceToUpdate.car_plate,
+                    email: spaceToUpdate.email,
+                  });
+
+                  console.log("Updated data on server:", spaceToUpdate);
+                }
+              } catch (error) {
+                console.error("Error updating data on server:", error);
+              }
             }
 
             console.log("After booking - groupedFilteredSpaces:", this.groupedFilteredSpaces);
@@ -389,10 +436,6 @@
           }
         }
       },
-
-      disabledDate(time) {
-          return time.getTime() < Date.now()
-      }
 
     },
   };
