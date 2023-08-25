@@ -89,13 +89,12 @@
       </el-form-item>
     </el-form>
   </el-dialog>
-    <el-dialog
+  <el-dialog
     title="Edit Profile"
     v-model="profileModalVisible"
     @close="closeProfileModal"
     width="30%"
-    >
-     <!-- 编写头像修改和自我简介的表单代码 -->
+  >
     <el-form>
       <el-form-item label="Profile Image">
         <el-upload
@@ -106,17 +105,40 @@
           :on-success="handleAvatarSuccess"
           :on-error="handleAvatarError"
         >
-          <img v-if="profileImage" :src="profileImage" class="avatar">
+          <img v-if="profileImage" :src="profileImage" class="avatar" />
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-          <button>Change Your Image</button>
+          <el-button type="primary">Change Your Image</el-button>
         </el-upload>
-            </el-form-item>
-            <el-form-item label="Introduction">
-                <el-input v-model="introduction" type="textarea" :rows="4"></el-input>
-            </el-form-item>
-            <el-form-item>
-                <el-button type="primary" @click="saveProfile">Save</el-button>
-            </el-form-item>
+      </el-form-item>
+      <el-form-item label="User Name">
+        <el-input v-model="userName" />
+      </el-form-item>
+      <el-form-item label="User Email">
+        <el-input v-model="userEmail" />
+      </el-form-item>
+      <el-form-item label="Birth Month">
+        <el-select v-model="birthMonth">
+          <el-option label="January" value="January" />
+          <el-option label="February" value="February" />
+          <el-option label="March" value="March" />
+          <el-option label="April" value="April" />
+          <el-option label="May" value="May" />
+          <el-option label="June" value="June" />
+          <el-option label="July" value="July" />
+          <el-option label="August" value="August" />
+          <el-option label="September" value="September" />
+          <el-option label="October" value="October" />
+          <el-option label="November" value="November" />
+          <el-option label="December" value="December" />
+          
+        </el-select>
+      </el-form-item>
+      <el-form-item label="Introduction">
+        <el-input v-model="introduction" type="textarea" :rows="4" />
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="saveProfile">Save</el-button>
+      </el-form-item>
     </el-form>
   </el-dialog>
     
@@ -185,6 +207,12 @@
   const profileModalVisible = ref(false)
   const profileImage = ref('')
   const introduction = ref('')
+  
+  // 这些是用来绑定用户信息的变量
+  const userName = ref('User Name');
+  const userEmail = ref('User Email');
+  const birthMonth = ref('January');
+
 
   const openProfileModal = () => {
     profileModalVisible.value = true
@@ -260,10 +288,17 @@ const saveProfile = async () => {
         introduction: introduction.value
       })
     })
-    const data = await response.json()
-    // handle successful update
+    const data = await response.json();
+    // 根据后端返回的情况进行相应的处理
+    if (data.success) {
+      // 成功处理
+      // 关闭对话框等操作
+    } else {
+      // 失败处理
+      // 提示用户保存失败等
+    }
   } catch (error) {
-    // handle error
+    // 处理错误
   }
 }
 
