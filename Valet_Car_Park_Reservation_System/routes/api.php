@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Client\PaymentController;
 use App\Http\Controllers\Client\ReserveController;
+use App\Models\ParkingSpace;
 use App\Repositories\AdminRepositories\ParkingLotRepository;
 use App\Repositories\AdminRepositories\ReservationRepository;
 use App\Repositories\AdminRepositories\ParkingSpaceRepository;
@@ -74,6 +75,7 @@ Route::prefix('reserve')->group(function(){
 
 Route::post('booking',[ReserveController::class,'booking'])->name('api.booking');
 Route::patch('/{parkingSpaceId}/bookingStateUpdate',[ReserveController::class,'changeBookingState'])->name('api.bookingStateUpdate');
+Route::get('parkingLotWithParkingSpace',[ParkingSpaceController::class,'parkingLotWithParkingSpace'])->name('api.getParkingLotWithParkingSpace');
 
 Route::get('test/{parkingLotId}',[ParkingSpaceController::class,'getLayout'])->name('api.name');
 
