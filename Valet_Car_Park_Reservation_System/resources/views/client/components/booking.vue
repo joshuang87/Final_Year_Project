@@ -208,7 +208,7 @@
           }
 
             // Concatenate the new slots with the existing spaces array
-            //this.spaces = this.spaces.concat(parkingLotSpaces);
+            this.spaces = this.spaces.concat(parkingLotSpaces);
             axios.post('/api/booking/',parkingLotSpaces);
             this.groupedFilteredSpaces = this.groupSpacesByDate(this.spaces);
           }

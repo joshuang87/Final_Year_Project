@@ -39,6 +39,7 @@ Route::prefix('admin')->group(function(){
 });
 
 Route::prefix('parkingLot')->group(function(){
+    Route::get('/allId',[ParkingLotController::class,'allId'])->name('api.allId');
     Route::get('/allData',[ParkingLotRepository::class,'showParkingLots'])->name('api.showParkingLots');
     Route::get('/{parkingLotId}/details',[ParkingLotRepository::class,'showParkingLotDetails'])->name('api.showParkingLotDetails');
     Route::post('/add',[ParkingLotController::class,'store'])->name('api.storeParkingLot');
