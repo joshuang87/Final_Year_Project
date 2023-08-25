@@ -98,34 +98,9 @@
   export default {
     data() {
       return {
-        parkingLots: [/*
-                        { id: 1 },
-                        { id: 2 },
-                        { id: 3 },
-                        { id: 4 },
-                     */],
+        parkingLots: [],
 
-        spaces: [/*
-                    { parkingLotId: 1, date: "2023-08-21", startTime: "08:00", endTime: "09:00", status: "available", id: 101, car_plate: null, email: null },
-                    { parkingLotId: 1, date: "2023-08-21", startTime: "09:00", endTime: "10:00", status: "available", id: 101, car_plate: null, email: null },
-                    { parkingLotId: 1, date: "2023-08-21", startTime: "10:00", endTime: "11:00", status: "available", id: 101, car_plate: null, email: null },
-                    { parkingLotId: 1, date: "2023-08-21", startTime: "11:00", endTime: "12:00", status: "available", id: 101, car_plate: null, email: null },
-                    { parkingLotId: 1, date: "2023-08-21", startTime: "12:00", endTime: "13:00", status: "available", id: 101, car_plate: null, email: null },
-                    { parkingLotId: 1, date: "2023-08-21", startTime: "13:00", endTime: "14:00", status: "available", id: 101, car_plate: null, email: null },
-                    { parkingLotId: 1, date: "2023-08-21", startTime: "14:00", endTime: "15:00", status: "available", id: 101, car_plate: null, email: null },
-                    { parkingLotId: 1, date: "2023-08-21", startTime: "15:00", endTime: "16:00", status: "available", id: 101, car_plate: null, email: null },
-                    { parkingLotId: 1, date: "2023-08-21", startTime: "16:00", endTime: "17:00", status: "available", id: 101, car_plate: null, email: null },
-
-                    { parkingLotId: 2, date: "2023-08-21", startTime: "08:00", endTime: "09:00", status: "available", id: 201, car_plate: null, email: null },
-                    { parkingLotId: 2, date: "2023-08-21", startTime: "09:00", endTime: "10:00", status: "available", id: 201, car_plate: null, email: null },
-                    { parkingLotId: 2, date: "2023-08-21", startTime: "10:00", endTime: "11:00", status: "available", id: 201, car_plate: null, email: null },
-                    { parkingLotId: 2, date: "2023-08-21", startTime: "11:00", endTime: "12:00", status: "available", id: 201, car_plate: null, email: null },
-                    { parkingLotId: 2, date: "2023-08-21", startTime: "12:00", endTime: "13:00", status: "available", id: 201, car_plate: null, email: null },
-                    { parkingLotId: 2, date: "2023-08-21", startTime: "13:00", endTime: "14:00", status: "available", id: 201, car_plate: null, email: null },
-                    { parkingLotId: 2, date: "2023-08-21", startTime: "14:00", endTime: "15:00", status: "available", id: 201, car_plate: null, email: null },
-                    { parkingLotId: 2, date: "2023-08-21", startTime: "15:00", endTime: "16:00", status: "available", id: 201, car_plate: null, email: null },
-                    { parkingLotId: 2, date: "2023-08-21", startTime: "16:00", endTime: "17:00", status: "available", id: 201, car_plate: null, email: null },
-                */],
+        spaces: [],
 
         groupedFilteredSpaces: [],
 
@@ -152,7 +127,9 @@
       async fetchParkingLots(){
         try{
           const response = await axios.get('/api/parkingLot/allData');
-          this.parkingLots = response.data;
+          this.parkingLots = response.data.parking_lot_id;
+          console.log(this.parkingLots)
+
         }catch(error){
           console.error("error get parking lot:",error);
         }
@@ -162,6 +139,7 @@
         try{
           const response = await axios.get('/api/parkingSpace/allData');
           this.spaces = response.data;
+          console.log(this.spaces)
         }catch(error){
           console.log("error get parking space data:",error)
         }
@@ -230,7 +208,7 @@
           }
 
             // Concatenate the new slots with the existing spaces array
-            this.spaces = this.spaces.concat(parkingLotSpaces);
+            //this.spaces = this.spaces.concat(parkingLotSpaces);
             axios.post('/api/booking/',parkingLotSpaces);
             this.groupedFilteredSpaces = this.groupSpacesByDate(this.spaces);
           }
