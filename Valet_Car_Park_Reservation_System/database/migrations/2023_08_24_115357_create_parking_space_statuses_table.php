@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('parking_space_statuses', function (Blueprint $table) {
             $table->id();
+            $table->date('date')->nullable();
             $table->time('start_time');
             $table->time('end_time');
             $table->boolean('availability')->default(true);

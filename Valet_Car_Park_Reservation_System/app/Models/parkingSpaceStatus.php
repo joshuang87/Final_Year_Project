@@ -11,6 +11,7 @@ class parkingSpaceStatus extends Model
 
     protected $fillable = [
         'id',
+        'date',
         'start_time',
         'end_time',
         'availability',
