@@ -173,7 +173,8 @@
           const parkingSpaceIDs = this.spaces.map(space => space.parking_space_id);
 
           const spaceIdMapping = {
-              G0: parkingSpaceIDs,  // Space IDs for parking lot 1
+              G0: parkingSpaceIDs,
+              //G1: parkingSpaceIDs,  // Space IDs for parking lot 1
             // Add more mappings as needed
           };
 
@@ -192,7 +193,7 @@
 
                   for (const spaceId of spaceIds) {
                     parkingLotSpaces.push({
-                      parking_Lot_Id: parkingLot.parking_lot_id,
+                      parking_lot_id: parkingLot.parking_lot_id,
                       date: this.selectedDate,
                       start_time: slotStartTime,
                       end_time: slotEndTime,
@@ -226,7 +227,7 @@
             return false;
           }
 
-          if (this.selectedParkingLot && parkingLots.parkingLotId !== this.selectedParkingLot) {
+          if (this.selectedParkingLot && parkingLots.parking_lot_id !== this.selectedParkingLot) {
             matches = false;
           }
 
@@ -242,15 +243,15 @@
 
           // Find any booked time ranges for the selected space
           const bookedTimeRanges = this.spaces.filter(sp =>
-            sp.id === space.id &&
+            sp.parking_space_id === space.parking_space_id &&
             sp.date === this.selectedDate &&
             sp.status === 0
           );
 
           // Check for overlap with each booked time range
           for (const bookedRange of bookedTimeRanges) {
-            const bookedStartTime = new Date(`${this.selectedDate} ${bookedRange.startTime}`);
-            const bookedEndTime = new Date(`${this.selectedDate} ${bookedRange.endTime}`);
+            const bookedStartTime = new Date(`${this.selectedDate} ${bookedRange.start_time}`);
+            const bookedEndTime = new Date(`${this.selectedDate} ${bookedRange.end_time}`);
 
             if (
               (selectedStartTime >= bookedStartTime && selectedStartTime < bookedEndTime) ||
@@ -262,7 +263,7 @@
             }
           }
 
-          console.log("Filtering space:", space.id,space.startTime,space.endTime,space.date,space.status,space.car_plate,space.email);
+          console.log("Filtering space:", space.parking_space_id,space.start_time,space.end_time,space.date,space.status,space.car_plate,space.email);
           console.log("Matches:", matches);
           return matches;
         }));
@@ -272,12 +273,12 @@
 
         const grouped = {};
         for (const space of spaces) {
-          const key = `${space.id}-${space.date}`;
+          const key = `${space.parking_space_id}-${space.date}`;
           if (!grouped[key]) {
             grouped[key] = {
-              parkingLotId: space.parkingLotId,
+              parkingLotId: space.parking_lot_id,
               date: space.date,
-              id: space.id,
+              id: space.parking_space_id,
               status: space.status,
               car_plate: space.car_plate,
               email: space.email
@@ -298,7 +299,7 @@
       async generateAndDownloadInvoice(space) {
         const pdf = new jsPDF();
         pdf.text('Invoice', 10, 10);
-        pdf.text(`Parking Space ID: ${space.id}`, 10, 20);
+        pdf.text(`Parking Space ID: ${space.parking_space_id}`, 10, 20);
         pdf.text(`Date: ${this.selectedDate}`, 10, 30);
         pdf.text(`Start Time: ${this.selectedStartTime}`, 10, 40);
         pdf.text(`End Time: ${this.selectedEndTime}`, 10, 50);
@@ -316,16 +317,16 @@
         const pdfUrl = URL.createObjectURL(pdfBlob);
         const link = document.createElement('a');
         link.href = pdfUrl;
-        link.download = `invoice_${space.id}_${this.selectedDate}.pdf`;
+        link.download = `invoice_${space.parking_space_id}_${this.selectedDate}.pdf`;
         link.click();
       },
 
       async bookParkingSpace() {
-        const selectedSpace = this.groupedFilteredSpaces.find(space => space.id === this.selectedSpaceId);
+        const selectedSpace = this.groupedFilteredSpaces.find(space => space.parking_space_id === this.selectedSpaceId);
 
         if (selectedSpace) {
           if (this.selectedDate && this.selectedStartTime && this.selectedEndTime) {
-            console.log("Booking parking space:", selectedSpace.id);
+            console.log("Booking parking space:", selectedSpace.parking_space_id);
             console.log("Selected Date:", this.selectedDate);
             console.log("Selected Start Time:", this.selectedStartTime);
             console.log("Selected End Time:", this.selectedEndTime);
@@ -345,10 +346,10 @@
 
               // Find the space for each booking time slot
               const originalSpace = this.spaces.find(space =>
-                space.id === selectedSpace.id &&
+                space.parking_space_id === selectedSpace.parking_space_id &&
                 space.date === this.selectedDate &&
-                new Date(`${this.selectedDate} ${space.startTime}`) >= bookingStartTime &&
-                new Date(`${this.selectedDate} ${space.endTime}`) <= bookingEndTime
+                new Date(`${this.selectedDate} ${space.start_time}`) >= bookingStartTime &&
+                new Date(`${this.selectedDate} ${space.end_time}`) <= bookingEndTime
               );
 
               if (originalSpace) {
@@ -379,7 +380,7 @@
                   spaceToUpdate.car_plate = this.carPlate;
                   spaceToUpdate.email = this.email;
 
-                  await axios.patch(`/api/${spaceToUpdate.id}/'bookingStateUpdate/`, {
+                  await axios.patch(`/api/${spaceToUpdate.parking_space_id}/'bookingStateUpdate/`, {
                     status: spaceToUpdate.status,
                     car_plate: spaceToUpdate.car_plate,
                     email: spaceToUpdate.email,
