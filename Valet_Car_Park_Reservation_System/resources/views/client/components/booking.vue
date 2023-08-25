@@ -10,7 +10,7 @@
             <select v-model="selectedParkingLot" class="form-select" id="parkingLotSelect">
               <option value="">All</option>
               <!-- Populate with parking lot IDs -->
-              <option v-for="parkingLot in parkingLots" :value="parkingLot.id" :key="parkingLot.id">{{ parkingLot.id }}</option>
+              <option v-for="parkingLot in parkingLots" :value="parkingLot.parking_lot_id" :key="parkingLot.parking_lot_id">{{ parkingLot.parking_lot_id }}</option>
             </select>
           </div>
           <div class="col-md-3 mb-3">
@@ -126,8 +126,8 @@
 
       async fetchParkingLots(){
         try{
-          const response = await axios.get('/api/parkingLot/allData');
-          this.parkingLots = response.data.parking_lot_id;
+          const response = await axios.get('/api/parkingLot/allId');
+          this.parkingLots = response.data;
           console.log(this.parkingLots)
 
         }catch(error){
@@ -170,10 +170,10 @@
             matches = false;
           }
 
+          const parkingSpaceIDs = this.spaces.map(space => space.parking_space_id);
+
           const spaceIdMapping = {
-              1: [101, 102, 103],  // Space IDs for parking lot 1
-              2: [201, 202, 203],  // Space IDs for parking lot 2
-              3: [301, 302, 303],
+              G0: parkingSpaceIDs,  // Space IDs for parking lot 1
             // Add more mappings as needed
           };
 
@@ -181,9 +181,9 @@
           const parkingLotSpaces = [];
 
           for (const parkingLot of this.parkingLots) {
-            if (!this.selectedParkingLot || parkingLot.id === this.selectedParkingLot) {
+            if (!this.selectedParkingLot || parkingLot.parking_lot_id === this.selectedParkingLot) {
               // Get the space IDs based on the parking lot ID
-              const spaceIds = spaceIdMapping[parkingLot.id];
+              const spaceIds = spaceIdMapping[parkingLot.parking_lot_id];
 
               if (spaceIds) {
                 for (let hour = 8; hour <= 17; hour++) {
@@ -192,7 +192,7 @@
 
                   for (const spaceId of spaceIds) {
                     parkingLotSpaces.push({
-                      parking_Lot_Id: parkingLot.id,
+                      parking_Lot_Id: parkingLot.parking_lot_id,
                       date: this.selectedDate,
                       start_time: slotStartTime,
                       end_time: slotEndTime,
@@ -201,6 +201,7 @@
                       car_plate: null,
                       email: null
                     });
+                    console.log(parkingLotSpaces);
                   }
                 }
               }
@@ -208,8 +209,8 @@
           }
 
             // Concatenate the new slots with the existing spaces array
-            this.spaces = this.spaces.concat(parkingLotSpaces);
-            axios.post('/api/booking/',parkingLotSpaces);
+            //this.spaces = this.spaces.concat(parkingLotSpaces);
+            //axios.post('/api/booking/',parkingLotSpaces);
             this.groupedFilteredSpaces = this.groupSpacesByDate(this.spaces);
           }
           return matches;
@@ -225,7 +226,7 @@
             return false;
           }
 
-          if (this.selectedParkingLot && space.parkingLotId !== this.selectedParkingLot) {
+          if (this.selectedParkingLot && parkingLots.parkingLotId !== this.selectedParkingLot) {
             matches = false;
           }
 

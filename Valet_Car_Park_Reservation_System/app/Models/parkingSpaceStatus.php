@@ -14,7 +14,7 @@ class parkingSpaceStatus extends Model
         'date',
         'start_time',
         'end_time',
-        'availability',
+        'status',
         'car_plate',
         'parking_space_id',
         'parking_lot_id'

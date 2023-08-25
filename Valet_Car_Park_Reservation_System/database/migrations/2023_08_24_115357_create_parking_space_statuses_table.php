@@ -16,7 +16,7 @@ return new class extends Migration
             $table->date('date')->nullable();
             $table->time('start_time');
             $table->time('end_time');
-            $table->boolean('availability')->default(true);
+            $table->boolean('status')->default(true);
             $table->string('email')->nullable();
             $table->string('car_plate')->nullable();
             $table->foreign('car_plate')->references('car_plate')->on('cars')->cascadeOnUpdate()->cascadeOnDelete();
