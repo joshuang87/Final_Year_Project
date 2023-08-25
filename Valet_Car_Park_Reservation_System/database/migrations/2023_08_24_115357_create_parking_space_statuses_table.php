@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('car_plate');
             $table->foreign('car_plate')->references('car_plate')->on('cars')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
+            $table->string('parking_lot_id');
+            $table->foreign('parking_lot_id')->references('parking_lot_id')->on('parking_spaces')->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('parking_space_id');
             $table->foreign('parking_space_id')->references('parking_space_id')->on('parking_spaces')->cascadeOnDelete()->cascadeOnUpdate();
         });

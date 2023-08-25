@@ -8,6 +8,7 @@ use App\Models\Reserve;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\parkingSpaceStatus;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use App\Repositories\Interfaces\ClientInterfaces\CarRepositoryInterface;
 use App\Repositories\Interfaces\ClientInterfaces\ClientRepositoryInterface;
@@ -26,57 +27,57 @@ class ReserveController extends Controller
         $this->car = $car;
     }
 
-    public function booking(Request $request)
-    {
-        $data = [
-            'reserve_id' => $request->reserve_id,
-            'car_plate' => $request->car_plate,
-            'phone_number' => $request->phone_number,
-            'email' => $request->email,
-            'parking_space_id' => $request->parking_space_id,
-            'parking_lot_id' => $request->parking_lot_id,
-            'date' => $request->date,
-            'time' => $request->time,
-            'duration' => $request->duration
-        ];
+    // public function booking(Request $request)
+    // {
+    //     $data = [
+    //         'reserve_id' => $request->reserve_id,
+    //         'car_plate' => $request->car_plate,
+    //         'phone_number' => $request->phone_number,
+    //         'email' => $request->email,
+    //         'parking_space_id' => $request->parking_space_id,
+    //         'parking_lot_id' => $request->parking_lot_id,
+    //         'date' => $request->date,
+    //         'time' => $request->time,
+    //         'duration' => $request->duration
+    //     ];
 
-        $this->client->storeClientInfor([
-            'car_plate' => $data['car_plate'],
-            'phone_number' => $data['phone_number'],
-            'reserve_id' => $data['reserve_id']
-        ]);
+    //     $this->client->storeClientInfor([
+    //         'car_plate' => $data['car_plate'],
+    //         'phone_number' => $data['phone_number'],
+    //         'reserve_id' => $data['reserve_id']
+    //     ]);
 
-        // get current client id who is making reserve
-        $currentClientId = Client::where('car_plate',$data['car_plate'])->first()['client_id'];
+    //     // get current client id who is making reserve
+    //     $currentClientId = Client::where('car_plate',$data['car_plate'])->first()['client_id'];
 
-        $this->car->storeCarData([
-            'car_plate' => $data['car_plate'],
-            'phone_number' => $data['phone_number'],
-            'reserve_id' => $data['reserve_id'],
-            'client_id' => $currentClientId
-        ]);
+    //     $this->car->storeCarData([
+    //         'car_plate' => $data['car_plate'],
+    //         'phone_number' => $data['phone_number'],
+    //         'reserve_id' => $data['reserve_id'],
+    //         'client_id' => $currentClientId
+    //     ]);
 
-        $reserveData = [
-            'reserve_id' => $data['reserve_id'],
-            'car_plate' => $request->car_plate,
-            'phone_number' => $request->phone_number,
-            'email' => $request->email,
-            'parking_space_id' => $request->parking_space_id,
-            'parking_lot_id' => $request->parking_lot_id,
-            'date' => $request->date,
-            'time' => $request->time,
-            'duration' => $request->duration,
-            'client_id' => $currentClientId
-        ];
+    //     $reserveData = [
+    //         'reserve_id' => $data['reserve_id'],
+    //         'car_plate' => $request->car_plate,
+    //         'phone_number' => $request->phone_number,
+    //         'email' => $request->email,
+    //         'parking_space_id' => $request->parking_space_id,
+    //         'parking_lot_id' => $request->parking_lot_id,
+    //         'date' => $request->date,
+    //         'time' => $request->time,
+    //         'duration' => $request->duration,
+    //         'client_id' => $currentClientId
+    //     ];
 
-        $this->reserve->storeReserveData($reserveData);
+    //     $this->reserve->storeReserveData($reserveData);
 
-        // return response()->json([
-        //     'reserve_id' => $data['reserve_id']
-        // ]);
+    //     // return response()->json([
+    //     //     'reserve_id' => $data['reserve_id']
+    //     // ]);
 
-        return redirect('http://127.0.0.1:8000/client#/');
-    }
+    //     return redirect('http://127.0.0.1:8000/client#/');
+    // }
 
     public function checkout(Request $request)
     {
@@ -254,5 +255,14 @@ class ReserveController extends Controller
 
         // http_response_code(200);
         return response('',200);
+    }
+
+    public function booking(Request $request)
+    {
+        $data = $request->all();
+
+        parkingSpaceStatus::create($data);
+
+        return response("GOOD",200);
     }
 }

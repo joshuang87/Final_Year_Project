@@ -15,6 +15,7 @@ class parkingSpaceStatus extends Model
         'end_time',
         'availability',
         'car_plate',
-        'parking_space_id'
+        'parking_space_id',
+        'parking_lot_id'
     ];
 }

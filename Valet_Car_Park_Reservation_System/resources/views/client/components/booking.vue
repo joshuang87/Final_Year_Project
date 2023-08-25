@@ -42,7 +42,7 @@
                             placeholder="Start Time"
                             start="08:00"
                             step="01:00"
-                            end="23:00"
+                            end="22:00"
             />
           </div>
           <div class="col-md-3 mb-3">
@@ -65,7 +65,7 @@
                             placeholder="End Time"
                             start="08:00"
                             step="01:00"
-                            end="23:00"
+                            end="22:00"
             />
           </div>
         </div>
