@@ -7,8 +7,9 @@ use App\Models\Client;
 use App\Models\Reserve;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\parkingSpaceStatus;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use App\Repositories\Interfaces\ClientInterfaces\CarRepositoryInterface;
 use App\Repositories\Interfaces\ClientInterfaces\ClientRepositoryInterface;
@@ -263,6 +264,19 @@ class ReserveController extends Controller
 
         parkingSpaceStatus::create($data);
 
+        return response("GOOD",200);
+    }
+
+    public function changeBookingState($parkingSpaceId,Request $request)
+    {
+        $data = [
+            'car_plate' => $request->car_plate,
+            'email' => $request->email,
+            'availability' => $request->availability
+        ];
+
+        parkingSpaceStatus::where('parking_space_id',$parkingSpaceId)->update($data);
+        
         return response("GOOD",200);
     }
 }

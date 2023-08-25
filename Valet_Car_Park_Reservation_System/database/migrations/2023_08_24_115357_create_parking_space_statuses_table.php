@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->time('start_time');
             $table->time('end_time');
-            $table->boolean('availability');
-            $table->string('email');
-            $table->string('car_plate');
+            $table->boolean('availability')->default(true);
+            $table->string('email')->nullable();
+            $table->string('car_plate')->nullable();
             $table->foreign('car_plate')->references('car_plate')->on('cars')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
             $table->string('parking_lot_id');
