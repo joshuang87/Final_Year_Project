@@ -16,7 +16,7 @@ return new class extends Migration
             $table->time('open_time')->default('08:00:00');
             $table->time('close_time')->default('23:30:00');
             $table->timestamps();
-            $table->boolean('status')->default(false);
+            $table->boolean('status')->default(true);
         });
     }
 

@@ -19,11 +19,9 @@ class ParkingSpaceFactory extends Factory
     {
         return [
             'parking_space_id' => Str::uuid()->toString(),
-            'open_time' => null,
-            'close_time' => null,
+            // 'open_time' => null,
+            // 'close_time' => null,
             'parking_lot_id' => fake()->numerify('G#'),
-            'car_plate' => null,
-            'client_id' => null,
 
             'x' => fake()->numberBetween(0,11),
             'y' => fake()->numberBetween(0,6),

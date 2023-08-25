@@ -71,6 +71,8 @@ Route::prefix('reserve')->group(function(){
 
 });
 
+Route::post('booking',[ReserveController::class,'booking'])->name('api.booking');
+
 Route::get('test/{parkingLotId}',[ParkingSpaceController::class,'getLayout'])->name('api.name');
 
 Route::get('/getUserInfo',[UserRepository::class, 'getUserInfo'])->name('api.getUserInfo');
