@@ -102,4 +102,29 @@ class ParkingSpaceController extends Controller
 
         return "GOOD";
     }
+
+    public function parkingLotWithParkingSpace()
+    {
+        $data = [];
+        $count = 0;
+
+        $allParkingLotId = DB::table('parking_lots')->select('parking_lot_id')->get();
+
+        foreach($allParkingLotId as $parkingLotId)
+        {
+            $id = $parkingLotId->parking_lot_id;
+            $parkingSpaces = DB::table('parking_spaces')->where('parking_lot_id',$id)->get();
+
+            $data[$count] = [
+                [
+                    [$parkingLotId],
+                    $parkingSpaces
+                ]
+            ];
+
+            $count++;
+        }
+
+        return $data;
+    }
 }
