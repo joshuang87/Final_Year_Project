@@ -72,6 +72,7 @@ Route::prefix('reserve')->group(function(){
 });
 
 Route::post('booking',[ReserveController::class,'booking'])->name('api.booking');
+Route::patch('bookingStateUpdate',[ReserveController::class,'changeBookingState'])->name('api.bookingStateUpdate');
 
 Route::get('test/{parkingLotId}',[ParkingSpaceController::class,'getLayout'])->name('api.name');
 
