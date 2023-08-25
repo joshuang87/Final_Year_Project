@@ -266,7 +266,7 @@ class ReserveController extends Controller
         {
             parkingSpaceStatus::create($one);
         }
-        // dd($data[0]['']);
+        // dd($data);
 
         // parkingSpaceStatus::create($data[0]);
 
