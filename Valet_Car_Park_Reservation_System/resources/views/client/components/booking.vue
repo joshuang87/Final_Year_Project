@@ -61,11 +61,11 @@
 
         <button
           v-for="space in groupedFilteredSpaces"
-          :key="space.id"
-          :class="['btn', 'btn-success', 'm-1', { 'btn-primary': space.id === selectedSpaceId }]"
-          @click="selectSpace(space.id)"
+          :key="space.parking_space_id"
+          :class="['btn', 'btn-success', 'm-1', { 'btn-primary': space.parking_space_id === selectedSpaceId }]"
+          @click="selectSpace(space.parking_space_id)"
         >
-          {{ space.id }}
+          {{ space.parking_space_id }}
         </button>
       </div>
 
@@ -198,7 +198,7 @@
                       start_time: slotStartTime,
                       end_time: slotEndTime,
                       status: 1,
-                      id: spaceId,
+                      parking_space_id: spaceId,
                       car_plate: null,
                       email: null
                     });
@@ -211,7 +211,7 @@
 
             // Concatenate the new slots with the existing spaces array
             //this.spaces = this.spaces.concat(parkingLotSpaces);
-            //axios.post('/api/booking/',parkingLotSpaces);
+            axios.post('/api/booking/',parkingLotSpaces);
             this.groupedFilteredSpaces = this.groupSpacesByDate(this.spaces);
           }
           return matches;
@@ -227,7 +227,7 @@
             return false;
           }
 
-          if (this.selectedParkingLot && parkingLots.parking_lot_id !== this.selectedParkingLot) {
+          if (this.selectedParkingLot && space.parking_lot_id !== this.selectedParkingLot) {
             matches = false;
           }
 
@@ -361,7 +361,7 @@
             }
 
             // Update the status in the groupedFilteredSpaces array
-            const groupedSpace = this.groupedFilteredSpaces.find(space => space.id === selectedSpace.id);
+            const groupedSpace = this.groupedFilteredSpaces.find(space => space.parking_space_id === selectedSpace.parking_space_id);
             if (groupedSpace) {
               groupedSpace.status = 0;
               groupedSpace.car_plate = this.carPlate;
