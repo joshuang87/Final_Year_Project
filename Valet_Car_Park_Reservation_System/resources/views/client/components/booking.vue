@@ -180,30 +180,6 @@
 
     const layout = ref(null)
 
-    // watchEffect(async() => {
-
-    //     let parkingLotId = bookingParam.value.parking_lot_id
-
-    //     const getAllParkingSpacesData = async() => {
-    //         try {
-    //             const response = await axios.get('api/parkingSpace/filter/' + parkingLotId)
-    //             const data = response.data
-
-    //             return data
-    //         }
-    //         catch(error) {
-    //             console.log(error)
-    //         }
-    //     }
-
-    //     const parkingSpaces = await getAllParkingSpacesData()
-    //     const specificParkingSpaceData = parkingSpaces.filter(item => item.parking_lot_id === parkingLotId)
-
-    //     layout.value = specificParkingSpaceData
-    //     console.log(specificParkingSpaceData)
-
-    // })
-
     const filter = async() => {
         try {
             const response = await axios.post('api/checkAvailability',bookingParam.value)
