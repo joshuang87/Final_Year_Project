@@ -61,7 +61,7 @@ class DatabaseSeeder extends Seeder
             'parking_lot_id' => 'G9'
         ]);
 
-        \App\Models\ParkingSpace::factory(50)->create();
+        \App\Models\ParkingSpace::factory(10)->create();
 
         // Reserve::factory(100)->create();
     }

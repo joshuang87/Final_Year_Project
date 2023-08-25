@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Repositories\Interfaces\AdminInterfaces\ParkingLotRepositoryInterface;
 
@@ -26,7 +27,7 @@ class ParkingLotController extends Controller
         return view('test.adminAddParkingLot');
     }
 
-    public function edit($parkingLotId)
+    public function edit(string $parkingLotId)
     {
         return view('test.adminParkingLotEdit')->with('parkingLot',$this->parkingLot->showParkingLotDetails($parkingLotId));
     }
@@ -35,7 +36,8 @@ class ParkingLotController extends Controller
     {
         $this->parkingLot->storeParkingLot($request);
 
-        return redirect(route('test.adminHome'));
+        // return redirect(route('test.adminHome'));
+        return response('Parking Lot Added',200);
     }
 
     public function destroy($parkingLotId)
@@ -55,5 +57,10 @@ class ParkingLotController extends Controller
     public function detail($parkingLotId)
     {
         return view('test.adminParkingLotDetail')->with('parkingLot',$this->parkingLot->showParkingLots($parkingLotId));
+    }
+
+    public function allId()
+    {
+        return DB::table('parking_lots')->select('parking_lot_id')->get();
     }
 }

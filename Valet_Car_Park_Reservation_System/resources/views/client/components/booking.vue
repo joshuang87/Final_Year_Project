@@ -1,340 +1,434 @@
 <template>
-<div class="container-fluid">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <br>
-                    <div class="container">
-                        <h2>Parking</h2>
-                        <div class="scrollable-table">
-                            <div class="row">
-                            <!-- Use nested v-for to create the grid layout -->
-                                <div v-for="row in itemsAs2DArray" :key="`row-${row[0].parking_lot_id}`" class="col-md-6">
-                                    <div v-for="item in row" :key="item.parking_space_id" class="mb-3">
-                                    <!-- Use a button to display parking space ID -->
-                                    <button class="btn btn-primary" @click="onSpaceButtonClick(item)">
-                                        {{ item.parking_space_id }}
-                                    </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-
-            <div class="col-md-6 border-start">
-                <div class="container mt-5">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-10">
-                            <div class="card shadow">
-                                <div class="card-body">
-                                    <h2 class="mb-4" style="text-align: center;">Cart</h2>
-                                    <table class="table">
-                                        <thead>
-                                        <tr>
-                                            <th>Parking Space ID</th>
-                                            <th>Parking Lot ID</th>
-                                            <th>Action</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr v-for="cartItem in cart" :key="cartItem.parking_space_id">
-                                            <td>{{ cartItem.parking_space_id }}</td>
-                                            <td>{{ cartItem.parking_lot_id }}</td>
-                                            <td>
-                                            <button class="btn btn-danger" @click="removeFromCart(cartItem)">
-                                                Delete
-                                            </button>
-                                            </td>
-                                        </tr>
-                                        <br>
-                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bookingModal">
-                                                Confirm
-                                            </button>
-                                        </tbody>
-                                    </table>
-                                    <h2 class="mb-4" style="text-align: center;">Book</h2>
-                                    <form class="form-container" @submit.prevent="redirectToStripe">
-
-                                        <div class="form-group">
-                                            <label class="form-label" for="car_plate">Car Plate:</label>
-                                            <input class="form-control" type="text" id="car_plate" v-model="booking.car_plate" required>
-                                        </div>
-                                        <hr/>
-                                        <div class="form-group">
-                                            <label class="form-label" for="phone_number">Phone Number:</label>
-                                            <input class="form-control" type="tel" id="phone_number" v-model="booking.phone_number" required>
-                                        </div>
-                                        <hr/>
-                                        <div class="form-group">
-                                            <label class="form-label" for="email">Email:</label>
-                                            <input class="form-control" type="email" id="email" v-model="booking.email">
-                                        </div>
-                                        <hr/>
-                                        <div class="form-group">
-                                            <label class="form-label" for="parking_space_id">Parking Space ID:</label>
-                                            <input class="form-control" type="text" id="parking_space_id" v-model="booking.parking_space_id" required>
-                                        </div>
-                                        <hr/>
-                                        <div class="form-group">
-                                            <label class="form-label" for="parking_lot_id">Parking Lot ID:</label>
-                                            <input class="form-control" type="text" id="parking_lot_id" v-model="booking.parking_lot_id" required>
-                                        </div>
-                                        <hr/>
-                                        <div class="form-group">
-                                            <label class="form-label" for="date">Date:</label>
-                                            <input class="form-control" type="date" id="date" v-model="booking.date" required>
-                                        </div>
-                                        <hr/>
-                                        <div class="form-group">
-                                            <label class="form-label" for="time">Time:</label>
-                                            <input class="form-control" type="time" id="time" v-model="booking.time" required>
-                                        </div>
-                                        <hr/>
-                                        <div class="form-group">
-                                            <label class="form-label" for="duration">Duration (hours):</label>
-                                            <input class="form-control" type="number" id="duration" v-model="booking.duration" required>
-                                        </div>
-                                        <hr/>
-                                        <button class="btn btn-primary" type="submit">Book Car Park</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div><br>
-
-    <div class="modal fade" id="bookingModal" tabindex="-1" role="dialog" aria-labelledby="bookingModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-            <div class="modal-content">
-
-                <div class="modal-header">
-                    <h5 class="modal-title" id="bookingtModalLabel">Payment</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <div class="modal-body">
-                    <div class="container">
-                        <div class="row">
-
-                            <div class="col-md-6">
-                                <div class="card-body">
-                                    <h2 class="mb-4" style="text-align: center;">Book</h2>
-                                    <form class="form-container" @submit.prevent="submitBooking">
-                                        <div class="form-group">
-                                            <label class="form-label" for="car_plate">Car Plate:</label>
-                                            <input class="form-control" type="text" id="car_plate">
-                                        </div>
-                                        <hr>
-                                        <div class="form-group">
-                                            <label class="form-label" for="phone_number">Phone Number:</label>
-                                            <input class="form-control" type="tel" id="phone_number">
-                                        </div>
-                                        <hr>
-                                        <div class="form-group">
-                                            <label class="form-label" for="email">Email:</label>
-                                            <input class="form-control" type="email" id="email">
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Parking Space ID</th>
-                                            <th scope="col">Parking Lot ID</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr v-for="cartItem in cart" :key="cartItem.parking_space_id">
-                                            <td>{{ cartItem.parking_space_id }}</td>
-                                            <td>{{ cartItem.parking_lot_id }}</td>
-                                        </tr>
-                                        <tr>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-                <div class="modal-footer d-flex justify-content-center">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-                        Pay with Debit/Credit Card (Stripe)
-                    </button>
-                    <button type="button" class="btn btn-primary">Pay with TNG</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-
-            </div>
-        </div>
+    <div class="d-flex justify-content-center mt-3 border-bottom container">
+      <h2>Reservation</h2>
     </div>
-</div>
-</template>
+    <div class="centered-content">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3 mb-3">
+            <label for="parkingLotSelect" class="form-label">Parking Lot ID</label>
+            <select v-model="selectedParkingLot" class="form-select" id="parkingLotSelect">
+              <option value="">All</option>
+              <!-- Populate with parking lot IDs -->
+              <option v-for="parkingLot in parkingLots" :value="parkingLot.parking_lot_id" :key="parkingLot.parking_lot_id">{{ parkingLot.parking_lot_id }}</option>
+            </select>
+          </div>
+          <div class="col-md-3 mb-3">
+            <label for="dateInput" class="form-label">Date</label>
+            <input v-model="selectedDate" type="date" class="form-control" id="dateInput" @change="craeteNewDate">
+          </div>
+          <div class="col-md-3 mb-3">
+            <label for="startTimeInput" class="form-label">Start Time: </label>
+            <div>
+                <el-time-select
+                    v-model="selectedStartTime"
+                    :max-time="selectedEndTime"
+                    class="mr-4"
+                    placeholder="Start time"
+                    start="08:00"
+                    step="01:00"
+                    end="17:00"
+                />
+            </div>
+          </div>
+          <div class="col-md-3 mb-3">
+            <label for="endTimeInput" class="form-label">End Time  :</label>
+            <div>
+                <el-time-select
+                    v-model="selectedEndTime"
+                    :min-time="selectedStartTime"
+                    placeholder="End time"
+                    start="09:00"
+                    step="01:00"
+                    end="17:00"
+                />
+            </div>
+          </div>
+        </div>
+      </div>
 
-<script>
-import axios from 'axios';
-import PaymentForm from 'V/components/PaymentForm.vue';
-// import { fetchAllParkingSpacesData } from 'V/api'
+      <!-- Similar dropdowns for Date, Start Time, and End Time -->
 
-    export default {
-        data() {
-            return {
-                items: [],
-                cart: [],
-                booking: {
-                    car_plate: '',
-                    phone_number: '',
-                    email: '',
-                    parking_space_id: '',
-                    parking_lot_id: '',
-                    date: '',
-                    time: '',
-                    duration: 0
-                },
-            };
-        },
+      <div class="d-flex justify-content-center">
+        <button @click="filterSpaces" class="btn btn-primary" :disabled="!selectedDate || !selectedStartTime || !selectedEndTime">Filter</button>
+      </div>
 
-        computed: {
-            // Convert the 'items' array to a 2D array for grid layout
-            itemsAs2DArray() {
+      <div class="d-flex justify-content-center mt-3 border-bottom">
+          <h2>Available Parking Space</h2>
+      </div>
 
-                const colsPerRow = 2; // Set the number of columns per row
-                const result = [];
-                let tempRow = [];
+      <div class="d-flex justify-content-center mt-3">
 
-                this.items.forEach((item, index) => {
-                    tempRow.push(item);
-                    if ((index + 1) % colsPerRow === 0 || index === this.items.length - 1) {
-                        result.push(tempRow);
-                        tempRow = [];
-                    }
-                });
+        <button
+          v-for="space in groupedFilteredSpaces"
+          :key="space.parking_space_id"
+          :class="['btn', 'btn-success', 'm-1', { 'btn-primary': space.parking_space_id === selectedSpaceId }]"
+          @click="selectSpace(space.parking_space_id)"
+        >
+          {{ space.parking_space_id }}
+        </button>
+      </div>
 
-                return result;
-            },
-        },
+      <div class="d-flex justify-content-center mt-3" style="margin-top: 20px;" v-if="selectedSpaceId">
+        <div class="card-body card shadow">
+          <form v-if="selectedSpaceId" @submit.prevent="bookParkingSpace">
+              <div class="mb-3">
+                  <label for="carPlateInput" class="form-label">Car Plate Number</label>
+                  <input v-model="carPlate" type="text" class="form-control" id="carPlateInput" required>
+              </div>
+              <div class="mb-3">
+                  <label for="emailInput" class="form-label">Email</label>
+                  <input v-model="email" type="email" class="form-control" id="emailInput" required>
+              </div>
+              <div class="d-grid">
+                  <button type="submit" class="btn btn-primary">Book</button>
+              </div>
+          </form>
+        </div>
+      </div>
 
-        components: {
-            PaymentForm,
-        },
+    </div>
+  </template>
 
-        mounted() {
-            this.fetchData();
-        },
+  <script>
+  import jsPDF from 'jspdf';
+  import QRCode from 'qrcode';
+  import axios from "axios";
 
-        methods: {
-            fetchData() {
-                axios.get('/api/parkingSpace/allData')
-                    .then(response => {
-                        this.items = response.data;
-                    })
-                    .catch(error => {
-                        console.error(error);
+  export default {
+    data() {
+      return {
+        parkingLots: [],
+
+        spaces: [],
+
+        groupedFilteredSpaces: [],
+
+        selectedParkingLot: "",
+        selectedDate: null,
+        selectedStartTime: null, //hold filter option
+        selectedEndTime: null,
+        selectedSpaceId: null,
+        // Other filter properties (date, start time, end time)
+
+        carPlate: "", //user submit data
+        email: "",
+
+      };
+    },
+
+    mounted(){
+      this.fetchParkingLots();
+      this.fetchSpaces();
+    },
+
+    methods: {
+
+      async fetchParkingLots(){
+        try{
+          const response = await axios.get('/api/parkingLot/allId');
+          this.parkingLots = response.data;
+          console.log(this.parkingLots)
+
+        }catch(error){
+          console.error("error get parking lot:",error);
+        }
+      },
+
+      async fetchSpaces(){
+        try{
+          const response = await axios.get('/api/parkingSpace/allData');
+          this.spaces = response.data;
+          console.log(this.spaces)
+        }catch(error){
+          console.log("error get parking space data:",error)
+        }
+      },
+
+    /*  async craeteNewDate() {
+          if (!this.selectedDate) {
+              return;
+          }
+
+          try {
+              await axios.post('/api/spaces/create-for-date', {
+                  selectedDate: this.selectedDate
+              });
+
+              // After creating spaces, you might want to refetch the updated spaces data
+              this.fetchSpaces();
+          } catch (error) {
+              console.error('Error creating spaces:', error);
+          }
+      },*/
+
+      craeteNewDate(){
+        const currentDate = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+        this.groupedFilteredSpaces = this.groupSpacesByDate(this.spaces.filter(space => {
+          let matches = true;
+          if (this.selectedDate < currentDate || this.selectedDate && space.date !== this.selectedDate) {
+            matches = false;
+          }
+
+          const parkingSpaceIDs = this.spaces.map(space => space.parking_space_id);
+
+          const spaceIdMapping = {
+              G0: parkingSpaceIDs,
+              //G1: parkingSpaceIDs,  // Space IDs for parking lot 1
+            // Add more mappings as needed
+          };
+
+          if (!this.spaces.some(space => space.date === this.selectedDate)) {
+          const parkingLotSpaces = [];
+
+          for (const parkingLot of this.parkingLots) {
+            if (!this.selectedParkingLot || parkingLot.parking_lot_id === this.selectedParkingLot) {
+              // Get the space IDs based on the parking lot ID
+              const spaceIds = spaceIdMapping[parkingLot.parking_lot_id];
+
+              if (spaceIds) {
+                for (let hour = 8; hour <= 17; hour++) {
+                  const slotStartTime = `${hour.toString().padStart(2, '0')}:00`;
+                  const slotEndTime = `${(hour + 1).toString().padStart(2, '0')}:00`;
+
+                  for (const spaceId of spaceIds) {
+                    parkingLotSpaces.push({
+                      parking_lot_id: parkingLot.parking_lot_id,
+                      date: this.selectedDate,
+                      start_time: slotStartTime,
+                      end_time: slotEndTime,
+                      status: 1,
+                      parking_space_id: spaceId,
+                      car_plate: null,
+                      email: null
                     });
-            },
-
-            onSpaceButtonClick(item) {
-                // Handle the button click event, you can access the item's data here
-                this.booking.parking_space_id = item.parking_space_id;
-                this.booking.parking_lot_id = item.parking_lot_id;
-                this.cart.push({
-                    parking_space_id: item.parking_space_id,
-                    parking_lot_id: item.parking_lot_id,
-                });
-                // Set other relevant data from 'item' to 'this.booking' as needed
-                // You can then use this data to pre-fill the form or take other actions
-            },
-
-            removeFromCart(cartItem) {
-                // Remove the selected item from the cart
-                const index = this.cart.indexOf(cartItem);
-                if (index !== -1) {
-                    this.cart.splice(index, 1);
+                    console.log(parkingLotSpaces);
+                  }
                 }
-            },
+              }
+            }
+          }
 
-            async redirectToStripe() {
-                // Make an API request to your Laravel backend
-                const response = await axios.post('api/reserve/checkout',this.booking);
-                const sessionId = response.data.sessionId;
-                // Redirect the user to the Stripe checkout page
-                const stripe = Stripe('pk_test_51MHkNwAAIANGTO9uk5MsvOteodjvYlAIBwMZRaTj71eMAtWISNGHrJD5UCzc2a7BAbQxn3QdUB6N8uvyvuriFCuP00ASOZdJWw');
-                const { error } = await stripe.redirectToCheckout({sessionId});
+            // Concatenate the new slots with the existing spaces array
+            //this.spaces = this.spaces.concat(parkingLotSpaces);
+            axios.post('/api/booking/',parkingLotSpaces);
+            this.groupedFilteredSpaces = this.groupSpacesByDate(this.spaces);
+          }
+          return matches;
+        }))
+      },
 
-                if (error) {
-                    // Handle any errors during redirection
-                    console.error(error);
-                }
-            },
+      filterSpaces() {
+        const currentDate = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+        this.groupedFilteredSpaces = this.groupSpacesByDate(this.spaces.filter(space => {
+          let matches = true;
 
-            async startCheckout() {
-                const stripe = await loadStripe('pk_test_51NGxNDGmA7QKNFMQAHGPm8IVsFAp2dqD7P5tvURFQCz3iDIAu0kWnOJgZ2mpVGSatoJxAKQRguqFqWC9FxYWOno800PHJXypYc');
+          if (!this.selectedDate || !this.selectedStartTime || !this.selectedEndTime) {
+            return false;
+          }
 
-                const { error } = await stripe.redirectToCheckout(
-                    {
-                        lineItems: [
-                            {
-                                price: 'price_1NHVB6GmA7QKNFMQJNx8Wpe0',
-                                quantity: 1
-                            } // Replace with your Stripe price ID
-                        ],
-                        mode: 'payment',
-                        successUrl: 'http://127.0.0.1:8000/client#/', // Redirect URL after successful payment
-                        cancelUrl: 'http://127.0.0.1:8000/client#/booking' // Redirect URL if the payment is canceled
-                    }
+          if (this.selectedParkingLot && space.parking_lot_id !== this.selectedParkingLot) {
+            matches = false;
+          }
+
+          // Check if selectedDate is today or a future date
+          if (this.selectedDate < currentDate || this.selectedDate && space.date !== this.selectedDate) {
+            matches = false;
+          }
+
+
+          // Convert selected start and end times to Date objects for comparison
+          const selectedStartTime = new Date(`${this.selectedDate} ${this.selectedStartTime}`);
+          const selectedEndTime = new Date(`${this.selectedDate} ${this.selectedEndTime}`);
+
+          // Find any booked time ranges for the selected space
+          const bookedTimeRanges = this.spaces.filter(sp =>
+            sp.parking_space_id === space.parking_space_id &&
+            sp.date === this.selectedDate &&
+            sp.status === 0
+          );
+
+          // Check for overlap with each booked time range
+          for (const bookedRange of bookedTimeRanges) {
+            const bookedStartTime = new Date(`${this.selectedDate} ${bookedRange.start_time}`);
+            const bookedEndTime = new Date(`${this.selectedDate} ${bookedRange.end_time}`);
+
+            if (
+              (selectedStartTime >= bookedStartTime && selectedStartTime < bookedEndTime) ||
+              (selectedEndTime > bookedStartTime && selectedEndTime <= bookedEndTime) ||
+              (selectedStartTime <= bookedStartTime && selectedEndTime >= bookedEndTime)
+            ) {
+              matches = false;
+              break; // No need to check further, space is not available
+            }
+          }
+
+          console.log("Filtering space:", space.parking_space_id,space.start_time,space.end_time,space.date,space.status,space.car_plate,space.email);
+          console.log("Matches:", matches);
+          return matches;
+        }));
+      },
+
+      groupSpacesByDate(spaces) {
+
+        const grouped = {};
+        for (const space of spaces) {
+          const key = `${space.parking_space_id}-${space.date}`;
+          if (!grouped[key]) {
+            grouped[key] = {
+              parkingLotId: space.parking_lot_id,
+              date: space.date,
+              id: space.parking_space_id,
+              status: space.status,
+              car_plate: space.car_plate,
+              email: space.email
+            };
+          }
+        }
+        return Object.values(grouped);
+
+      },
+
+      selectSpace(spaceId) {
+        console.log("Selected space:", spaceId);
+        this.selectedSpaceId = spaceId;
+        this.carPlate = ""; // Clear car plate input
+        this.email = ""; // Clear email input
+      },
+
+      async generateAndDownloadInvoice(space) {
+        const pdf = new jsPDF();
+        pdf.text('Invoice', 10, 10);
+        pdf.text(`Parking Space ID: ${space.parking_space_id}`, 10, 20);
+        pdf.text(`Date: ${this.selectedDate}`, 10, 30);
+        pdf.text(`Start Time: ${this.selectedStartTime}`, 10, 40);
+        pdf.text(`End Time: ${this.selectedEndTime}`, 10, 50);
+        pdf.text(`Car Plate: ${this.carPlate}`, 10, 60);
+        pdf.text(`Email: ${this.email}`, 10, 70);
+        pdf.text('Please show this invoice to the staff as a proof of booking.', 10, 90);
+
+        // Generate and embed the QR code
+        const youtubeUrl = 'https://www.youtube.com/watch?v=G1auYDCHO0k';
+        const qrCodeCanvas = await QRCode.toCanvas(youtubeUrl);
+        pdf.addImage(qrCodeCanvas, 'PNG', 10, 100, 50, 50);
+
+        // Save the PDF and provide a link for the user to download
+        const pdfBlob = pdf.output('blob');
+        const pdfUrl = URL.createObjectURL(pdfBlob);
+        const link = document.createElement('a');
+        link.href = pdfUrl;
+        link.download = `invoice_${space.parking_space_id}_${this.selectedDate}.pdf`;
+        link.click();
+      },
+
+      async bookParkingSpace() {
+        const selectedSpace = this.groupedFilteredSpaces.find(space => space.parking_space_id === this.selectedSpaceId);
+
+        if (selectedSpace) {
+          if (this.selectedDate && this.selectedStartTime && this.selectedEndTime) {
+            console.log("Booking parking space:", selectedSpace.parking_space_id);
+            console.log("Selected Date:", this.selectedDate);
+            console.log("Selected Start Time:", this.selectedStartTime);
+            console.log("Selected End Time:", this.selectedEndTime);
+            console.log("Car Plate:", this.carPlate);
+            console.log("Email:", this.email);
+            console.log("Before booking - groupedFilteredSpaces:", this.groupedFilteredSpaces);
+
+            const startTime = new Date(`${this.selectedDate} ${this.selectedStartTime}`);
+            const endTime = new Date(`${this.selectedDate} ${this.selectedEndTime}`);
+
+            // Calculate the number of hours between start and end times
+            const hoursDiff = (endTime - startTime) / (1000 * 60 * 60);
+
+            for (let i = 0; i < hoursDiff; i++) {
+              const bookingStartTime = new Date(startTime.getTime() + i * 60 * 60 * 1000);
+              const bookingEndTime = new Date(bookingStartTime.getTime() + 60 * 60 * 1000); // Assuming each slot is 1 hour
+
+              // Find the space for each booking time slot
+              const originalSpace = this.spaces.find(space =>
+                space.parking_space_id === selectedSpace.parking_space_id &&
+                space.date === this.selectedDate &&
+                new Date(`${this.selectedDate} ${space.start_time}`) >= bookingStartTime &&
+                new Date(`${this.selectedDate} ${space.end_time}`) <= bookingEndTime
+              );
+
+              if (originalSpace) {
+                originalSpace.status = 0;
+                originalSpace.car_plate = this.carPlate;
+                originalSpace.email = this.email;
+              }
+              console.log(originalSpace)
+            }
+
+            // Update the status in the groupedFilteredSpaces array
+            const groupedSpace = this.groupedFilteredSpaces.find(space => space.parking_space_id === selectedSpace.parking_space_id);
+            if (groupedSpace) {
+              groupedSpace.status = 0;
+              groupedSpace.car_plate = this.carPlate;
+              groupedSpace.email = this.email;
+
+              try {
+                const spaceToUpdate = this.spaces.find(space =>
+                  space.id === selectedSpace.id &&
+                  space.date === this.selectedDate &&
+                  new Date(`${this.selectedDate} ${space.startTime}`) >= bookingStartTime &&
+                  new Date(`${this.selectedDate} ${space.endTime}`) <= bookingEndTime
                 );
 
-                if (error) {
-                    console.error('Error:', error);
+                if (spaceToUpdate) {
+                  spaceToUpdate.status = 0;
+                  spaceToUpdate.car_plate = this.carPlate;
+                  spaceToUpdate.email = this.email;
+
+                  await axios.patch(`/api/${spaceToUpdate.parking_space_id}/'bookingStateUpdate/`, {
+                    status: spaceToUpdate.status,
+                    car_plate: spaceToUpdate.car_plate,
+                    email: spaceToUpdate.email,
+                  });
+
+                  console.log("Updated data on server:", spaceToUpdate);
                 }
-            },
-
-            submitBooking() {
-                this.redirectToStripe();
-                axios.post('/api/reserve', this.booking)
-                    .then(response => {
-                        console.log(response)
-                    // Handle successful booking and proceed to payment
-                        // this.storePayment(response.reserve_id)
-                    })
-                    .catch(error => {
-                    // Handle booking error
-                    console.log(error);
-                    });
-
-            },
-
-            storePayment() {
-                axios.post('/api/reserve/payment/store',[
-                    'dadad',
-                    '34'
-                ])
-                .then(response => {
-                    console.log(response)
-                })
-                .catch(error => {
-                    console.log(error)
-                })
+              } catch (error) {
+                console.error("Error updating data on server:", error);
+              }
             }
-        },
-    };
-</script>
 
-<style>
-    .scrollable-table {
-        height: 1000px; /* Set the desired height */
-        overflow-y: auto; /* Enable vertical scrolling */
+            console.log("After booking - groupedFilteredSpaces:", this.groupedFilteredSpaces);
+            console.log("Selected space:", selectedSpace);
+
+            // Optional: You can perform additional actions here, such as sending data to a server.
+
+            console.log("Parking space booked successfully:", selectedSpace);
+            alert("Booked successfully, The invoice is downloaded automatically, PLease Check, Thank you.");
+            this.generateAndDownloadInvoice(selectedSpace);
+            // Clear the selected space and form inputs after booking
+            this.selectedSpaceId = null;
+            this.selectedDate = null;
+            this.selectedStartTime = null;
+            this.selectedEndTime = null;
+            this.carPlate = "";
+            this.email = "";
+            this.groupedFilteredSpaces = [];
+
+            // Optional: Display a success message or perform further actions.
+          } else {
+            console.log("Please select date and time");
+          }
+        }
+      },
+
+    },
+  };
+  </script>
+
+  <style>
+
+  .centered-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 50vh;
     }
-    .border-start {
-        border-left: 1px solid #e9ecef; /* Adjust border color and thickness as needed */
-        padding-left: 15px; /* Optional: Add padding for visual separation */
-    }
-</style>
+
+  </style>

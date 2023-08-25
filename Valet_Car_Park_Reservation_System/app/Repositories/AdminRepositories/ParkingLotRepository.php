@@ -56,26 +56,27 @@ class ParkingLotRepository implements ParkingLotRepositoryInterface
             'parking_lot_id' => 'required|string|max:255'
         ]);
 
-        return ParkingLot::create($data);
+        ParkingLot::create($data);
+
+        return response('Parking Lot Added',200);
     }
 
     public function updateParkingLotInformation($parkingLotId,Request $data)
     {
         $oldData = ParkingLot::where('parking_lot_id',$parkingLotId)->first();
 
-        if($data->comment === null)
+        if($data->content === null)
         {
-            $errors = "NOT COMMENT";
-            return $errors;
+            return response("NOT COMMENT",406);
         }
         elseif($data->has('comment') && $oldData->parking_lot_id == $data->parking_lot_id && $oldData->status == $data->status && $oldData->open_time == $data->open_time && $oldData->close_time == $data->close_time)
         {
-            dd("UNNECESSARY COMMENT");
+            return response("UNNECESSARY COMMENT",406);
         }
         else
         {
             $data = $data->validate([
-                'comment' => 'required|string',
+                'content' => 'required|string',
                 'parking_lot_id' => 'required|string',
                 'status' => 'required',
                 'open_time' => 'required',
@@ -93,17 +94,24 @@ class ParkingLotRepository implements ParkingLotRepositoryInterface
             ParkingLot::where('parking_lot_id',$parkingLotId)->update($parkingLotData);
     
             $commentData = [
-                'content' => $data['comment'],
+                'content' => $data['content'],
                 'parking_lot_id' => $data['parking_lot_id']
             ];
     
             ParkingLotComment::create($commentData);
+
+            return response('DATA UPDATED',200);
         }  
     }
 
     public function deleteParkingLot($parkingLotId)
     {
         return ParkingLot::where('parking_lot_id',$parkingLotId)->delete();
+    }
+
+    public function allId()
+    {
+        
     }
 }
 

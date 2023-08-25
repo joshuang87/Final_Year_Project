@@ -2,6 +2,8 @@
 
 namespace App\Repositories\Interfaces\AdminInterfaces;
 
+use Illuminate\Http\Request;
+
 interface ParkingSpaceRepositoryInterface
 {
 
@@ -12,6 +14,8 @@ interface ParkingSpaceRepositoryInterface
     public function showAvailableParkingSpace();
 
     public function storeParkingSpaceData($data);
+
+    // public function updateParkingSpaceData(string $parkingSpaceId,Request $data);
 
 }
 

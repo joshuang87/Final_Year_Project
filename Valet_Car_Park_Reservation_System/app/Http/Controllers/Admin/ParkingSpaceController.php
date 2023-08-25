@@ -57,4 +57,74 @@ class ParkingSpaceController extends Controller
         // dd(ParkingSpace::all());
     
     }
+
+    public function delete($parkingSpaceId)
+    {
+        ParkingSpace::where('parking_space_id',$parkingSpaceId)->delete();
+
+        return response('Parking Space Deleted',200);
+    }
+
+    public function updateLayout(Request $request)
+    {
+        $data = $request->all();
+
+        $count = 0;
+        foreach($data as $parkingSpace)
+        {
+            $x = $data[$count]['x'];
+            $y = $data[$count]['y'];
+            $w = $data[$count]['w'];
+            $h = $data[$count]['h'];
+
+            $oldLayout = DB::table('parking_spaces')->where('parking_space_id',$parkingSpace['parking_space_id'])->first();
+
+            if($oldLayout != null)
+            {
+                if($oldLayout->x != $x || $oldLayout->y != $y || $oldLayout->w != $w || $oldLayout->h != $h)
+                {
+                    $newLayout = [
+                        'x' => $x,
+                        'y' => $y,
+                        'w' => $w,
+                        'h' => $h
+                    ];
+
+                    ParkingSpace::where('parking_space_id',$parkingSpace['parking_space_id'])->update($newLayout);
+                }
+            }
+            else
+            {
+                ParkingSpace::create($parkingSpace);
+            }
+            $count++;
+        }
+
+        return "GOOD";
+    }
+
+    public function parkingLotWithParkingSpace()
+    {
+        $data = [];
+        $count = 0;
+
+        $allParkingLotId = DB::table('parking_lots')->select('parking_lot_id')->get();
+
+        foreach($allParkingLotId as $parkingLotId)
+        {
+            $id = $parkingLotId->parking_lot_id;
+            $parkingSpaces = DB::table('parking_spaces')->where('parking_lot_id',$id)->get();
+
+            $data[$count] = [
+                [
+                    [$parkingLotId],
+                    $parkingSpaces
+                ]
+            ];
+
+            $count++;
+        }
+
+        return $data;
+    }
 }

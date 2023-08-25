@@ -6,12 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Client\PaymentController;
 use App\Http\Controllers\Client\ReserveController;
-use App\Models\ParkingLot;
+use App\Models\ParkingSpace;
 use App\Repositories\AdminRepositories\ParkingLotRepository;
 use App\Repositories\AdminRepositories\ReservationRepository;
 use App\Repositories\AdminRepositories\ParkingSpaceRepository;
 use App\Repositories\AdminRepositories\AuthenticationRepository;
 use App\Repositories\AdminRepositories\ParkingLotCommentRepository;
+use App\Repositories\AdminRepositories\UserRepository;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,17 +40,20 @@ Route::prefix('admin')->group(function(){
 });
 
 Route::prefix('parkingLot')->group(function(){
+    Route::get('/allId',[ParkingLotController::class,'allId'])->name('api.allId');
     Route::get('/allData',[ParkingLotRepository::class,'showParkingLots'])->name('api.showParkingLots');
     Route::get('/{parkingLotId}/details',[ParkingLotRepository::class,'showParkingLotDetails'])->name('api.showParkingLotDetails');
+    Route::post('/add',[ParkingLotController::class,'store'])->name('api.storeParkingLot');
     Route::delete('/{parkingLotId}/delete',[ParkingLotRepository::class,'deleteParkingLot'])->name('api.deleteParkingLot');
     Route::patch('/{parkingLotId}/update',[ParkingLotRepository::class,'updateParkingLotInformation'])->name('api.updateParkingLotInformation');
 });
 
 Route::prefix('parkingSpace')->group(function(){
     Route::get('/allData',[ParkingSpaceRepository::class,'showParkingSpaces'])->name('api.showParkingSpaces');
-    Route::get('/{parkingSpaceId}/details',[ParkingLotRepository::class,'showParkingSpaceDetails'])->name('api.showParkingSpaceDetails');
+    Route::get('/{parkingSpaceId}/details',[ParkingSpaceRepository::class,'showParkingSpaceDetails'])->name('api.showParkingSpaceDetails');
     Route::get('filter/{parkingLotId}',[ParkingSpaceController::class,'getLayout'])->name('api.filter');
-
+    Route::post('/updateLayout',[ParkingSpaceController::class,'updateLayout'])->name('api.updateLayout');
+    Route::delete('/{parkingSpaceId}/delete',[ParkingSpaceController::class,'delete'])->name('api.deleteParkingSpace');
 });
 
 Route::prefix('comments')->group(function(){
@@ -69,4 +73,10 @@ Route::prefix('reserve')->group(function(){
 
 });
 
+Route::post('booking',[ReserveController::class,'booking'])->name('api.booking');
+Route::patch('/{parkingSpaceId}/bookingStateUpdate',[ReserveController::class,'changeBookingState'])->name('api.bookingStateUpdate');
+Route::get('parkingLotWithParkingSpace',[ParkingSpaceController::class,'parkingLotWithParkingSpace'])->name('api.getParkingLotWithParkingSpace');
+
 Route::get('test/{parkingLotId}',[ParkingSpaceController::class,'getLayout'])->name('api.name');
+
+Route::get('/getUserInfo',[UserRepository::class, 'getUserInfo'])->name('api.getUserInfo');

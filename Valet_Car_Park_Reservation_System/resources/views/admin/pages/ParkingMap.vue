@@ -1,5 +1,23 @@
 <template>
     <div>
+        <button @click="addFormVisible = true" class="btn btn-primary" style="margin-bottom: 5px;">Add Parking Space</button>
+        <div v-if="draggable" class="form-check form-switch">
+            <input type="checkbox" v-model="draggable" class="form-check-input"/> Edit Mode (ON)
+        </div>
+        <div v-else class="form-check form-switch">
+            <input type="checkbox" v-model="draggable" class="form-check-input"/> Edit Mode (OFF)
+        </div>
+        <div class="form-check form-switch">
+            <input type="checkbox" v-model="resizable" class="form-check-input"/> Resizable
+        </div>
+        <div class="form-check form-switch">
+            <input type="checkbox" v-model="collision" class="form-check-input"/> Collision
+        </div>
+
+        <div>
+            <button @click="saveLayout" class="btn btn-primary" style="margin-bottom: 20px;">Save</button>
+        </div>
+
         <grid-layout :layout.sync="layout"
                      :col-num="colNum"
                      :row-height="80"
@@ -18,11 +36,11 @@
                        :h="item.h"
                        :i="item.i"
                        :key="item.i"
-                       @click="test(item.i)"
+                       style="background-color: RGB(75, 181,67);"
             >
-                <span class="text">
-                    {{item.i}}
-                </span>
+                <button @click="edit(item.i)">
+                    {{ item.parking_space_id }}
+                </button>
                 <span class="remove" @click="removeItem(item.i)">
                     x
                 </span>
@@ -30,10 +48,82 @@
         </grid-layout>
 
         <br>
-        <button @click="addItem">Add Parking Space</button>
-        <input type="checkbox" v-model="draggable" /> Draggable
-        <input type="checkbox" v-model="resizable" /> Resizable
-        <input type="checkbox" v-model="collision" /> Collision
+
+
+        <!-- EDIT FORM -->
+        <el-dialog
+            v-model="centerDialogVisible"
+            title="Parking Space Information Edit"
+            align-center
+            draggable
+        >
+            <el-form>
+                <el-form-item label="Parking Space ID : ">
+                    <el-input clearable v-model="parkingSpaceDetails.parking_space_id"/>
+                </el-form-item>
+                <el-form-item label="Status : ">
+                    <el-radio-group v-model="parkingSpaceDetails.status">
+                        <el-radio :label="1">Open</el-radio>
+                        <el-radio :label="0">Close</el-radio>
+                    </el-radio-group>
+                </el-form-item>
+                <el-form-item label="Comment : ">
+                    <el-input type="textarea" placeholder="Please Write Some Comment Before Update Information" autosize clearable/>
+                </el-form-item>
+                <el-form-item label="Open Time : ">
+                    <el-input type="time" step="1" v-model="parkingSpaceDetails.open_time"/>
+                </el-form-item>
+                <el-form-item label="Close Time : ">
+                    <el-input type="time" step="1" v-model="parkingSpaceDetails.close_time"/>
+                </el-form-item>
+            </el-form>
+            <template #footer>
+                <span class="dialog-footer">
+                    <el-button @click="centerDialogVisible = false">
+                        Cancel
+                    </el-button>
+                    <el-button type="primary" @click="centerDialogVisible = false">
+                        Update
+                    </el-button>
+                </span>
+            </template>
+        </el-dialog>
+
+        <!-- ADD FORM -->
+        <el-dialog
+            v-model="addFormVisible"
+            title="Parking Space Create Form"
+            align-center
+            draggable
+        >
+            <el-form>
+                <el-form-item label="Parking Space ID : ">
+                    <el-input clearable v-model="createParam.parking_space_id"/>
+                </el-form-item>
+                <el-form-item label="Status : ">
+                    <el-radio-group v-model="createParam.status">
+                        <el-radio :label="1">Open</el-radio>
+                        <el-radio :label="0">Close</el-radio>
+                    </el-radio-group>
+                </el-form-item>
+                <el-form-item label="Open Time : ">
+                    <el-input type="time" step="1" v-model="createParam.open_time"/>
+                </el-form-item>
+                <el-form-item label="Close Time : ">
+                    <el-input type="time" step="1" v-model="createParam.close_time"/>
+                </el-form-item>
+            </el-form>
+            <template #footer>
+                <span class="dialog-footer">
+                    <el-button @click="addFormVisible = false">
+                        Cancel
+                    </el-button>
+                    <el-button type="primary" @click="addItem">
+                        Conform
+                    </el-button>
+                </span>
+            </template>
+        </el-dialog>
     </div>
 </template>
 
@@ -44,77 +134,63 @@
 
     const store = useStore()
 
-    const layout = ref(
-        // [
-        //     { x: 0, y: 0, w: 1, h: 1, i: "haha" },
-        //     { x: 1, y: 0, w: 1, h: 1, i: "1" },
-        //     { x: 2, y: 0, w: 1, h: 1, i: "2" },
-        //     { x: 3, y: 0, w: 1, h: 1, i: "3" },
-        //     { x: 4, y: 0, w: 1, h: 1, i: "4" },
-        // ]
-        null
+    const draggable = ref(false)
+    const resizable = ref(false)
+    const collision = ref(true)
+    const centerDialogVisible = ref(false)
+    const addFormVisible = ref(false)
+
+    const layout = ref(null)
+    const parkingSpaceDetails = ref(null)
+    const createParam = ref(
+        {
+            parking_lot_id: null,
+            parking_space_id: null,
+            status: null,
+            open_time: null,
+            close_time: null
+        }
     )
 
-    let parkingLotId = ref(store.state.parkingLotId)
+    let parkingLotId = store.state.parkingLotId
 
-        const getLayout = async() => {
-            try {
-                const response = await axios.get('api/parkingSpace/filter/' + parkingLotId.value)
-                const data = response.data
+    const getAllParkingSpacesData = async() => {
+        try {
+            const response = await axios.get('api/parkingSpace/filter/' + parkingLotId)
+            const data = response.data
 
-                return data
-            }
-            catch(error) {
-                console.log(error)
-            }
+            return data
         }
+        catch(error) {
+            console.log(error)
+        }
+    }
 
-        const pLotLayout = await getLayout()
+    const parkingSpaces = await getAllParkingSpacesData()
+    const specificParkingSpaceData = parkingSpaces.filter(item => item.parking_lot_id === parkingLotId)
 
-        layout.value = pLotLayout
-
-    const draggable = ref(true)
-    const resizable = ref(true)
-    const collision = ref(true)
+    layout.value = specificParkingSpaceData
 
     let colNum = 12
     let index = 0
+    let x = 0
 
     onMounted(async() => {
-        // const pLotLayout = await getLayout()
-        // layout.value = pLotLayout
 
-        // let parkingLotId = ref(store.state.parkingLotId)
-
-        // const getLayout = async() => {
-        //     try {
-        //         const response = await axios.get('api/parkingSpace/filter/' + parkingLotId.value)
-        //         const data = response.data
-
-        //         return data
-        //     }
-        //     catch(error) {
-        //         console.log(error)
-        //     }
-        // }
-
-        // const pLotLayout = await getLayout()
-
-        // layout.value = pLotLayout
-        
         index = layout.value.length
-        console.log(pLotLayout);
+        console.log(parkingSpaces)
+
     })
 
     watchEffect(async() => {
 
-        let parkingLotId = ref(store.state.parkingLotId)
+        let parkingLotId = store.state.parkingLotId
 
-        const getLayout = async() => {
+        const getAllParkingSpacesData = async() => {
             try {
-                const response = await axios.get('api/parkingSpace/filter/' + parkingLotId.value)
+                const response = await axios.get('api/parkingSpace/filter/' + parkingLotId)
                 const data = response.data
-                // console.log(data);
+
                 return data
             }
             catch(error) {
@@ -122,44 +198,58 @@
             }
         }
 
-        const pLotLayout = await getLayout()
+        const parkingSpaces = await getAllParkingSpacesData()
+        const specificParkingSpaceData = parkingSpaces.filter(item => item.parking_lot_id === parkingLotId)
 
-        layout.value = pLotLayout
-
-        // for(i = 0) {
-
-        // }
-
-        const spData = layout.value.filter(item => item.parking_lot_id === 'G0')
-
-        console.log(spData);
+        layout.value = specificParkingSpaceData
+        console.log(specificParkingSpaceData)
 
     })
 
     const addItem = () => {
         // Add a new item. It must have a unique key!
-        layout.value.push({
-            // x: (layout.value.length * 2) % (colNum || 12),
-            x: 0,
-            // y: layout.value.length + (colNum || 12), // puts it at the bottom
-            y: 0,
-            w: 1,
-            h: 2,
-            i: index,
-        })
+        layout.value.push(
+            {
+                parking_lot_id: store.state.parkingLotId,
+                parking_space_id: createParam.value.parking_space_id,
+                status: createParam.value.status,
+                open_time: createParam.value.open_time,
+                close_time: createParam.value.close_time,
+                x: x,
+                y: 0,
+                w: 1,
+                h: 1,
+                i: createParam.value.parking_space_id
+            }
+        )
+        createParam.value.parking_lot_id = null
+        createParam.value.parking_space_id = null
+        createParam.value.status = null
+        createParam.value.open_time = null
+        createParam.value.close_time = null
+
+        addFormVisible.value = false
         // Increment the counter to ensure key is always unique.
-        index++
+        x++
+        console.log(layout.value);
     }
 
-    const removeItem = (val) => {
+    const removeItem = async(val) => {
         const index = layout.value.map(item => item.i).indexOf(val)
+        let parkingSpaceId = layout.value[index].parking_space_id
         layout.value.splice(index, 1)
+        await axios.delete('api/parkingSpace/' + parkingSpaceId + '/delete')
     }
 
-    const test = (val) => {
+    const edit = async(val) => {
         const index = layout.value.map(item => item.i).indexOf(val)
-        console.log(pLotLayout[index])
-        // layout.value.splice(index, 1)
+        parkingSpaceDetails.value = layout.value[index]
+        centerDialogVisible.value = true
+    }
+
+    const saveLayout = async()=>{
+        console.log(layout.value)
+        await axios.post('api/parkingSpace/updateLayout',layout.value)
     }
 
 </script>
@@ -252,13 +342,14 @@
             to right,
             lightgrey 1px,
             transparent 1px
-    ),
-    linear-gradient(to bottom, lightgrey 1px, transparent 1px);
-    height: calc(100% - 5px);
+        ),
+        linear-gradient(to bottom, lightgrey 1px, transparent 1px);
+    height: calc(85% - 5px); /* Adjusted to exclude top 20% */
     width: calc(100% - 5px);
     position: absolute;
     background-repeat: repeat;
-    margin:5px;
+    margin: 5px;
+    top: 15%; /* Position at the top of the remaining 80% */
 }
 
 .vue-grid-item.vue-grid-placeholder {
