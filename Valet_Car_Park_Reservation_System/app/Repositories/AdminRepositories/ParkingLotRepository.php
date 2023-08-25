@@ -108,6 +108,11 @@ class ParkingLotRepository implements ParkingLotRepositoryInterface
     {
         return ParkingLot::where('parking_lot_id',$parkingLotId)->delete();
     }
+
+    public function allId()
+    {
+        
+    }
 }
 
 ?>
