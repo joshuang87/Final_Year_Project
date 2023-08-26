@@ -12,6 +12,6 @@ class ParkingSpaceSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\ParkingSpace::factory(10)->create();
+        \App\Models\ParkingSpace::factory(20)->create();
     }
 }

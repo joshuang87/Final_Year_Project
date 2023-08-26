@@ -61,7 +61,7 @@
         <grid-layout :layout.sync="layout"
                      :col-num="12"
                      :row-height="80"
-                     :is-draggable="false"
+                     :is-draggable="true"
                      :is-resizable="false"
                      :vertical-compact="false"
                      :prevent-collision="collision"
@@ -76,9 +76,9 @@
                        :h="item.h"
                        :i="item.i"
                        :key="item.i"
-                       style="background-color: RGB(75, 181,67);"
+
             >
-                <button @click="book(item.i)">
+                <button @click="book(item.i)" class="btn btn-primary" style="margin: 10px;">
                     {{ item.parking_space_id }}
                 </button>
             </grid-item>
@@ -140,11 +140,39 @@
             </div>
         </div>
     </div>
+
+    <!-- <grid-layout :layout.sync="layout"
+                     :col-num="12"
+                     :row-height="80"
+                     :is-draggable="false"
+                     :is-resizable="false"
+                     :vertical-compact="false"
+                     :prevent-collision="collision"
+                     :use-css-transforms="true"
+                     class="grid"
+        >
+            <grid-item v-for="item in layout"
+                       :static="item.static"
+                       :x="item.x"
+                       :y="item.y"
+                       :w="item.w"
+                       :h="item.h"
+                       :i="item.i"
+                       :key="item.i"
+                       style="background-color: RGB(75, 181,67);"
+            >
+                <button @click="book(item.i)">
+                    {{ item.parking_space_id }}
+                </button>
+            </grid-item>
+        </grid-layout> -->
 </template>
 
 <script setup>
     import { ref,watchEffect } from 'vue'
     import axios from 'axios';
+    import jsPDF from 'jspdf';
+    import QRCode from 'qrcode';
 
     const parkingLots = ref(null)
     const bookingForm = ref(false)
@@ -159,7 +187,7 @@
            email: null,
            car_plate: null,
            parking_lot_id: null,
-           parking_space_id: null 
+           parking_space_id: null
         }
     )
 
@@ -190,7 +218,7 @@
 
                     const getAllParkingSpacesData = async() => {
                         try {
-                            //  ALL PARKING SPACES DATA 
+                            //  ALL PARKING SPACES DATA
                             const response = await axios.get('api/parkingSpace/filter/G0')
                             const data = response.data
 
@@ -213,7 +241,7 @@
 
                     const getAllParkingSpacesData = async() => {
                         try {
-                            //  ALL PARKING SPACES DATA 
+                            //  ALL PARKING SPACES DATA
                             const response = await axios.get('api/parkingSpace/filter/G0')
                             const data = response.data
 
@@ -263,7 +291,55 @@
             console.log(err);
         }
         bookingForm.value = false
+
+        const pdf = new jsPDF();
+        pdf.text('Invoice', 10, 10);
+        pdf.text(`Parking Space ID: ${bookingParam.value.parking_space_id}`, 10, 20);
+        pdf.text(`Date: ${bookingParam.value.date}`, 10, 30);
+        pdf.text(`Start Time: ${bookingParam.value.start_time}`, 10, 40);
+        pdf.text(`End Time: ${bookingParam.value.end_time}`, 10, 50);
+        pdf.text(`Car Plate: ${bookingParam.value.car_plate}`, 10, 60);
+        pdf.text(`Email: ${bookingParam.value.email}`, 10, 70);
+        pdf.text('Please show this invoice to the staff as a proof of booking.', 10, 90);
+
+        // Generate and embed the QR code
+        const youtubeUrl = 'https://www.youtube.com/watch?v=GRWbIoIR04c';
+        const qrCodeCanvas = await QRCode.toCanvas(youtubeUrl);
+        pdf.addImage(qrCodeCanvas, 'PNG', 10, 100, 50, 50);
+
+        // Save the PDF and provide a link for the user to download
+        const pdfBlob = pdf.output('blob');
+        const pdfUrl = URL.createObjectURL(pdfBlob);
+        const link = document.createElement('a');
+        link.href = pdfUrl;
+        link.download = `invoice_${bookingParam.value.parking_space_id}_${bookingParam.value.date}.pdf`;
+        link.click();
     }
+
+    // const generateAndDownloadInvoice = async(space) => {
+    //   const pdf = new jsPDF();
+    //   pdf.text('Invoice', 10, 10);
+    //   pdf.text(`Parking Space ID: ${space.id}`, 10, 20);
+    //   pdf.text(`Date: ${this.selectedDate}`, 10, 30);
+    //   pdf.text(`Start Time: ${this.selectedStartTime}`, 10, 40);
+    //   pdf.text(`End Time: ${this.selectedEndTime}`, 10, 50);
+    //   pdf.text(`Car Plate: ${this.carPlate}`, 10, 60);
+    //   pdf.text(`Email: ${this.email}`, 10, 70);
+    //   pdf.text('Please show this invoice to the staff as a proof of booking.', 10, 90);
+
+    //   // Generate and embed the QR code
+    //   const youtubeUrl = 'https://www.youtube.com/watch?v=G1auYDCHO0k';
+    //   const qrCodeCanvas = await QRCode.toCanvas(youtubeUrl);
+    //   pdf.addImage(qrCodeCanvas, 'PNG', 10, 100, 50, 50);
+
+    //   // Save the PDF and provide a link for the user to download
+    //   const pdfBlob = pdf.output('blob');
+    //   const pdfUrl = URL.createObjectURL(pdfBlob);
+    //   const link = document.createElement('a');
+    //   link.href = pdfUrl;
+    //   link.download = `invoice_${space.id}_${this.selectedDate}.pdf`;
+    //   link.click();
+    // }
 
 </script>
 
@@ -276,5 +352,6 @@
         justify-content: center;
         min-height: 50vh;
     }
+
 
 </style>
