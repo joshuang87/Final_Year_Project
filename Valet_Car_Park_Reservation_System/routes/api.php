@@ -77,6 +77,7 @@ Route::prefix('reserve')->group(function(){
 Route::post('booking',[ReserveController::class,'booking'])->name('api.booking');
 Route::patch('/{parkingSpaceId}/bookingStateUpdate',[ReserveController::class,'changeBookingState'])->name('api.bookingStateUpdate');
 Route::get('parkingLotWithParkingSpace',[ParkingSpaceController::class,'parkingLotWithParkingSpace'])->name('api.getParkingLotWithParkingSpace');
+Route::post('checkAvailability',[ReserveController::class,'checkAvailability'])->name('api.checkAvailability');
 
 Route::get('test/{parkingLotId}',[ParkingSpaceController::class,'getLayout'])->name('api.name');
 

@@ -262,6 +262,12 @@ class ReserveController extends Controller
     {
         $data = $request->all();
 
+        // foreach($data as $one)
+        // {
+        //     parkingSpaceStatus::create($one);
+        // }
+        // dd($data);
+
         parkingSpaceStatus::create($data);
 
         return response("GOOD",200);
@@ -278,5 +284,61 @@ class ReserveController extends Controller
         parkingSpaceStatus::where('parking_space_id',$parkingSpaceId)->update($data);
         
         return response("GOOD",200);
+    }
+
+    public function checkAvailability(Request $request)
+    {
+        $data = $request->all();
+
+        // $availability = DB::table('parking_space_statuses')->where('start_time',$data['start_time'])
+        //                                                     ->where('end_time',$data['end_time'])
+        //                                                     ->where('date',$data['date'])
+        //                                                     ->get();
+
+                                                            
+
+        // $availability = DB::table('parking_space_statuses')->where('parking_lot_id',$data['parking_lot_id'])->whereDate('date', $data['date'])
+  
+        //                                                     ->where(function ($query) use ($data) {
+        //                                                         $query->where('start_time', '<', $data['end_time'])
+        //                                                             ->where('end_time', '>', $data['start_time']);
+        //                                                     })
+        //                                                     ->orWhere(function ($query) use ($data) {
+        //                                                         $query->where('start_time', '<', $data['end_time'])
+        //                                                             ->where('end_time', '>', $data['start_time']);
+        //                                                     })
+        //                                                     ->get();
+
+        $availability = DB::table('parking_space_statuses')->where('parking_lot_id', $data['parking_lot_id'])
+                                                            ->where(function ($query) use ($data) {
+                                                                $query->whereDate('date', $data['date'])
+                                                                    ->where(function ($query) use ($data) {
+                                                                        $query->where('start_time', '<=', $data['end_time'])
+                                                                            ->where('end_time', '>=', $data['start_time']);
+                                                                        });
+                                                            })
+                                                            ->get();
+
+                                                        
+        // dd($availability);
+
+        $count = 0;
+
+        if($availability->isEmpty())
+        {
+            return "true";
+        }
+        else {
+            foreach($availability as $parkingSpaces)
+            {
+                $parkingSpacesId[$count] = $parkingSpaces->parking_space_id;
+                $count++; 
+            }
+            return [
+                "false",
+                $parkingSpacesId
+            ];
+            // return false;
+        }
     }
 }

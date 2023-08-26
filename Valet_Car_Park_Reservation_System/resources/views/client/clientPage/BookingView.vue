@@ -5,25 +5,16 @@
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
-
-    <booking />
+    <Suspense>
+      <booking />
+    </Suspense>
 
 </template>
 
-<script>
+<script setup>
 import booking from 'V/components/booking.vue';
 import space from 'V/components/space.vue';
 
-  export default{
-    components:{
-        booking,
-        space,
-    },
-
-    data(){
-
-    },
-  }
   </script>
 
 <style>
