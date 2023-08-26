@@ -42,13 +42,13 @@
     title="Admin Profile"
     v-model="adminProfileDialogVisible"
     @close="closeAdminProfileDialog"
-    width="30%"
+    width="50%"
   >
     <div class="d-flex justify-content-center align-items-center flex-column">
       <img
         src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
         class="rounded-circle"
-        style="width: 100px; height: 100px;"
+        style="width: 50px; height: 50px;"
       />
       <h4 class="mt-2">Admin</h4>
     </div>
@@ -106,8 +106,9 @@
           :on-success="handleAvatarSuccess"
           :on-error="handleAvatarError"
         >
-          <img v-if="profileImage" :src="profileImage" class="avatar" />
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          <img v-if="profileImage" :src="profileImage" class="avatar" style="height: 100px; width: 100px;"  />
+          <i v-else class="el-icon-plus avatar-uploader-icon" ></i>
+          <br><br><br><br><br>
           <el-button type="primary">Change Your Image</el-button>
         </el-upload>
       </el-form-item>
