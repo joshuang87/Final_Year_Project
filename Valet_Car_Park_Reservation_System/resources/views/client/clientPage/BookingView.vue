@@ -15,8 +15,14 @@
 import booking from 'V/components/booking.vue';
 import space from 'V/components/space.vue';
 
+  // export default{
+  //   components: {
+  //     booking,
+  //       space,
+  //   }
+        
+  // }
   </script>
 
 <style>
-/* add some style  */
 </style>
