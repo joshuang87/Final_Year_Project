@@ -16,7 +16,7 @@
 
             <RouterLink to="/parkingLots">
                 <el-menu-item index="/parkingLots">
-                    <el-icon>               
+                    <el-icon>
                         <OfficeBuilding />
                     </el-icon>
                     <template #title>Parking Lots</template>
@@ -32,29 +32,29 @@
                 </el-menu-item>
             </RouterLink>
 
-            <RouterLink to="/customers">
+            <!-- <RouterLink to="/customers">
                 <el-menu-item index="/customers">
                     <el-icon>
                         <Ticket />
                     </el-icon>
                     <template #title>Customers</template>
                 </el-menu-item>
-            </RouterLink>
+            </RouterLink> -->
 
             <RouterLink to="/users">
-                <el-menu-item index="/users">               
+                <el-menu-item index="/users">
                         <el-icon>
                             <User />
-                        </el-icon>              
+                        </el-icon>
                         <template #title>Users</template>
                 </el-menu-item>
             </RouterLink>
-            
+
             <!-- <RouterLink to="/parkingMap">
-                <el-menu-item index="/parkingMap">               
+                <el-menu-item index="/parkingMap">
                         <el-icon>
                             <List />
-                        </el-icon>              
+                        </el-icon>
                         <template #title>Parking Map</template>
                 </el-menu-item>
             </RouterLink>  -->
@@ -92,7 +92,7 @@
         store.dispatch('getParkingLotId',parkingLotId)
         console.log(store.state.parkingLotId)
     }
-    
+
 
 </script>
 

@@ -170,9 +170,12 @@
 
 <script setup>
     import { ref,watchEffect } from 'vue'
+    import { useRouter } from 'vue-router'
     import axios from 'axios';
     import jsPDF from 'jspdf';
     import QRCode from 'qrcode';
+
+    const router = useRouter()
 
     const parkingLots = ref(null)
     const bookingForm = ref(false)
@@ -314,31 +317,13 @@
         link.href = pdfUrl;
         link.download = `invoice_${bookingParam.value.parking_space_id}_${bookingParam.value.date}.pdf`;
         link.click();
+
+        // bookingParam.value = null
+        router.push('/')
     }
 
-    // const generateAndDownloadInvoice = async(space) => {
-    //   const pdf = new jsPDF();
-    //   pdf.text('Invoice', 10, 10);
-    //   pdf.text(`Parking Space ID: ${space.id}`, 10, 20);
-    //   pdf.text(`Date: ${this.selectedDate}`, 10, 30);
-    //   pdf.text(`Start Time: ${this.selectedStartTime}`, 10, 40);
-    //   pdf.text(`End Time: ${this.selectedEndTime}`, 10, 50);
-    //   pdf.text(`Car Plate: ${this.carPlate}`, 10, 60);
-    //   pdf.text(`Email: ${this.email}`, 10, 70);
-    //   pdf.text('Please show this invoice to the staff as a proof of booking.', 10, 90);
-
-    //   // Generate and embed the QR code
-    //   const youtubeUrl = 'https://www.youtube.com/watch?v=G1auYDCHO0k';
-    //   const qrCodeCanvas = await QRCode.toCanvas(youtubeUrl);
-    //   pdf.addImage(qrCodeCanvas, 'PNG', 10, 100, 50, 50);
-
-    //   // Save the PDF and provide a link for the user to download
-    //   const pdfBlob = pdf.output('blob');
-    //   const pdfUrl = URL.createObjectURL(pdfBlob);
-    //   const link = document.createElement('a');
-    //   link.href = pdfUrl;
-    //   link.download = `invoice_${space.id}_${this.selectedDate}.pdf`;
-    //   link.click();
+    // const test = () => {
+    //     router.push('/')
     // }
 
 </script>
