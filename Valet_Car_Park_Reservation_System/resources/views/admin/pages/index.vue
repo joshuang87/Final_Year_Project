@@ -79,7 +79,16 @@
         <el-card shadow="never">
             <template #header>
             <div class="d-flex">
-                <span>HELLo</span>
+                <span>Hello and welcome join with us company.</span>
+            </div>
+            </template>
+        </el-card>
+
+        <el-card shadow="never">
+            <template #header>
+            <div class="d-flex">
+                <span>
+                </span>
             </div>
             </template>
             <div id="chart"></div>

@@ -32,14 +32,14 @@
                 </el-menu-item>
             </RouterLink>
 
-            <RouterLink to="/customers">
+            <!-- <RouterLink to="/customers">
                 <el-menu-item index="/customers">
                     <el-icon>
                         <Ticket />
                     </el-icon>
                     <template #title>Customers</template>
                 </el-menu-item>
-            </RouterLink>
+            </RouterLink> -->
 
             <RouterLink to="/users">
                 <el-menu-item index="/users">               
