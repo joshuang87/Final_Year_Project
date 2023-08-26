@@ -20,6 +20,10 @@ export function logout() {
 export function updatePassword(data) {
     return axios.post('/api/admin/updatePassword',data)
 }
-export function updateProfileImage(){
-    return axios.post('/api/admin/updateProfileImage',data)
+export function updateProfileImage(formData) {
+    return axios.post('/api/admin/updateProfileImage', formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    });
 }

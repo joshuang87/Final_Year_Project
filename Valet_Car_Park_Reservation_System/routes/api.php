@@ -13,6 +13,7 @@ use App\Repositories\AdminRepositories\ParkingSpaceRepository;
 use App\Repositories\AdminRepositories\AuthenticationRepository;
 use App\Repositories\AdminRepositories\ParkingLotCommentRepository;
 use App\Repositories\AdminRepositories\UserRepository;
+use App\Http\Controllers\Admin\ProfileImageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -81,3 +82,7 @@ Route::post('checkAvailability',[ReserveController::class,'checkAvailability'])-
 Route::get('test/{parkingLotId}',[ParkingSpaceController::class,'getLayout'])->name('api.name');
 
 Route::get('/getUserInfo',[UserRepository::class, 'getUserInfo'])->name('api.getUserInfo');
+
+Route::post('/admin/updateProfileImage', [ProfileImageController::class, 'updateProfileImage'])
+    ->middleware('auth:sanctum')
+    ->name('api.updateProfileImage');
